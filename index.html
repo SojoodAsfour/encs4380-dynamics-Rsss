@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSIENT | Dynamic Characteristics Lab</title>
+    <script>
+        const savedTheme = localStorage.getItem("transient-themee");
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (savedTheme === "dark" || (!savedTheme && systemDark)) {
+            document.documentElement.classList.add("dark");
+        }
+    </script>
+
+    <link rel="stylesheet" href="./output.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+
+<body class="min-h-screen">
+
+    <header class="border-b" style="border-color: var(--border)">
+        <div class="max-w-7xl mx-auto px-5 py-5
+                    flex items-center justify-between gap-4">
+
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl flex
+                            items-center justify-center
+                            font-black text-xl" style="background: var(--primary);
+                            color: var(--bg)">
+                    T
+                </div>
+
+                <div>
+                    <h1 class="text-2xl font-black tracking-tight">
+                        TRANSIENT<span style="color:var(--accent)">.</span>
+                    </h1>
+                    <p class="text-xs lab-muted">
+                        DYNAMIC CHARACTERISTICS LAB
+                    </p>
+                </div>
+            </div>
+
+            <button id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" class="rounded-full px-4 py-2 font-semibold
+                           text-sm border cursor-pointer" style="background: var(--surface);
+                           border-color: var(--border)">
+                <span id="themeIcon">☾</span>
+                <span id="themeLabel">Dark mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-5 py-10">
+
+        <section class="mb-10">
+            <p class="text-xs font-bold tracking-[0.22em]
+                      uppercase lab-accent mb-3">
+                ENCS4380 / INTERACTIVE ENGINEERING LAB
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-black
+                       tracking-tight leading-tight max-w-3xl">
+                Understand the science
+                <span style="color:var(--accent)">of response.</span>
+            </h2>
+
+            <p class="lab-muted mt-4 max-w-2xl leading-relaxed">
+                Experiment with sensor dynamics, explore response
+                curves, and discover how systems behave over time.
+            </p>
+        </section>
+
+        <nav aria-label="Project modules" class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+
+            <a href="#module1" class="lab-card p-4 block">
+                <p class="text-xs lab-accent font-bold mb-2">
+                    01 / ACTIVE
+                </p>
+                <p class="font-semibold">Time Response</p>
+            </a>
+
+            <div class="lab-panel p-4">
+                <p class="text-xs lab-muted mb-2">02 / MODULE</p>
+                <p class="font-semibold">Frequency Response</p>
+            </div>
+
+            <div class="lab-panel p-4">
+                <p class="text-xs lab-muted mb-2">03 / MODULE</p>
+                <p class="font-semibold">Second-Order</p>
+            </div>
+
+            <div class="lab-panel p-4">
+                <p class="text-xs lab-muted mb-2">04 / MODULE</p>
+                <p class="font-semibold">Guess the Sensor</p>
+            </div>
+        </nav>
+
+        <!-- Module 1 experiment -->
+        <section id="module1" class="lab-card p-5 md:p-8">
+
+            <div class="flex flex-wrap justify-between
+                        items-start gap-4 mb-8">
+                <div>
+                    <p class="text-xs font-bold tracking-widest
+                              lab-accent mb-2">
+                        EXPERIMENT 001 / TIME DOMAIN
+                    </p>
+
+                    <h2 class="text-2xl md:text-3xl font-bold">
+                        First-Order Response
+                    </h2>
+
+                    <p class="lab-muted mt-2 max-w-xl">
+                        Investigate the effect of gain and time
+                        constant on a sensor's response.
+                    </p>
+                </div>
+
+                <div class="text-xs font-semibold rounded-full
+                            px-4 py-2 lab-panel">
+                    INTERACTIVE LAB
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+
+                <!-- Controls column -->
+                <aside class="lab-panel p-5 space-y-7">
+
+                    <div>
+                        <p class="text-xs lab-accent font-bold">
+                            CONTROL PANEL
+                        </p>
+                        <h3 class="text-xl font-bold mt-1">
+                            Parameters
+                        </h3>
+                    </div>
+
+                    <!-- Gain slider -->
+                    <div>
+                        <div class="flex justify-between gap-2 mb-3">
+                            <label for="gain" class="font-medium">
+                                System Gain (K)
+                            </label>
+                            <output id="gainValue" for="gain" class="font-bold lab-accent">1.0</output>
+                        </div>
+                        <input id="gain" type="range" min="0.1" max="10" step="0.1" value="1" class="lab-range">
+                    </div>
+
+                    <!-- Tau slider -->
+                    <div>
+                        <div class="flex justify-between gap-2 mb-3">
+                            <label for="tau" class="font-medium">
+                                Time Constant (τ)
+                            </label>
+                            <output id="tauValue" for="tau" class="font-bold lab-accent">2.0 s</output>
+                        </div>
+                        <input id="tau" type="range" min="0.1" max="20" step="0.1" value="2" class="lab-range">
+                    </div>
+
+                    <!-- Signal selector -->
+                    <div>
+                        <label for="inputType" class="font-medium block mb-3">
+                            Input Signal
+                        </label>
+
+                        <select id="inputType" class="lab-select">
+                            <option value="step">Step Input</option>
+                            <option value="ramp">Ramp Input</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4 border-t" style="border-color:var(--border)">
+                        <p class="text-xs lab-muted">
+                            SYSTEM MODEL
+                        </p>
+                        <p class="font-semibold mt-2">
+                            τ dy/dt + y = Kx(t)
+                        </p>
+
+                        <p id="inputEquation" class="text-sm mt-3 lab-muted">
+                            x(t) = A
+                        </p>
+
+                        <p id="responseEquation" class="text-sm mt-2 font-semibold lab-accent">
+                            y(t) = KA(1 − e^(-t/τ))
+                        </p>
+                    </div>
+                </aside>
+
+                <div class="lg:col-span-2 lab-panel p-4 md:p-6">
+                    <div class="flex flex-wrap items-center
+                                justify-between gap-3 mb-4">
+                        <div>
+                            <p class="text-xs lab-accent font-bold">
+                                RESPONSE ANALYSIS
+                            </p>
+                            <h3 class="text-xl font-bold mt-1">
+                                Live Signal Visualization
+                            </h3>
+                        </div>
+                        <span class="text-xs lab-muted">
+                            Time Domain / y(t)
+                        </span>
+                    </div>
+
+                    <div id="responsePlot" class="w-full min-h-85" aria-label="First-order sensor response plot">
+                        <p class="lab-muted text-sm">
+                            Simulation will appear here.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Numerical results -->
+            <div class="grid sm:grid-cols-3 gap-4 mt-6">
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Time Constant</p>
+                    <p id="resultTau" class="text-2xl font-bold mt-2 lab-accent">
+                        2.0 s
+                    </p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Response at τ</p>
+                    <p id="result63" class="text-2xl font-bold mt-2">
+                        63.2%
+                    </p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Response at 3τ</p>
+                    <p id="result95" class="text-2xl font-bold mt-2">
+                        95.0%
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Error Fraction Analysis -->
+            <div id="errorSection" class="lab-card p-5 md:p-7 mt-6">
+                <div class="flex flex-wrap items-start justify-between gap-4 mb-5">
+                    <div>
+                        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                            TRANSIENT ANALYSIS / 02
+                        </p>
+
+                        <h3 class="text-xl font-bold">
+                            Error Fraction Analysis
+                        </h3>
+
+                        <p class="lab-muted text-sm mt-2">
+                            Explore the exponential decay of the normalized step-response error on a logarithmic scale.
+                        </p>
+                    </div>
+
+                    <div class="lab-panel px-4 py-3">
+                        <p class="lab-muted text-xs">NATURAL LOG SLOPE (ln E)</p>
+                        <p id="errorSlope" class="text-xl font-bold lab-accent">
+                            -0.500 s⁻¹
+                        </p>
+                    </div>
+                </div>
+
+                <div id="errorPlot" class="w-full min-h-80" aria-label="Logarithmic error fraction plot">
+                </div>
+
+                <div class="lab-panel p-4 mt-4">
+                    <p class="font-semibold text-sm">
+                        Engineering Insight
+                    </p>
+                    <p class="lab-muted text-sm mt-2">
+                        E(t) = e⁻ᵗ/τ
+                        &nbsp; · &nbsp;
+                        ln(E(t)) = −t/τ
+                    </p>
+                    <p class="lab-muted text-sm mt-2">
+                        A smaller time constant creates a steeper
+                        decay and a faster sensor response.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="lab-card p-5 md:p-7 mt-6" id="predictionSection">
+                <p class="text-xs font-bold tracking-widest lab-accent">
+                    TRANSIENT ANALYSIS / 03
+                </p>
+                <h3 class="text-xl font-bold mt-2">
+                    Predict, then Check
+                </h3>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Before changing a parameter, predict how the first-order sensor response will behave.
+                </p>
+
+                <label id="predictionQuestion" for="predictionType" class="block font-medium mb-3">
+                    Loading question...
+                </label>
+                <select id="predictionType" class="lab-select mb-5">
+                    <option value="" selected disabled>
+                        Choose your prediction
+                    </option>
+                </select>
+
+                <button id="checkPrediction" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Check Prediction
+                </button>
+
+                <button id="newPrediction" type="button" class="lab-select mt-3 sm:mt-0 sm:ml-3"
+                    style="width:auto; cursor:pointer;">
+                    New Question ↻
+                </button>
+
+                <div id="predictionResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite">
+                </div>
+
+                <div id="predictionChartSection" class="lab-panel p-4 md:p-5 mt-5 hidden">
+                    <h4 class="font-bold text-lg mb-2">
+                        Prediction vs. Actual Response
+                    </h4>
+                    <p class="lab-muted text-sm mb-4">
+                        Compare the original sensor response with the response after the hypothetical change.
+                    </p>
+                    <div id="predictionPlot" class="w-full min-h-80"
+                        aria-label="Original and modified response comparison">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="lab-card p-5 md:p-7 mt-6" id="validationSection">
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    ENGINEERING VALIDATION / 01
+                </p>
+                <h3 class="text-xl font-bold">
+                    First-Order Model Validation
+                </h3>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Verify the step-response equation against a known analytical reference value.
+                </p>
+                <button id="runValidation" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Run Validation Check #1
+                </button>
+                <div id="validationResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite">
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="text-center text-sm lab-muted py-8 px-4">
+        TRANSIENT · Dynamic Characteristics Interactive Toolkit
+        <p class="mt-2">
+            Developed by Team RSSS · Birzeit University · ENCS4380
+        </p>
+    </footer>
+
+    <script src="./js/theme.js"></script>
+    <script src="./js/module1.js"></script>
+    <script src="./js/prediction.js"></script>
+    <script src="./js/validation.js"></script>
+</body>
+
+</html>

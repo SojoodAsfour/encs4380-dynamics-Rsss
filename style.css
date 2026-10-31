@@ -1,0 +1,91 @@
+:root {
+    color-scheme: light;
+
+    --bg: #F8F8FC;
+    --surface: #FFFFFF;
+    --surface-soft: #F0F2FA;
+    --primary: #3158B8;
+    --primary-soft: #E9EEFC;
+    --accent: #DA91AA;
+    --text: #222941;
+    --muted: #67718A;
+    --border: #E1E5F0;
+    --chart-grid: #E6EAF3;
+}
+
+:root.dark {
+    color-scheme: dark;
+
+    --bg: #151724;
+    --surface: #252A3C;
+    --surface-soft: #30364B;
+    --primary: #94B3FF;
+    --primary-soft: #343F60;
+    --accent: #F0A6C0;
+    --text: #F6F4FC;
+    --muted: #B4BDD1;
+    --border: #414960;
+    --chart-grid: #3C455C;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: Inter, "Segoe UI", sans-serif;
+    transition: background-color 0.25s, color 0.25s;
+}
+
+.lab-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(20, 30, 70, 0.035);
+}
+
+.lab-panel {
+    background-color: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.lab-muted {
+    color: var(--muted);
+}
+
+.lab-accent {
+    color: var(--primary);
+}
+
+.lab-button {
+    background-color: var(--primary);
+    color: var(--bg);
+    border-radius: 14px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.lab-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.lab-range {
+    width: 100%;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.lab-select {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 12px;
+    width: 100%;
+}
+
+.lab-card,
+.lab-panel,
+.lab-select {
+    transition: background-color 0.25s, border-color 0.25s;
+}
+
