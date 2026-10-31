@@ -1,0 +1,182 @@
+
+/*
+ * KINETIQ - Module 1
+ * First-Order Time Response
+ *
+ * Step response:
+ * y(t) = K * A * (1 - exp(-t / tau))
+ */
+
+const gainSlider = document.getElementById("gain");
+const tauSlider = document.getElementById("tau");
+const inputType = document.getElementById("inputType");
+const gainValue = document.getElementById("gainValue");
+const tauValue = document.getElementById("tauValue");
+const resultTau = document.getElementById("resultTau");
+const result63 = document.getElementById("result63");
+const result95 = document.getElementById("result95");
+
+const A = 1;
+
+// Calculate first-order step response
+function stepResponse(t, K, tau) {
+    return K * A * (1 - Math.exp(-t / tau));
+}
+
+// Read current CSS theme colors
+function getChartColors() {
+    const styles = getComputedStyle(document.documentElement);
+
+    return {
+        background: styles.getPropertyValue("--surface-soft").trim(),
+        text: styles.getPropertyValue("--text").trim(),
+        grid: styles.getPropertyValue("--chart-grid").trim(),
+        primary: styles.getPropertyValue("--primary").trim(),
+        accent: styles.getPropertyValue("--accent").trim()
+    };
+}
+
+// Draw and update the response
+function updateModule1() {
+
+    const K = Number(gainSlider.value);
+    const tau = Number(tauSlider.value);
+    const type = inputType.value;
+
+    // Update slider labels
+    gainValue.textContent = K.toFixed(1);
+    tauValue.textContent = tau.toFixed(1) + " s";
+
+    // Generate time and output arrays
+    const time = [];
+    const output = [];
+
+    const maxTime = 5 * tau;
+    const points = 200;
+
+    for (let i = 0; i <= points; i++) {
+        const t = (i / points) * maxTime;
+
+        time.push(t);
+        output.push(stepResponse(t, K, tau));
+    }
+
+    // Calculate Response values at tau and 3*tau
+    const yTau = stepResponse(tau, K, tau);
+    const y3Tau = stepResponse(3 * tau, K, tau);
+    const finalValue = K * A;
+    const percentTau = (yTau / finalValue) * 100;
+    const percent3Tau = (y3Tau / finalValue) * 100;
+
+    // Update result cards
+    resultTau.textContent = tau.toFixed(1) + " s";
+    result63.textContent = percentTau.toFixed(1) + "%";
+    result95.textContent = percent3Tau.toFixed(1) + "%";
+
+    const colors = getChartColors();
+
+    // Main response curve
+    const responseTrace = {
+        x: time,
+        y: output,
+        type: "scatter",
+        mode: "lines",
+        name: "Step Response",
+        line: {
+            color: colors.primary,
+            width: 4
+        },
+        hovertemplate:
+            "Time: %{x:.2f} s" +
+            "<br>Output: %{y:.4f}<extra></extra>"
+    };
+
+    // 63.2% and 95% markers
+    const markerTrace = {
+        x: [tau, 3 * tau],
+        y: [yTau, y3Tau],
+        type: "scatter",
+        mode: "markers+text",
+        name: "Reference Points",
+        text: ["63.2%", "95.0%"],
+        textposition: "top center",
+        textfont: {
+            color: colors.text,
+            size: 12
+        },
+        marker: {
+            color: colors.accent,
+            size: 11,
+            line: {
+                color: colors.background,
+                width: 2
+            }
+        },
+        hovertemplate:
+            "Time: %{x:.2f} s" +
+            "<br>Output: %{y:.4f}<extra></extra>"
+    };
+
+    // Chart layout
+    const layout = {
+        paper_bgcolor: colors.background,
+        plot_bgcolor: colors.background,
+        font: {
+            color: colors.text,
+            family: "Arial, sans-serif"
+        },
+        margin: {
+            l: 60,
+            r: 20,
+            t: 35,
+            b: 60
+        },
+        xaxis: {
+            title: {text: "Time (s)"},
+            gridcolor: colors.grid,
+            zeroline: false,
+            range: [0, maxTime]
+        },
+        yaxis: {
+            title: {text: "Sensor Output y(t)"},
+            gridcolor: colors.grid,
+            zeroline: false,
+            range: [0, finalValue * 1.2]
+        },
+        showlegend: true,
+        legend: {
+            orientation: "h",
+            x: 0,
+            y: 1.15
+        }
+    };
+
+    const config = {
+        responsive: true,
+        displaylogo: false
+    };
+
+    // Draw or redraw the plot
+    Plotly.react(
+        "responsePlot",
+        [responseTrace, markerTrace],
+        layout,
+        config
+    );
+}
+
+// Update when slider values change
+gainSlider.addEventListener("input", updateModule1);
+tauSlider.addEventListener("input", updateModule1);
+
+// Update when input selection changes
+inputType.addEventListener("change", updateModule1);
+
+// Reapply chart colors when theme changes
+window.addEventListener(
+    "kinetiq-theme-change",
+    updateModule1
+);
+
+// Draw the initial plot
+updateModule1();

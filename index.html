@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINETIQ | Dynamic Characteristics Lab</title>
+    <script>
+        const savedTheme = localStorage.getItem("kinetiq-theme");
+        const systemDark = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
+
+        if (savedTheme === "dark" ||
+            (!savedTheme && systemDark)) {
+            document.documentElement.classList.add("dark");
+        }
+    </script>
+
+    <link rel="stylesheet" href="./output.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+
+<body class="min-h-screen">
+
+    <header class="border-b" style="border-color: var(--border)">
+        <div class="max-w-7xl mx-auto px-5 py-5
+                    flex items-center justify-between gap-4">
+
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl flex
+                            items-center justify-center
+                            font-black text-xl" style="background: var(--primary);
+                            color: var(--bg)">
+                    K
+                </div>
+
+                <div>
+                    <h1 class="text-2xl font-black tracking-tight">
+                        KINETIQ<span style="color:var(--accent)">.</span>
+                    </h1>
+                    <p class="text-xs lab-muted">
+                        DYNAMIC CHARACTERISTICS LAB
+                    </p>
+                </div>
+            </div>
+
+            <button id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" class="rounded-full px-4 py-2 font-semibold
+                           text-sm border cursor-pointer" style="background: var(--surface);
+                           border-color: var(--border)">
+                <span id="themeIcon">☾</span>
+                <span id="themeLabel">Dark mode</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-5 py-10">
+
+        <section class="mb-10">
+            <p class="text-xs font-bold tracking-[0.22em]
+                      uppercase lab-accent mb-3">
+                ENCS4380 / INTERACTIVE ENGINEERING LAB
+            </p>
+
+            <h2 class="text-4xl md:text-5xl font-black
+                       tracking-tight leading-tight max-w-3xl">
+                Understand the science
+                <span style="color:var(--accent)">of response.</span>
+            </h2>
+
+            <p class="lab-muted mt-4 max-w-2xl leading-relaxed">
+                Experiment with sensor dynamics, explore response
+                curves, and discover how systems behave over time.
+            </p>
+        </section>
+
+        <nav aria-label="Project modules" class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+
+            <a href="#module1" class="lab-card p-4 block">
+                <p class="text-xs lab-accent font-bold mb-2">
+                    01 / ACTIVE
+                </p>
+                <p class="font-semibold">Time Response</p>
+            </a>
+
+            <div class="lab-panel p-4">
+                <p class="text-xs lab-muted mb-2">02 / MODULE</p>
+                <p class="font-semibold">Frequency Response</p>
+            </div>
+
+            <div class="lab-panel p-4">
+                <p class="text-xs lab-muted mb-2">03 / MODULE</p>
+                <p class="font-semibold">Second-Order</p>
+            </div>
+
+            <div class="lab-panel p-4">
+                <p class="text-xs lab-muted mb-2">04 / MODULE</p>
+                <p class="font-semibold">Guess the Sensor</p>
+            </div>
+        </nav>
+
+        <!-- Module 1 experiment -->
+        <section id="module1" class="lab-card p-5 md:p-8">
+
+            <div class="flex flex-wrap justify-between
+                        items-start gap-4 mb-8">
+                <div>
+                    <p class="text-xs font-bold tracking-widest
+                              lab-accent mb-2">
+                        EXPERIMENT 001 / TIME DOMAIN
+                    </p>
+
+                    <h2 class="text-2xl md:text-3xl font-bold">
+                        First-Order Response
+                    </h2>
+
+                    <p class="lab-muted mt-2 max-w-xl">
+                        Investigate the effect of gain and time
+                        constant on a sensor's response.
+                    </p>
+                </div>
+
+                <div class="text-xs font-semibold rounded-full
+                            px-4 py-2 lab-panel">
+                    INTERACTIVE LAB
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-6">
+
+                <!-- Controls column -->
+                <aside class="lab-panel p-5 space-y-7">
+
+                    <div>
+                        <p class="text-xs lab-accent font-bold">
+                            CONTROL PANEL
+                        </p>
+                        <h3 class="text-xl font-bold mt-1">
+                            Parameters
+                        </h3>
+                    </div>
+
+                    <!-- Gain slider -->
+                    <div>
+                        <div class="flex justify-between gap-2 mb-3">
+                            <label for="gain" class="font-medium">
+                                System Gain (K)
+                            </label>
+                            <output id="gainValue" for="gain" class="font-bold lab-accent">1.0</output>
+                        </div>
+                        <input id="gain" type="range" min="0.5" max="5" step="0.1" value="1" class="lab-range">
+                    </div>
+
+                    <!-- Tau slider -->
+                    <div>
+                        <div class="flex justify-between gap-2 mb-3">
+                            <label for="tau" class="font-medium">
+                                Time Constant (τ)
+                            </label>
+                            <output id="tauValue" for="tau" class="font-bold lab-accent">2.0 s</output>
+                        </div>
+                        <input id="tau" type="range" min="0.5" max="10" step="0.5" value="2" class="lab-range">
+                    </div>
+
+                    <!-- Signal selector -->
+                    <div>
+                        <label for="inputType" class="font-medium block mb-3">
+                            Input Signal
+                        </label>
+
+                        <select id="inputType" class="lab-select">
+                            <option value="step">Step Input</option>
+                            <option value="ramp">Ramp Input</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4 border-t" style="border-color:var(--border)">
+                        <p class="text-xs lab-muted">
+                            SYSTEM MODEL
+                        </p>
+                        <p class="font-semibold mt-2">
+                            τ dy/dt + y = Kx(t)
+                        </p>
+                    </div>
+                </aside>
+
+                <div class="lg:col-span-2 lab-panel p-4 md:p-6">
+                    <div class="flex flex-wrap items-center
+                                justify-between gap-3 mb-4">
+                        <div>
+                            <p class="text-xs lab-accent font-bold">
+                                RESPONSE ANALYSIS
+                            </p>
+                            <h3 class="text-xl font-bold mt-1">
+                                Live Signal Visualization
+                            </h3>
+                        </div>
+                        <span class="text-xs lab-muted">
+                            Time Domain / y(t)
+                        </span>
+                    </div>
+
+                    <div id="responsePlot" class="w-full min-h-[340px]" aria-label="First-order sensor response plot">
+                        <p class="lab-muted text-sm">
+                            Simulation will appear here.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Numerical results -->
+            <div class="grid sm:grid-cols-3 gap-4 mt-6">
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Time Constant</p>
+                    <p id="resultTau" class="text-2xl font-bold mt-2 lab-accent">
+                        2.0 s
+                    </p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Response at τ</p>
+                    <p id="result63" class="text-2xl font-bold mt-2">
+                        63.2%
+                    </p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Response at 3τ</p>
+                    <p id="result95" class="text-2xl font-bold mt-2">
+                        95.0%
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center text-sm lab-muted py-8 px-4">
+        KINETIQ · Birzeit University · ENCS4380 · Homework 1
+    </footer>
+
+    <script src="./js/theme.js"></script>
+    <script src="./js/module1.js"></script>
+</body>
+
+</html>

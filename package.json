@@ -1,0 +1,25 @@
+{
+  "name": "encs4380-dynamics-rsss",
+  "version": "1.0.0",
+  "description": "**Course:** ENCS4380 – Interfacing Techniques  \r **University:** Birzeit University  \r **Instructor:** Dr. Wasel Ghanem  \r **Assignment:** Homework 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SojoodAsfour/encs4380-dynamics-Rsss.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SojoodAsfour/encs4380-dynamics-Rsss/issues"
+  },
+  "homepage": "https://github.com/SojoodAsfour/encs4380-dynamics-Rsss#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
