@@ -55,10 +55,10 @@ function updateModule1() {
 
     if (type === "step") {
         inputEquation.textContent = "x(t) = A";
-        responseEquation.textContent ="y(t) = KA(1 − e^(−t/τ))";
+        responseEquation.textContent = "y(t) = KA(1 − e^(−t/τ))";
     } else {
         inputEquation.textContent = "x(t) = Rt";
-        responseEquation.textContent ="y(t) = KR[t − τ(1 − e^(−t/τ))]";
+        responseEquation.textContent = "y(t) = KR[t − τ(1 − e^(−t/τ))]";
     }
 
 
@@ -216,6 +216,90 @@ function updateModule1() {
         responsive: true,
         displaylogo: false
     };
+
+
+    const errorSection = document.getElementById("errorSection");
+    const errorSlope = document.getElementById("errorSlope");
+
+    if (type === "step") {
+
+        errorSection.style.display = "block";
+        const slope = -1 / tau;
+        errorSlope.textContent = slope.toFixed(3) + " s⁻¹";
+        const errorTime = [];
+        const errorFraction = [];
+
+        // Generate error values from t = 0 to 5*tau
+        for (let i = 0; i <= 200; i++) {
+
+            const t = (i / 200) * (5 * tau);
+            // E(t) = exp(-t/tau)
+            const error = Math.exp(-t / tau);
+            errorTime.push(t);
+            errorFraction.push(error);
+        }
+
+        const errorTrace = {
+            x: errorTime,
+            y: errorFraction,
+            type: "scatter",
+            mode: "lines",
+            name: "Error Fraction",
+            line: {
+                color: colors.accent,
+                width: 3
+            },
+            hovertemplate:
+                "Time: %{x:.2f} s" +
+                "<br>Error: %{y:.5f}<extra></extra>"
+        };
+
+        const errorLayout = {
+            paper_bgcolor: colors.background,
+            plot_bgcolor: colors.background,
+
+            font: {
+                color: colors.text
+            },
+
+            margin: {
+                l: 75, r: 25, t: 30, b: 65
+            },
+
+            xaxis: {
+                title: { text: "Time (s)" },
+                gridcolor: colors.grid,
+                zeroline: false
+            },
+
+            yaxis: {
+                title: { text: "Error Fraction E(t)" },
+                type: "log",
+                gridcolor: colors.grid,
+                range: [-2.3, 0.1],
+                tickmode: "array",
+                tickvals: [0.01, 0.1, 1],
+                ticktext: ["0.01", "0.1", "1"]
+            },
+
+            showlegend: false
+        };
+
+        Plotly.react(
+            "errorPlot",
+            [errorTrace],
+            errorLayout,
+            {
+                responsive: true,
+                displaylogo: false
+            }
+        );
+
+    } else {
+        // Error fraction analysis is specific to step response
+        errorSection.style.display = "none";
+    }
+
 
     // Draw or redraw the plot
 

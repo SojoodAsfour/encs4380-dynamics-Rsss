@@ -145,7 +145,7 @@
                             </label>
                             <output id="gainValue" for="gain" class="font-bold lab-accent">1.0</output>
                         </div>
-                        <input id="gain" type="range" min="0.5" max="10" step="0.1" value="1" class="lab-range">
+                        <input id="gain" type="range" min="0.1" max="10" step="0.1" value="1" class="lab-range">
                     </div>
 
                     <!-- Tau slider -->
@@ -156,7 +156,7 @@
                             </label>
                             <output id="tauValue" for="tau" class="font-bold lab-accent">2.0 s</output>
                         </div>
-                        <input id="tau" type="range" min="0.5" max="20" step="0.5" value="2" class="lab-range">
+                        <input id="tau" type="range" min="0.1" max="20" step="0.1" value="2" class="lab-range">
                     </div>
 
                     <!-- Signal selector -->
@@ -205,7 +205,7 @@
                         </span>
                     </div>
 
-                    <div id="responsePlot" class="w-full min-h-[340px]" aria-label="First-order sensor response plot">
+                    <div id="responsePlot" class="w-full min-h-85" aria-label="First-order sensor response plot">
                         <p class="lab-muted text-sm">
                             Simulation will appear here.
                         </p>
@@ -237,6 +237,52 @@
                     </p>
                 </div>
             </div>
+
+
+            <!-- Error Fraction Analysis -->
+            <div id="errorSection" class="lab-card p-5 md:p-7 mt-6">
+                <div class="flex flex-wrap items-start justify-between gap-4 mb-5">
+                    <div>
+                        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                            TRANSIENT ANALYSIS / 02
+                        </p>
+
+                        <h3 class="text-xl font-bold">
+                            Error Fraction Analysis
+                        </h3>
+
+                        <p class="lab-muted text-sm mt-2">
+                            Explore the exponential decay of the normalized step-response error on a logarithmic scale.
+                        </p>
+                    </div>
+
+                    <div class="lab-panel px-4 py-3">
+                        <p class="lab-muted text-xs">NATURAL LOG SLOPE (ln E)</p>
+                        <p id="errorSlope" class="text-xl font-bold lab-accent">
+                            -0.500 s⁻¹
+                        </p>
+                    </div>
+                </div>
+
+                <div id="errorPlot" class="w-full min-h-80" aria-label="Logarithmic error fraction plot">
+                </div>
+
+                <div class="lab-panel p-4 mt-4">
+                    <p class="font-semibold text-sm">
+                        Engineering Insight
+                    </p>
+                    <p class="lab-muted text-sm mt-2">
+                        E(t) = e⁻ᵗ/τ
+                        &nbsp; · &nbsp;
+                        ln(E(t)) = −t/τ
+                    </p>
+                    <p class="lab-muted text-sm mt-2">
+                        A smaller time constant creates a steeper
+                        decay and a faster sensor response.
+                    </p>
+                </div>
+            </div>
+
         </section>
     </main>
 
