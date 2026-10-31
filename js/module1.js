@@ -1,8 +1,4 @@
-
 /*
- * KINETIQ - Module 1
- * First-Order Time Response
- *
  * Step response:
  * y(t) = K * A * (1 - exp(-t / tau))
  */
@@ -22,6 +18,17 @@ const A = 1;
 function stepResponse(t, K, tau) {
     return K * A * (1 - Math.exp(-t / tau));
 }
+
+
+const R = 1;
+
+// First-order ramp response for zero initial conditions
+function rampResponse(t, K, tau) {
+    return K * R * (
+        t - tau * (1 - Math.exp(-t / tau))
+    );
+}
+
 
 // Read current CSS theme colors
 function getChartColors() {
@@ -43,6 +50,18 @@ function updateModule1() {
     const tau = Number(tauSlider.value);
     const type = inputType.value;
 
+    const inputEquation = document.getElementById("inputEquation");
+    const responseEquation = document.getElementById("responseEquation");
+
+    if (type === "step") {
+        inputEquation.textContent = "x(t) = A";
+        responseEquation.textContent ="y(t) = KA(1 − e^(−t/τ))";
+    } else {
+        inputEquation.textContent = "x(t) = Rt";
+        responseEquation.textContent ="y(t) = KR[t − τ(1 − e^(−t/τ))]";
+    }
+
+
     // Update slider labels
     gainValue.textContent = K.toFixed(1);
     tauValue.textContent = tau.toFixed(1) + " s";
@@ -50,15 +69,25 @@ function updateModule1() {
     // Generate time and output arrays
     const time = [];
     const output = [];
+    const input = [];
 
-    const maxTime = 5 * tau;
+    const maxTime = Math.max(30, 6 * tau);
     const points = 200;
 
     for (let i = 0; i <= points; i++) {
         const t = (i / points) * maxTime;
 
         time.push(t);
-        output.push(stepResponse(t, K, tau));
+
+        input.push(type === "step" ? K * A : K * R * t);
+
+
+        if (type === "step") {
+            output.push(stepResponse(t, K, tau));
+        } else {
+            output.push(rampResponse(t, K, tau));
+        }
+
     }
 
     // Calculate Response values at tau and 3*tau
@@ -68,10 +97,27 @@ function updateModule1() {
     const percentTau = (yTau / finalValue) * 100;
     const percent3Tau = (y3Tau / finalValue) * 100;
 
+
     // Update result cards
     resultTau.textContent = tau.toFixed(1) + " s";
-    result63.textContent = percentTau.toFixed(1) + "%";
-    result95.textContent = percent3Tau.toFixed(1) + "%";
+
+    if (type === "step") {
+        // Step response results
+        result63.parentElement.querySelector("p").textContent = "Response at τ";
+        result95.parentElement.querySelector("p").textContent = "Response at 3τ";
+        result63.textContent = percentTau.toFixed(1) + "%";
+        result95.textContent = percent3Tau.toFixed(1) + "%";
+
+    } else {
+        // Ramp response results
+        const timeLag = tau;
+        const steadyStateError = K * R * tau;
+        result63.parentElement.querySelector("p").textContent = "Ramp Time Lag";
+        result95.parentElement.querySelector("p").textContent = "Steady-State Error";
+        result63.textContent = timeLag.toFixed(1) + " s";
+        result95.textContent = steadyStateError.toFixed(2);
+    }
+
 
     const colors = getChartColors();
 
@@ -81,7 +127,7 @@ function updateModule1() {
         y: output,
         type: "scatter",
         mode: "lines",
-        name: "Step Response",
+        name: type === "step" ? "Step Response" : "Ramp Response",
         line: {
             color: colors.primary,
             width: 4
@@ -90,6 +136,21 @@ function updateModule1() {
             "Time: %{x:.2f} s" +
             "<br>Output: %{y:.4f}<extra></extra>"
     };
+
+
+    const idealTrace = {
+        x: time,
+        y: input,
+        type: "scatter",
+        mode: "lines",
+        name: "Ideal Output (Kx)",
+        line: {
+            color: colors.accent,
+            width: 2.5,
+            dash: "dash"
+        }
+    };
+
 
     // 63.2% and 95% markers
     const markerTrace = {
@@ -132,16 +193,16 @@ function updateModule1() {
             b: 60
         },
         xaxis: {
-            title: {text: "Time (s)"},
+            title: { text: "Time (s)" },
             gridcolor: colors.grid,
             zeroline: false,
             range: [0, maxTime]
         },
         yaxis: {
-            title: {text: "Sensor Output y(t)"},
+            title: { text: "Sensor Output y(t)" },
             gridcolor: colors.grid,
             zeroline: false,
-            range: [0, finalValue * 1.2]
+            range: [0, type === "step" ? finalValue * 1.2 : K * R * maxTime * 1.1]
         },
         showlegend: true,
         legend: {
@@ -157,12 +218,16 @@ function updateModule1() {
     };
 
     // Draw or redraw the plot
+
+    const traces = type === "step" ? [responseTrace, markerTrace] : [idealTrace, responseTrace];
+
     Plotly.react(
         "responsePlot",
-        [responseTrace, markerTrace],
+        traces,
         layout,
         config
     );
+
 }
 
 // Update when slider values change
@@ -174,7 +239,7 @@ inputType.addEventListener("change", updateModule1);
 
 // Reapply chart colors when theme changes
 window.addEventListener(
-    "kinetiq-theme-change",
+    "transient-theme-change",
     updateModule1
 );
 

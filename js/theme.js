@@ -1,4 +1,3 @@
-
 const themeToggle = document.getElementById("themeToggle");
 const themeIcon = document.getElementById("themeIcon");
 const themeLabel = document.getElementById("themeLabel");
@@ -17,11 +16,11 @@ themeToggle.addEventListener("click", () => {
     const isDark = document.documentElement.classList.toggle("dark");
 
     localStorage.setItem(
-        "kinetiq-theme",
+        "transient-theme-change",
         isDark ? "dark" : "light"
     );
     updateThemeButton();
-    window.dispatchEvent(new Event("kinetiq-theme-change"));
+    window.dispatchEvent(new Event("transient-theme-change"));
 });
 
 updateThemeButton();

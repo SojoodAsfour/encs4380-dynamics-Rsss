@@ -4,15 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KINETIQ | Dynamic Characteristics Lab</title>
+    <title>TRANSIENT | Dynamic Characteristics Lab</title>
     <script>
-        const savedTheme = localStorage.getItem("kinetiq-theme");
-        const systemDark = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-        ).matches;
-
-        if (savedTheme === "dark" ||
-            (!savedTheme && systemDark)) {
+        const savedTheme = localStorage.getItem("transient-themee");
+        const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (savedTheme === "dark" || (!savedTheme && systemDark)) {
             document.documentElement.classList.add("dark");
         }
     </script>
@@ -33,12 +29,12 @@
                             items-center justify-center
                             font-black text-xl" style="background: var(--primary);
                             color: var(--bg)">
-                    K
+                    T
                 </div>
 
                 <div>
                     <h1 class="text-2xl font-black tracking-tight">
-                        KINETIQ<span style="color:var(--accent)">.</span>
+                        TRANSIENT<span style="color:var(--accent)">.</span>
                     </h1>
                     <p class="text-xs lab-muted">
                         DYNAMIC CHARACTERISTICS LAB
@@ -149,7 +145,7 @@
                             </label>
                             <output id="gainValue" for="gain" class="font-bold lab-accent">1.0</output>
                         </div>
-                        <input id="gain" type="range" min="0.5" max="5" step="0.1" value="1" class="lab-range">
+                        <input id="gain" type="range" min="0.5" max="10" step="0.1" value="1" class="lab-range">
                     </div>
 
                     <!-- Tau slider -->
@@ -160,7 +156,7 @@
                             </label>
                             <output id="tauValue" for="tau" class="font-bold lab-accent">2.0 s</output>
                         </div>
-                        <input id="tau" type="range" min="0.5" max="10" step="0.5" value="2" class="lab-range">
+                        <input id="tau" type="range" min="0.5" max="20" step="0.5" value="2" class="lab-range">
                     </div>
 
                     <!-- Signal selector -->
@@ -181,6 +177,14 @@
                         </p>
                         <p class="font-semibold mt-2">
                             τ dy/dt + y = Kx(t)
+                        </p>
+
+                        <p id="inputEquation" class="text-sm mt-3 lab-muted">
+                            x(t) = A
+                        </p>
+
+                        <p id="responseEquation" class="text-sm mt-2 font-semibold lab-accent">
+                            y(t) = KA(1 − e^(-t/τ))
                         </p>
                     </div>
                 </aside>
@@ -237,7 +241,10 @@
     </main>
 
     <footer class="text-center text-sm lab-muted py-8 px-4">
-        KINETIQ · Birzeit University · ENCS4380 · Homework 1
+        TRANSIENT · Dynamic Characteristics Interactive Toolkit
+        <p class="mt-2">
+            Developed by Team RSSS · Birzeit University · ENCS4380
+        </p>
     </footer>
 
     <script src="./js/theme.js"></script>
