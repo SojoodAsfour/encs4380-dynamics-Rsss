@@ -14,7 +14,7 @@ The toolkit allows users to adjust system parameters, observe live response plot
 
 ## Live Website
 
-**GitHub Pages:** https://sojoodasfour.github.io/encs4380-dynamics-Rsss/
+**GitHub Pages:** https://github.com/SojoodAsfour/encs4380-dynamics-Rsss
 
 **GitHub Repository:** https://github.com/SojoodAsfour/encs4380-dynamics-Rsss
 
