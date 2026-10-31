@@ -283,6 +283,71 @@
                 </div>
             </div>
 
+
+            <div class="lab-card p-5 md:p-7 mt-6" id="predictionSection">
+                <p class="text-xs font-bold tracking-widest lab-accent">
+                    TRANSIENT ANALYSIS / 03
+                </p>
+                <h3 class="text-xl font-bold mt-2">
+                    Predict, then Check
+                </h3>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Before changing a parameter, predict how the first-order sensor response will behave.
+                </p>
+
+                <label id="predictionQuestion" for="predictionType" class="block font-medium mb-3">
+                    Loading question...
+                </label>
+                <select id="predictionType" class="lab-select mb-5">
+                    <option value="" selected disabled>
+                        Choose your prediction
+                    </option>
+                </select>
+
+                <button id="checkPrediction" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Check Prediction
+                </button>
+
+                <button id="newPrediction" type="button" class="lab-select mt-3 sm:mt-0 sm:ml-3"
+                    style="width:auto; cursor:pointer;">
+                    New Question ↻
+                </button>
+
+                <div id="predictionResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite">
+                </div>
+
+                <div id="predictionChartSection" class="lab-panel p-4 md:p-5 mt-5 hidden">
+                    <h4 class="font-bold text-lg mb-2">
+                        Prediction vs. Actual Response
+                    </h4>
+                    <p class="lab-muted text-sm mb-4">
+                        Compare the original sensor response with the response after the hypothetical change.
+                    </p>
+                    <div id="predictionPlot" class="w-full min-h-80"
+                        aria-label="Original and modified response comparison">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="lab-card p-5 md:p-7 mt-6" id="validationSection">
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    ENGINEERING VALIDATION / 01
+                </p>
+                <h3 class="text-xl font-bold">
+                    First-Order Model Validation
+                </h3>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Verify the step-response equation against a known analytical reference value.
+                </p>
+                <button id="runValidation" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Run Validation Check #1
+                </button>
+                <div id="validationResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite">
+                </div>
+            </div>
+
         </section>
     </main>
 
@@ -295,6 +360,8 @@
 
     <script src="./js/theme.js"></script>
     <script src="./js/module1.js"></script>
+    <script src="./js/prediction.js"></script>
+    <script src="./js/validation.js"></script>
 </body>
 
 </html>
