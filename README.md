@@ -113,6 +113,24 @@ The remaining official validation checks are assigned to Module 3.
 ### Module 1 — Predict, then Check
 ![Prediction Comparison](screenshots/module1-prediction.png)
 
+### Module 2 — First-Order Frequency Response
+![Input and Output Sine Waves](screenshots/module2-frequency-response.png)
+
+![Results](screenshots/module2-results.png)
+
+### Module 2 — Bode Plot and Cutoff Frequency
+![Bode Plot and Cutoff Frequency](screenshots/module2-bode.png)
+
+### Module 2 — Official Validation Check #2
+![Frequency Response Validation](screenshots/module2-validation.png)
+
+### Module 2 — Dynamic Error Analysis
+![Dynamic Error Analysis](screenshots/module2-dynamic-error.png)
+
+### Module 2 — Predict, then Check
+![Prediction Comparison](screenshots/module2-prediction.png)
+
+
 
 ## AI Tool Usage
 
