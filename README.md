@@ -94,6 +94,8 @@ Module 1 implements Official Validation Check #1, verifying that the first-order
 
 Module 2 implements Official Validation Check #2, verifying the first-order frequency response using the reference values τ = 0.2 s and ω = 2 rad/s. The check confirms an amplitude ratio of approximately 0.93 and a phase lag of approximately 21.8°.
 
+Module 2 also validates dynamic error calculations.
+
 The remaining official validation checks are assigned to Module 3.
 
 
