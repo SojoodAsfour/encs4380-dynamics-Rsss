@@ -44,12 +44,17 @@ The toolkit allows users to adjust system parameters, observe live response plot
 
 ### Module 2 — First-Order Frequency Response
 
-**Status:** In development
+**Status:** Implemented
 
-- Sinusoidal input and output responses.
-- Amplitude ratio and phase lag.
-- Bode plots and cutoff frequency.
-- Dynamic-error calculations.
+- Interactive time constant (τ) and input angular frequency (ω) sliders.
+- Live sinusoidal input and output response visualization.
+- Real-time calculation of amplitude ratio (M) and phase lag (φ).
+- Dynamic error (δ) calculation as the frequency changes.
+- Interactive Bode plots showing magnitude (dB) and phase (degrees).
+- Cutoff frequency calculation and −3 dB point identification.
+- Selected-frequency marker on the Bode magnitude plot.
+- Interactive Predict, then Check question about the effect of increasing input frequency on amplitude ratio.
+- Official Homework Validation Check #2 using the reference values (τ = 0.2 s, ω = 2 rad/s), with expected values, calculated values, and PASS/CHECK results.
 
 ### Module 3 — Second-Order Response
 
@@ -87,7 +92,9 @@ The project follows the six official validation checks specified in Homework 1.
 
 Module 1 implements Official Validation Check #1, verifying that the first-order step response reaches approximately 63.2% of its final value at τ and 95% at 3τ.
 
-The remaining official validation checks are assigned to Modules 2 and 3.
+Module 2 implements Official Validation Check #2, verifying the first-order frequency response using the reference values τ = 0.2 s and ω = 2 rad/s. The check confirms an amplitude ratio of approximately 0.93 and a phase lag of approximately 21.8°.
+
+The remaining official validation checks are assigned to Module 3.
 
 
 ## Screenshots
