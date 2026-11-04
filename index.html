@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRANSIENT | Dynamic Characteristics Lab</title>
     <script>
-        const savedTheme = localStorage.getItem("transient-themee");
+        const savedTheme = localStorage.getItem("transient-theme");
         const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         if (savedTheme === "dark" || (!savedTheme && systemDark)) {
             document.documentElement.classList.add("dark");
@@ -80,10 +80,10 @@
                 <p class="font-semibold">Time Response</p>
             </a>
 
-            <div class="lab-panel p-4">
-                <p class="text-xs lab-muted mb-2">02 / MODULE</p>
+            <a href="#module2" class="lab-card p-4 block">
+                <p class="text-xs lab-accent font-bold mb-2">02 / ACTIVE</p>
                 <p class="font-semibold">Frequency Response</p>
-            </div>
+            </a>
 
             <div class="lab-panel p-4">
                 <p class="text-xs lab-muted mb-2">03 / MODULE</p>
@@ -349,6 +349,190 @@
             </div>
 
         </section>
+        <!-- Module 2: First-Order Frequency Response -->
+<section id="module2" class="lab-card p-5 md:p-8 mt-8">
+
+    <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+        <div>
+            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                EXPERIMENT 002 / FREQUENCY DOMAIN
+            </p>
+            <h2 class="text-2xl md:text-3xl font-bold">
+                First-Order Frequency Response
+            </h2>
+            <p class="lab-muted mt-2 max-w-2xl">
+                Explore how a first-order sensor changes the amplitude and phase of a sinusoidal input.
+            </p>
+        </div>
+        <div class="text-xs font-semibold rounded-full px-4 py-2 lab-panel">
+            INTERACTIVE LAB
+        </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+
+        <aside class="lab-panel p-5 space-y-7">
+            <div>
+                <p class="text-xs lab-accent font-bold">CONTROL PANEL</p>
+                <h3 class="text-xl font-bold mt-1">Parameters</h3>
+            </div>
+
+            <div>
+                <div class="flex justify-between gap-2 mb-3">
+                    <label for="m2Tau" class="font-medium">Time Constant (τ)</label>
+                    <output id="m2TauValue" class="font-bold lab-accent">0.20 s</output>
+                </div>
+                <input id="m2Tau" type="range" min="0.01" max="2"
+                     step="0.01" value="0.2" class="lab-range">
+            </div>
+
+            <div>
+                <div class="flex justify-between gap-2 mb-3">
+                    <label for="m2Omega" class="font-medium">Input Frequency (ω)</label>
+                    <output id="m2OmegaValue" class="font-bold lab-accent">2.00 rad/s</output>
+                </div>
+                <input id="m2Omega" type="range" min="0.1" max="30"
+                    step="0.1" value="2" class="lab-range">
+            </div>
+
+            <div>
+                <p class="text-xs lab-muted">TRANSFER FUNCTION</p>
+                <p class="font-semibold mt-2">G(s) = 1 / (τs + 1)</p>
+                <p class="text-sm lab-muted mt-2">For x(t) = sin(ωt):</p>
+                <p class="text-sm font-semibold lab-accent mt-1">
+                    M = 1 / √(1 + (ωτ)²)
+                </p>
+                <p class="text-sm font-semibold lab-accent mt-1">
+                    φ = −tan⁻¹(ωτ)
+                </p>
+            </div>
+        </aside>
+
+        <div class="lg:col-span-2 lab-panel p-4 md:p-6">
+            <div class="flex flex-wrap justify-between gap-3 mb-4">
+                <div>
+                    <p class="text-xs lab-accent font-bold">TIME-DOMAIN RESPONSE</p>
+                    <h3 class="text-xl font-bold mt-1">
+                        Input and Output Sine Waves
+                    </h3>
+                </div>
+                <span class="text-xs lab-muted">x(t) and y(t)</span>
+            </div>
+            <div id="m2SinePlot" class="w-full" style="height:360px"
+                  aria-label="Input and output sine wave plot"></div>
+        </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Amplitude Ratio (M)</p>
+            <p id="m2Amplitude" class="text-2xl font-bold mt-2 lab-accent">0.928</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Phase Lag</p>
+            <p id="m2Phase" class="text-2xl font-bold mt-2">21.8°</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Cutoff Frequency (ωc)</p>
+            <p id="m2Cutoff" class="text-2xl font-bold mt-2">5.00 rad/s</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Dynamic Error (δ = M − 1)</p>
+            <p id="m2Error" class="text-2xl font-bold mt-2">−7.2%</p>
+        </div>
+    </div>
+
+    <div class="lab-card p-5 md:p-7 mt-6">
+        <div class="mb-4">
+            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                FREQUENCY ANALYSIS / BODE
+            </p>
+            <h3 class="text-xl font-bold">Magnitude and Phase Response</h3>
+            <p class="lab-muted text-sm mt-2">
+                The cutoff occurs at ω = 1/τ, where the amplitude ratio is approximately 0.707.
+            </p>
+        </div>
+        <div id="m2BodePlot" class="w-full" style="height:560px"
+             aria-label="Bode magnitude and phase plots"></div>
+    </div>
+
+    <div class="lab-card p-5 md:p-7 mt-6">
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+            ENGINEERING VALIDATION / 02
+        </p>
+        <h3 class="text-xl font-bold">Frequency Response Validation</h3>
+        <p class="lab-muted text-sm mt-2 mb-5">
+            Check the official reference case: τ = 0.2 s and input frequency ω = 2 rad/s.
+        </p>
+        <button id="m2Validate" type="button"
+            class="lab-button px-6 py-3 font-semibold">
+            Run Validation Check #2
+        </button>
+        <div id="m2ValidationResult"
+            class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
+    </div>
+
+    
+    <!-- 100 Hz Dynamic Error Validation -->
+    <div class="lab-card p-5 md:p-7 mt-6">
+
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+             ENGINEERING VALIDATION / 03
+        </p>
+
+        <h3 class="text-xl font-bold">
+             100 Hz Dynamic Error Limit
+        </h3>
+
+        <p class="lab-muted text-sm mt-2 mb-5">
+             Verify the maximum time constant required to keep
+             the dynamic error within 5% for a 100 Hz input signal.
+        </p>
+
+        <button id="m2HighFreqValidate" type="button"
+             class="lab-button px-6 py-3 font-semibold">
+             Run 100 Hz / 5% Error Check
+         </button>
+
+        <div id="m2HighFreqResult"
+             class="lab-panel p-4 mt-5 hidden" aria-live="polite">
+        </div>
+
+    </div>
+
+
+    <div class="lab-panel p-5 mt-6">
+        <h3 class="font-bold text-lg">Predict, then Check</h3>
+        <p class="lab-muted text-sm mt-2 mb-4">
+            Before changing the frequency, predict what happens to the output amplitude as ω increases.
+        </p>
+
+        <label for="m2Prediction" class="block font-medium mb-3">
+            What happens to the amplitude ratio when the input frequency increases (with τ fixed)?
+        </label>
+
+        <select id="m2Prediction" class="lab-select mb-4">
+            <option value="">Choose your prediction</option>
+            <option value="decrease">It decreases</option>
+            <option value="increase">It increases</option>
+            <option value="same">It stays the same</option>
+        </select>
+
+        <button id="m2CheckPrediction" type="button"
+            class="lab-button px-6 py-3 font-semibold">
+            Check Prediction
+        </button>
+
+        <div id="m2PredictionResult"
+            class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
+    </div>
+
+</section>
+     
     </main>
 
     <footer class="text-center text-sm lab-muted py-8 px-4">
@@ -362,6 +546,7 @@
     <script src="./js/module1.js"></script>
     <script src="./js/prediction.js"></script>
     <script src="./js/validation.js"></script>
+    <script src="./js/module2.js"></script>
 </body>
 
 </html>

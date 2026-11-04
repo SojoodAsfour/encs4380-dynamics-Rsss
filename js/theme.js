@@ -15,10 +15,7 @@ themeToggle.addEventListener("click", () => {
 
     const isDark = document.documentElement.classList.toggle("dark");
 
-    localStorage.setItem(
-        "transient-theme-change",
-        isDark ? "dark" : "light"
-    );
+    localStorage.setItem("transient-theme", isDark ? "dark" : "light");
     updateThemeButton();
     window.dispatchEvent(new Event("transient-theme-change"));
 });
