@@ -118,7 +118,7 @@ The remaining official validation checks are assigned to Module 3.
 
 ![Results](screenshots/module2-results.png)
 
-### Module 2 — Bode Plot and Cutoff Frequency
+### Module 2 — Magnitude and Phase Response
 ![Bode Plot and Cutoff Frequency](screenshots/module2-bode.png)
 
 ### Module 2 — Official Validation Check #2
