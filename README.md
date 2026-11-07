@@ -130,6 +130,20 @@ The remaining official validation checks are assigned to Module 3.
 ### Module 2 — Predict, then Check
 ![Prediction Comparison](screenshots/module2-prediction.png)
 
+### Module 3 – Second-Order Response
+![Second-Order Response](screenshots/module3-second-order-response.png)
+
+### Module 3 – Transient Analysis
+![Transient Analysis](screenshots/module3-transient-analysis.png)
+
+### Module 3 – State-Space Representation
+![State-Space Representation](screenshots/module3-state-space.png)
+
+### Module 3 – Predict, then Check
+![Prediction Comparison](screenshots/module3-predictionn.png)
+
+### Module 3 – Official Validation Check #3
+![Transient Response Validation](screenshots/module3-validation.png)
 
 
 ## AI Tool Usage

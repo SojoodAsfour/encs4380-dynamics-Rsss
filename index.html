@@ -532,6 +532,285 @@
     </div>
 
 </section>
+<!-- MODULE 3: SECOND-ORDER RESPONSE -->
+<section id="module3" class="lab-card p-5 md:p-8 mt-8">
+
+    <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+        <div>
+            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                EXPERIMENT 003 / SECOND-ORDER SYSTEM
+            </p>
+            <h2 class="text-2xl md:text-3xl font-bold">
+                Second-Order Response
+            </h2>
+            <p class="lab-muted mt-2 max-w-2xl">
+                Investigate how mass, damping and spring stiffness
+                affect a mechanical system's dynamic response.
+            </p>
+        </div>
+
+        <div class="text-xs font-semibold rounded-full px-4 py-2 lab-panel">
+            INTERACTIVE LAB
+        </div>
+    </div>
+
+    <!-- Controls and response plot -->
+    <div class="grid lg:grid-cols-3 gap-6">
+
+        <aside class="lab-panel p-5 space-y-7">
+
+            <div>
+                <p class="text-xs lab-accent font-bold">CONTROL PANEL</p>
+                <h3 class="text-xl font-bold mt-1">System Parameters</h3>
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-3">
+                    <label for="m3Mass">Mass (m)</label>
+                    <output id="m3MassValue" class="font-bold lab-accent">1.0 kg</output>
+                </div>
+                <input id="m3Mass" type="range"
+                    min="0.2" max="10" step="0.1" value="1"
+                    class="lab-range">
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-3">
+                    <label for="m3Damping">Damping (b)</label>
+                    <output id="m3DampingValue" class="font-bold lab-accent">2.0 Ns/m</output>
+                </div>
+                <input id="m3Damping" type="range"
+                    min="0" max="20" step="0.1" value="2"
+                    class="lab-range">
+            </div>
+
+            <div>
+                <div class="flex justify-between mb-3">
+                    <label for="m3Spring">Spring Constant (k)</label>
+                    <output id="m3SpringValue" class="font-bold lab-accent">4.0 N/m</output>
+                </div>
+                <input id="m3Spring" type="range"
+                    min="0.2" max="50" step="0.1" value="4"
+                    class="lab-range">
+            </div>
+
+            <div class="border-t pt-4" style="border-color:var(--border)">
+                <p class="text-xs lab-muted">SYSTEM EQUATIONS</p>
+
+                <p class="font-semibold mt-3">
+                    ωn = √(k/m)
+                </p>
+
+                <p class="font-semibold mt-2">
+                    ζ = b / 2√(mk)
+                </p>
+
+                <div class="mt-4">
+                    <p class="text-xs lab-muted">DAMPING CLASSIFICATION</p>
+                    <p id="m3Classification" class="font-bold lab-accent mt-2">
+                        Underdamped
+                    </p>
+                </div>
+            </div>
+
+            <button id="m3Reset" type="button"
+                class="lab-select font-semibold">
+                Reset Parameters ↻
+            </button>
+
+        </aside>
+
+        <div class="lg:col-span-2 lab-panel p-4 md:p-6">
+
+            <div class="flex flex-wrap justify-between gap-3 mb-4">
+                <div>
+                    <p class="text-xs lab-accent font-bold">
+                        TIME-DOMAIN RESPONSE
+                    </p>
+                    <h3 class="text-xl font-bold mt-1">
+                        Step Response
+                    </h3>
+                </div>
+                <span class="text-xs lab-muted">y(t)</span>
+            </div>
+
+            <div id="m3ResponsePlot"
+                style="height:380px;width:100%"
+                aria-label="Second order step response"></div>
+
+        </div>
+    </div>
+
+    <!-- Calculated parameters -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Natural Frequency (ωn)</p>
+            <p id="m3Wn" class="text-2xl font-bold mt-2 lab-accent">2.00</p>
+            <p class="lab-muted text-xs">rad/s</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Damping Ratio (ζ)</p>
+            <p id="m3Zeta" class="text-2xl font-bold mt-2">0.50</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Overshoot</p>
+            <p id="m3Overshoot" class="text-2xl font-bold mt-2">16.3%</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Peak Time</p>
+            <p id="m3PeakTime" class="text-2xl font-bold mt-2">1.81 s</p>
+        </div>
+
+    </div>
+
+    <!-- Response metrics -->
+    <div class="lab-card p-5 md:p-7 mt-6">
+
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+            TRANSIENT ANALYSIS
+        </p>
+
+        <h3 class="text-xl font-bold mb-5">Response Characteristics</h3>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+
+            <div class="lab-panel p-4">
+                <p class="lab-muted text-sm">Rise Time (10–90%)</p>
+                <p id="m3RiseTime" class="text-xl font-bold mt-2">--</p>
+            </div>
+
+            <div class="lab-panel p-4">
+                <p class="lab-muted text-sm">Settling Time (2%)</p>
+                <p id="m3Settling" class="text-xl font-bold mt-2">--</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Poles -->
+    <div class="lab-card p-5 md:p-7 mt-6">
+
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+            COMPLEX FREQUENCY DOMAIN
+        </p>
+
+        <h3 class="text-xl font-bold">Poles in the S-Plane</h3>
+
+        <div id="m3PolePlot" style="height:350px;width:100%"></div>
+
+        <div class="lab-panel p-4 mt-4">
+            <p class="text-sm lab-muted">System Poles</p>
+            <p id="m3Poles" class="font-bold lab-accent mt-2">--</p>
+        </div>
+    </div>
+
+    <!-- State space -->
+    <div class="lab-card p-5 md:p-7 mt-6">
+
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+            STATE-SPACE MODEL
+        </p>
+
+        <h3 class="text-xl font-bold">Mass-Spring-Damper State Space</h3>
+
+        <p class="lab-muted text-sm mt-2">
+            The state-space matrices update automatically when
+            the system parameters change.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-4 mt-5">
+
+            <div class="lab-panel p-5">
+                <p class="font-bold mb-3">Matrix A</p>
+                <p class="font-mono text-lg" id="m3MatrixA">--</p>
+            </div>
+
+            <div class="lab-panel p-5">
+                <p class="font-bold mb-3">Matrix B</p>
+                <p class="font-mono text-lg" id="m3MatrixB">--</p>
+            </div>
+
+        </div>
+
+        <div class="lab-panel p-5 mt-4">
+            <p class="font-bold">Eigenvalues of A</p>
+            <p id="m3Eigenvalues" class="font-mono lab-accent mt-2">--</p>
+            <p class="lab-muted text-xs mt-2">
+                These eigenvalues must match the system poles.
+            </p>
+        </div>
+
+        <h3 class="text-lg font-bold mt-7 mb-2">
+            Phase Plane (Displacement vs Velocity)
+        </h3>
+
+        <div id="m3PhasePlot" style="height:350px;width:100%"></div>
+
+    </div>
+
+    <!-- Prediction -->
+    <div class="lab-card p-5 md:p-7 mt-6">
+
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+            Predection
+        </p>
+
+        <h3 class="text-xl font-bold">Predict, then Check</h3>
+
+        <p class="lab-muted text-sm mt-2 mb-4">
+            Predict how the response changes when the damping coefficient changes.
+        </p>
+
+        <label for="m3Prediction" class="font-medium block mb-3">
+            If damping increases while mass and spring stiffness remain constant, what happens?
+        </label>
+
+        <select id="m3Prediction" class="lab-select mb-4">
+            <option value="">Choose your prediction</option>
+            <option value="less">Oscillations and overshoot decrease</option>
+            <option value="more">Oscillations increase</option>
+            <option value="same">Nothing changes</option>
+        </select>
+
+        <button id="m3CheckPrediction" class="lab-button px-6 py-3 font-semibold">
+            Check Prediction
+        </button>
+
+        <div id="m3PredictionResult"
+            class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
+
+    </div>
+
+    <!-- Validation -->
+    <div class="lab-card p-5 md:p-7 mt-6">
+
+        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+            ENGINEERING VALIDATION / 04–06
+        </p>
+
+        <h3 class="text-xl font-bold">Second-Order Validation</h3>
+
+        <p class="lab-muted text-sm mt-2 mb-5">
+            Verify the analytical model against the official homework reference cases.
+        </p>
+
+        <button id="m3Validate"
+            class="lab-button px-6 py-3 font-semibold">
+            Run Validation Checks
+        </button>
+
+        <div id="m3ValidationResult"
+            class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
+
+    </div>
+
+</section>
+
+
      
     </main>
 
@@ -547,6 +826,7 @@
     <script src="./js/prediction.js"></script>
     <script src="./js/validation.js"></script>
     <script src="./js/module2.js"></script>
+    <script src="./js/module3.js"></script>
 </body>
 
 </html>
