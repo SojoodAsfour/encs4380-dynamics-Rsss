@@ -58,12 +58,19 @@ The toolkit allows users to adjust system parameters, observe live response plot
 
 ### Module 3 — Second-Order Response
 
-**Status:** In development
+**Status:** Implemented
 
-- Underdamped, critically damped, and overdamped responses.
-- Rise time, peak time, overshoot, and settling time.
-- Pole visualization.
-- State-space modeling and phase-plane visualization.
+- Interactive mass (m), damping coefficient (b), and spring constant (k) sliders.
+- Real-time calculation of natural frequency (ωₙ) and damping ratio (ζ).
+- Automatic classification of underdamped, critically damped, and overdamped responses.
+- Live second-order step-response visualization.
+- Dynamic calculation of rise time, peak time, percentage overshoot, and settling time.
+- Interactive pole visualization in the complex S-plane.
+- State-space modeling with dynamically updated A and B matrices.
+- Real-time calculation and display of system poles and eigenvalues.
+- Numerical state-space simulation using the fourth-order Runge-Kutta (RK4) method.
+- Interactive phase-plane visualization showing displacement versus velocity.
+- Interactive Predict, then Check question about the effect of increasing damping on         oscillations and overshoot.
 
 ### Module 4 — Guess the Sensor
 
@@ -97,6 +104,9 @@ Module 2 implements Official Validation Check #2, verifying the first-order freq
 Module 2 also validates dynamic error calculations.
 
 The remaining official validation checks are assigned to Module 3.
+
+Module 3 implements Official Validation Checks #4, #5, and #6, verifying second-order overshoot at ζ = 0.5, zero overshoot at ζ = 1, and state-space eigenvalues for m = 1, b = 2, and k = 4, with expected values, calculated values, and PASS/FAIL results.
+
 
 
 ## Screenshots
@@ -140,7 +150,7 @@ The remaining official validation checks are assigned to Module 3.
 ![State-Space Representation](screenshots/module3-state-space.png)
 
 ### Module 3 – Predict, then Check
-![Prediction Comparison](screenshots/module3-predictionn.png)
+![Prediction Comparison](screenshots/module3-predectionn.png)
 
 ### Module 3 – Official Validation Check #3
 ![Transient Response Validation](screenshots/module3-validation.png)
