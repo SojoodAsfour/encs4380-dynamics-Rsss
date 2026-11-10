@@ -74,12 +74,20 @@ The toolkit allows users to adjust system parameters, observe live response plot
 
 ### Module 4 — Guess the Sensor
 
-**Status:** In development
+**Status:** Implemented
 
-- Random hidden sensor parameters.
-- Interactive parameter estimation.
-- Predicted and actual response comparison.
-- Scoring and new sensor challenges.
+- Random hidden sensor in every round: first-order step, first-order sine, or second-order underdamped step.
+- Noise added to the measured response. Values can be read point by point with the hover tooltip.
+- Hidden true parameters: K and τ for first-order sensors, ζ and ωn for second-order sensors.
+- Estimation with the methods from Modules 1–3: the 63.2% point and the log method for first-order step, phase lag and amplitude ratio for first-order sine, overshoot and peak time for second-order.
+- Optional log-method helper that plots ln(1 − y/K) against time for first-order step responses.
+- Progressive hints (three levels per sensor type) available on request.
+- Scoring: Each parameter within 10% of the true value earns 50 points, while an error between 10% and 20% earns 25 points. Errors above 20% earn 0 points. Each round is worth 100 points.
+- A round skipped without checking a guess is not counted.
+- Reveal of the true values and a comparison plot that overlays the measured data, the true curve and the estimated curve.
+- Running session scoreboard: total score, maximum possible score, completed rounds and accuracy.
+- New Sensor button to start another round while keeping the session score.
+- Reuse of the response functions from Modules 1, 2 and 3.
 
 ## Technologies Used
 
@@ -107,6 +115,7 @@ The remaining official validation checks are assigned to Module 3.
 
 Module 3 implements Official Validation Checks #4, #5, and #6, verifying second-order overshoot at ζ = 0.5, zero overshoot at ζ = 1, and state-space eigenvalues for m = 1, b = 2, and k = 4, with expected values, calculated values, and PASS/FAIL results.
 
+Module 4 implements the official sensor estimation challenge, verifying random first-order and second-order sensor generation, parameter estimation, and scoring accuracy. It evaluates estimated parameters against their true values, awards full marks for errors within 10%, half marks for errors between 10% and 20%, and zero marks for errors above 20%. It also verifies the response comparison, true parameter reveal, and session score tracking.
 
 
 ## Screenshots
@@ -155,6 +164,26 @@ Module 3 implements Official Validation Checks #4, #5, and #6, verifying second-
 ### Module 3 – Official Validation Check #3
 ![Transient Response Validation](screenshots/module3-validation.png)
 
+### Module 4 — Guess the Sensor Challenge
+![Guess the Sensor Challenge](screenshots/module4-challenge.png)
+
+### Module 4 — First-Order Step Response
+![First-Order Step Response](screenshots/module4-first-order.png)
+
+### Module 4 — First-Order Sine Response
+![First-Order Sine Response](screenshots/module4-first-order-sine.png)
+
+### Module 4 — Progressive Hints
+![Progressive Hints](screenshots/module4-hint.png)
+
+### Module 4 — Guess Results and Scoring
+![Guess Results](screenshots/module4-guess-result.png)
+
+### Module 4 — True Values and Response Comparison
+![Response Comparison](screenshots/module4-reveal.png)
+
+### Module 4 — Session Scoreboard
+![Session Scoreboard](screenshots/module4-scoreboard.png)
 
 ## AI Tool Usage
 

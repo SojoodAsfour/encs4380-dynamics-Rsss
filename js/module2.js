@@ -370,6 +370,6 @@ if (highFreqButton && highFreqResult) {
         `;
     });
 }
-
+window.Module2 = { calculate };
 
 })();

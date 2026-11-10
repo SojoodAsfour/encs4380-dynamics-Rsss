@@ -92,10 +92,12 @@
                 <p class="font-semibold">Second-Order</p>
             </a>
 
-            <div class="lab-panel p-4">
-                <p class="text-xs lab-muted mb-2">04 / MODULE</p>
+            <a href="#module4" class="lab-card p-4 block">
+                <p class="text-xs lab-accent font-bold mb-2">
+                   04 / ACTIVE
+                </p>
                 <p class="font-semibold">Guess the Sensor</p>
-            </div>
+            </a>
         </nav>
 
         <!-- Module 1 experiment -->
@@ -813,6 +815,189 @@
 </section>
 
 
+<!-- MODULE 4: GUESS THE SENSOR -->
+<section id="module4" class="lab-card p-5 md:p-8" style="margin-top:2rem">
+
+    <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+        <div>
+            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                EXPERIMENT 004 / SENSOR IDENTIFICATION
+            </p>
+            <h2 class="text-2xl md:text-3xl font-bold">Guess the Sensor</h2>
+            <p class="lab-muted mt-2 max-w-2xl">
+                Analyze an unknown sensor response and estimate its
+                dynamic parameters before revealing the true values.
+            </p>
+        </div>
+        <div class="lab-panel px-4 py-2 text-xs font-semibold">
+            ENGINEERING CHALLENGE
+        </div>
+    </div>
+
+    <!-- Score board -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Session Score</p>
+            <p id="m4Score" class="text-2xl font-bold mt-2 lab-accent">0</p>
+            <p class="lab-muted text-xs mt-1">of <span id="m4MaxScore">0</span> possible</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Sensors Completed</p>
+            <p id="m4Completed" class="text-2xl font-bold mt-2">0</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Accuracy</p>
+            <p id="m4Accuracy" class="text-2xl font-bold mt-2">--</p>
+        </div>
+
+        <div class="lab-panel p-5">
+            <p class="lab-muted text-sm">Sensor Type</p>
+            <p id="m4SensorType" class="text-2xl font-bold mt-2 lab-accent">--</p>
+        </div>
+    </div>
+
+    <!-- Task description -->
+    <div class="lab-panel p-5 md:p-6 mb-5">
+        <p class="text-xs lab-accent font-bold">YOUR TASK</p>
+        <p id="m4Task" class="font-semibold mt-2">Loading sensor...</p>
+        <p id="m4Method" class="lab-muted text-sm mt-2"></p>
+    </div>
+
+    <!-- Sensor response -->
+    <div class="lab-panel p-5 md:p-6 mb-5">
+        <div class="flex flex-wrap justify-between gap-3 mb-4">
+            <div>
+                <p class="text-xs lab-accent font-bold">UNKNOWN SENSOR</p>
+                <h3 class="text-xl font-bold mt-1">Sensor Response Curve</h3>
+            </div>
+            <span class="text-xs lab-muted">Hover over the curve to read values</span>
+        </div>
+
+        <div id="m4ResponsePlot" style="height:360px;width:100%"
+             aria-label="Noisy response of the hidden sensor"></div>
+    </div>
+
+    <!-- Optional log-method helper (first-order step only) -->
+    <div id="m4ToolsSection" class="lab-panel p-5 md:p-6 mb-5 hidden">
+        <p class="text-xs lab-accent font-bold">OPTIONAL TOOL</p>
+        <h3 class="text-xl font-bold mt-1">Log Method Helper</h3>
+        <p class="lab-muted text-sm mt-2 mb-4">
+            Enter your estimate of the final value K, then plot ln(1 − y/K)
+            against t. For a first-order step this is a straight line
+            with slope −1/τ.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-3">
+            <input id="m4LogK" type="number" min="0.01" step="any"
+                inputmode="decimal" class="lab-select"
+                style="width:160px" placeholder="Estimated K"
+                aria-label="Estimated final value K for the log method">
+
+            <button id="m4LogButton" type="button"
+                class="lab-button px-6 py-3 font-semibold">
+                Plot ln(1 − y/K)
+            </button>
+        </div>
+
+        <p id="m4LogNote" class="lab-muted text-sm mt-3 hidden"></p>
+
+        <div id="m4LogPlot" class="hidden mt-4"
+             style="height:300px;width:100%"
+             aria-label="Logarithmic helper plot"></div>
+    </div>
+
+    <!-- Guess controls -->
+    <div class="lab-panel p-5 md:p-6 mb-5">
+        <p class="text-xs lab-accent font-bold">YOUR CHALLENGE</p>
+        <h3 class="text-xl font-bold mt-1">Estimate the Parameters</h3>
+        <p class="lab-muted text-sm mt-2 mb-5">
+            Study the response curve and enter your estimated parameters.
+        </p>
+
+        <div id="m4GuessFirstOrder" class="grid gap-4"
+             style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+            <div>
+                <label for="m4GainGuess" class="font-medium block mb-2">
+                    Estimated Gain (K)
+                </label>
+                <input id="m4GainGuess" type="number" min="0.01" step="any"
+                    inputmode="decimal" autocomplete="off"
+                    class="lab-select" placeholder="Enter K">
+            </div>
+
+            <div>
+                <label for="m4TauGuess" class="font-medium block mb-2">
+                    Estimated Time Constant (τ) in seconds
+                </label>
+                <input id="m4TauGuess" type="number" min="0.01" step="any"
+                    inputmode="decimal" autocomplete="off"
+                    class="lab-select" placeholder="Enter τ">
+            </div>
+        </div>
+
+        <div id="m4GuessSecondOrder" class="grid gap-4 hidden"
+             style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+            <div>
+                <label for="m4ZetaGuess" class="font-medium block mb-2">
+                    Estimated Damping Ratio (ζ)
+                </label>
+                <input id="m4ZetaGuess" type="number" min="0.01" step="any"
+                    inputmode="decimal" autocomplete="off"
+                    class="lab-select" placeholder="Enter ζ">
+            </div>
+
+            <div>
+                <label for="m4WnGuess" class="font-medium block mb-2">
+                    Estimated Natural Frequency (ωn) in rad/s
+                </label>
+                <input id="m4WnGuess" type="number" min="0.01" step="any"
+                    inputmode="decimal" autocomplete="off"
+                    class="lab-select" placeholder="Enter ωn">
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mt-6">
+            <button id="m4CheckGuess" type="button"
+                class="lab-button px-6 py-3 font-semibold">
+                Check My Guess
+            </button>
+
+            <button id="m4Hint" type="button"
+                class="lab-select font-semibold"
+                style="width:auto;cursor:pointer">
+                Get Hint
+            </button>
+
+            <button id="m4NewSensor" type="button"
+                class="lab-select font-semibold"
+                style="width:auto;cursor:pointer">
+                New Sensor ↻
+            </button>
+        </div>
+
+        <div id="m4HintResult" class="lab-panel p-4 mt-5 hidden"
+             aria-live="polite"></div>
+
+        <div id="m4GuessResult" class="lab-panel p-4 mt-5 hidden"
+             aria-live="polite"></div>
+    </div>
+
+    <!-- Revealed results -->
+    <div id="m4RevealSection" class="lab-card p-5 md:p-6 hidden">
+        <p class="text-xs lab-accent font-bold">REVEALED RESULTS</p>
+        <h3 class="text-xl font-bold mt-1">Your Guess vs. Actual Sensor</h3>
+
+        <div id="m4ComparisonPlot" style="height:360px;width:100%"
+             aria-label="True curve overlaid on the guessed curve"></div>
+
+        <div id="m4ActualValues" class="grid gap-4 mt-5"
+             style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"></div>
+    </div>
+
+</section>
+
      
     </main>
 
@@ -829,6 +1014,7 @@
     <script src="./js/validation.js"></script>
     <script src="./js/module2.js"></script>
     <script src="./js/module3.js"></script>
+    <script src="./js/module4.js"></script>
 </body>
 
 </html>

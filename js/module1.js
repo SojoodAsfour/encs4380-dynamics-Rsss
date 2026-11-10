@@ -329,3 +329,9 @@ window.addEventListener(
 
 // Draw the initial plot
 updateModule1();
+
+window.Module1 = {
+    stepResponse,
+    rampResponse,
+    getChartColors
+};
