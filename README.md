@@ -111,7 +111,6 @@ Module 2 implements Official Validation Check #2, verifying the first-order freq
 
 Module 2 also validates dynamic error calculations.
 
-The remaining official validation checks are assigned to Module 3.
 
 Module 3 implements Official Validation Checks #4, #5, and #6, verifying second-order overshoot at ζ = 0.5, zero overshoot at ζ = 1, and state-space eigenvalues for m = 1, b = 2, and k = 4, with expected values, calculated values, and PASS/FAIL results.
 
