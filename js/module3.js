@@ -100,6 +100,27 @@
         ];
     }
 
+    // Eigenvalues 
+    function calculateEigenvalues(m, b, k) {
+        const a11 = 0, a12 = 1;
+        const a21 = -k / m, a22 = -b / m;
+        const trace = a11 + a22;
+        const det = a11 * a22 - a12 * a21;
+        const disc = trace * trace - 4 * det;
+        if (disc >= 0) {
+            const root = Math.sqrt(disc) / 2;
+            return [
+                { real: trace / 2 + root, imaginary: 0 },
+                { real: trace / 2 - root, imaginary: 0 }
+            ];
+        }
+        const imaginary = Math.sqrt(-disc) / 2;
+        return [
+            { real: trace / 2, imaginary },
+            { real: trace / 2, imaginary: -imaginary }
+        ];
+    }
+
     // Find response characteristics from sampled curve
     function calculateMetrics(time, response, wn, zeta) {
 
@@ -155,60 +176,36 @@
         };
     }
 
-    // RK4 simulation for state-space model
-    // x1 = displacement, x2 = velocity
-    // F = k gives a normalized final displacement of 1
+    // RK4 state-space integration 
     function simulateStateSpace(m, b, k, endTime) {
-
-        const dt = endTime / 1200;
-        const time = [];
-        const displacement = [];
-        const velocity = [];
-
-        let x1 = 0;
-        let x2 = 0;
-
+        const samples = 1200;
+        const sampleDt = endTime / samples;
+        const { wn, zeta } = calculateParameters(m, b, k);
+        const fastestPole = Math.max(...calculatePoles(wn, zeta).map(
+            pole => Math.hypot(pole.real, pole.imaginary)
+        ));
+        const substeps = Math.max(1, Math.ceil(sampleDt * fastestPole / 0.25));
+        const dt = sampleDt / substeps;
+        const time = [], displacement = [], velocity = [];
+        let x1 = 0, x2 = 0;
         const force = k;
-
         function derivatives(a, v) {
-            return {
-                dx1: v,
-                dx2: (force - b * v - k * a) / m
-            };
+            return { dx1: v, dx2: (force - b * v - k * a) / m };
         }
-
-        for (let i = 0; i <= 1200; i++) {
-
-            time.push(i * dt);
+        for (let i = 0; i <= samples; i++) {
+            time.push(i * sampleDt);
             displacement.push(x1);
             velocity.push(x2);
-
-            if (i === 1200) break;
-
-            const a = derivatives(x1, x2);
-
-            const b1 = derivatives(
-                x1 + a.dx1 * dt / 2,
-                x2 + a.dx2 * dt / 2
-            );
-
-            const c = derivatives(
-                x1 + b1.dx1 * dt / 2,
-                x2 + b1.dx2 * dt / 2
-            );
-
-            const d = derivatives(
-                x1 + c.dx1 * dt,
-                x2 + c.dx2 * dt
-            );
-
-            x1 += dt / 6 *
-                (a.dx1 + 2*b1.dx1 + 2*c.dx1 + d.dx1);
-
-            x2 += dt / 6 *
-                (a.dx2 + 2*b1.dx2 + 2*c.dx2 + d.dx2);
+            if (i === samples) break;
+            for (let j = 0; j < substeps; j++) {
+                const a = derivatives(x1, x2);
+                const b1 = derivatives(x1 + a.dx1 * dt / 2, x2 + a.dx2 * dt / 2);
+                const c = derivatives(x1 + b1.dx1 * dt / 2, x2 + b1.dx2 * dt / 2);
+                const d = derivatives(x1 + c.dx1 * dt, x2 + c.dx2 * dt);
+                x1 += dt / 6 * (a.dx1 + 2 * b1.dx1 + 2 * c.dx1 + d.dx1);
+                x2 += dt / 6 * (a.dx2 + 2 * b1.dx2 + 2 * c.dx2 + d.dx2);
+            }
         }
-
         return { time, displacement, velocity };
     }
 
@@ -365,11 +362,14 @@
         $("m3Zeta").textContent = zeta.toFixed(3);
         $("m3Classification").textContent = classification;
 
-        // Time range
-        const endTime = Math.min(
-            30,
-            Math.max(5, 8 / (zeta * wn))
-        );
+        
+        const slowRate = zeta > 1
+            ? wn / (zeta + Math.sqrt(zeta * zeta - 1))
+            : zeta * wn;
+        const estimatedDuration = slowRate > 0
+            ? 8 / slowRate
+            : 8 * Math.PI / wn;
+        const endTime = Math.min(120, Math.max(5, estimatedDuration));
 
         const time = [];
         const response = [];
@@ -398,7 +398,7 @@
 
         $("m3Settling").textContent =
             metrics.settlingTime === null
-                ? "Not reached"
+                ? `Not within ${endTime.toFixed(1)} s`
                 : metrics.settlingTime.toFixed(3) + " s";
 
         // Response plot
@@ -421,7 +421,9 @@
         $("m3MatrixB").innerHTML =
             `⎡ 0 ⎤<br>⎣ ${(1/m).toFixed(3)} ⎦`;
 
-        $("m3Eigenvalues").textContent = $("m3Poles").textContent;
+        $("m3Eigenvalues").textContent = calculateEigenvalues(m, b, k).map(p =>
+            `${p.real.toFixed(3)} ${p.imaginary >= 0 ? "+" : "-"} j${Math.abs(p.imaginary).toFixed(3)}`
+        ).join("   ,   ");
 
         // State-space simulation
         const simulation = simulateStateSpace(m, b, k, endTime);
@@ -467,46 +469,46 @@
     // Validation checks 4, 5 and 6
     $("m3Validate").addEventListener("click", () => {
 
-        const test1 = calculateParameters(1, 2, 4);
-        const test2 = calculateParameters(1, 4, 4);
-
-        const overshoot05 =
-            100 * Math.exp(
-                -0.5 * Math.PI / Math.sqrt(1 - 0.5 ** 2)
-            );
-
-        const overshoot1 = 0;
-
-        const poles = calculatePoles(2, 0.5);
-
-        const pass1 = Math.abs(overshoot05 - 16.3) < 0.1;
-        const pass2 = overshoot1 === 0;
-
-        const pass3 =
-            Math.abs(test1.wn - 2) < 0.001 &&
-            Math.abs(test1.zeta - 0.5) < 0.001 &&
-            Math.abs(poles[0].real + 1) < 0.001 &&
-            Math.abs(poles[0].imaginary - 1.73205) < 0.001;
-
-        const tests = [
-            {
-                title: "Test 4: ζ = 0.5",
-                expected: "16.3%",
-                actual: overshoot05.toFixed(2) + "%",
-                pass: pass1
-            },
-            {
-                title: "Test 5: ζ = 1",
-                expected: "0%",
-                actual: overshoot1.toFixed(1) + "%",
-                pass: pass2
-            },
-            {
-                title: "Test 6: State-Space Eigenvalues",
-                expected: "-1 ± j1.732",
-                actual: "-1 ± j" + Math.abs(poles[0].imaginary).toFixed(3),
-                pass: pass3
+        
+        function sampledOvershoot(wn, zeta) {
+            const endTime = 8 / (zeta * wn);
+            let peak = -Infinity;
+            for (let i = 0; i <= 4000; i++) {
+                const t = i * endTime / 4000;
+                peak = Math.max(peak, stepResponse(t, wn, zeta));
             }
+            return Math.max(0, (peak - 1) * 100);
+        }
+        const under = calculateParameters(1, 2, 4);       // zeta=0.5, wn=2
+        const critical = calculateParameters(1, 4, 4);    // zeta=1, wn=2
+        const overshoot05 = sampledOvershoot(under.wn, under.zeta);
+        const overshoot1 = sampledOvershoot(critical.wn, critical.zeta);
+        const poles = calculatePoles(under.wn, under.zeta);
+        const eigenvalues = calculateEigenvalues(1, 2, 4);
+        const close = (x, y, tol = 1e-3) => Math.abs(x - y) <= tol;
+        const rootsMatch = poles.every((p, i) =>
+            close(p.real, eigenvalues[i].real) &&
+            close(p.imaginary, eigenvalues[i].imaginary)
+        );
+        const pass1 = close(overshoot05, 16.3, 0.1);
+        const pass2 = close(overshoot1, 0, 1e-3) &&
+            close(stepResponse(0, critical.wn, critical.zeta), 0) &&
+            stepResponse(8 / critical.wn, critical.wn, critical.zeta) > 0.99;
+        const pass3 = close(under.wn, 2) && close(under.zeta, 0.5) &&
+            close(eigenvalues[0].real, -1) &&
+            close(eigenvalues[0].imaginary, 1.73205) &&
+            close(eigenvalues[1].real, -1) &&
+            close(eigenvalues[1].imaginary, -1.73205) && rootsMatch;
+        const tests = [
+            { title: "Test 4: ζ = 0.5", expected: "16.3%",
+              actual: overshoot05.toFixed(2) + "%", pass: pass1 },
+            { title: "Test 5: ζ = 1", expected: "0%",
+              actual: overshoot1.toFixed(2) + "%", pass: pass2 },
+            { title: "Test 6: State-Space Eigenvalues",
+              expected: "−1 ± j1.732 (matches poles)",
+              actual: `${eigenvalues[0].real.toFixed(3)} ± j${Math.abs(eigenvalues[0].imaginary).toFixed(3)}; ` +
+                      (rootsMatch ? "matches poles" : "does not match poles"),
+              pass: pass3 }
         ];
 
         const output = $("m3ValidationResult");
