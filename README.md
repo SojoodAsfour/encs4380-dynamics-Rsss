@@ -12,11 +12,14 @@ TRANSIENT is an interactive web-based educational toolkit designed to explore th
 
 The toolkit allows users to adjust system parameters, observe live response plots, predict system behavior, and validate simulation results against analytical reference values.
 
+
 ## Live Website
 
-**GitHub Pages:** https://github.com/SojoodAsfour/encs4380-dynamics-Rsss
+**GitHub Pages:** https://sojoodasfour.github.io/encs4380-dynamics-Rsss/
 
-**GitHub Repository:** https://sojoodasfour.github.io/encs4380-dynamics-Rsss
+**GitHub Repository:** https://github.com/SojoodAsfour/encs4380-dynamics-Rsss
+
+
 
 ## Team Members and Contributions
 
@@ -101,20 +104,52 @@ The toolkit allows users to adjust system parameters, observe live response plot
 
 The website is a static application that runs directly in the browser without a backend server.
 
+
 ## Validation
 
-The project follows the six official validation checks specified in Homework 1.
+The project implements the six official validation checks
+specified in Homework 1.
 
-Module 1 implements Official Validation Check #1, verifying that the first-order step response reaches approximately 63.2% of its final value at τ and 95% at 3τ.
+### Module 1 — Validation Check #1
 
-Module 2 implements Official Validation Check #2, verifying the first-order frequency response using the reference values τ = 0.2 s and ω = 2 rad/s. The check confirms an amplitude ratio of approximately 0.93 and a phase lag of approximately 21.8°.
+- First-order step response:
+  y(τ) ≈ 63.2% of KA.
+- At 3τ, the response reaches approximately 95% of KA.
 
-Module 2 also validates dynamic error calculations.
+### Module 2 — Validation Checks #2 and #3
 
+**Check #2 — Sinusoidal Response**
+- Time constant: τ = 0.2 s.
+- Input angular frequency: ω = 2 rad/s.
+- Expected amplitude ratio: approximately 0.93.
+- Expected phase lag: approximately 21.8°.
 
-Module 3 implements Official Validation Checks #4, #5, and #6, verifying second-order overshoot at ζ = 0.5, zero overshoot at ζ = 1, and state-space eigenvalues for m = 1, b = 2, and k = 4, with expected values, calculated values, and PASS/FAIL results.
+**Check #3 — Dynamic Error**
+- Maximum frequency: 100 Hz.
+- Maximum allowable dynamic error: 5%.
+- Expected maximum time constant: approximately 0.52 ms.
+- Expected phase lag at 50 Hz: approximately 9.3°.
 
-Module 4 implements the official sensor estimation challenge, verifying random first-order and second-order sensor generation, parameter estimation, and scoring accuracy. It evaluates estimated parameters against their true values, awards full marks for errors within 10%, half marks for errors between 10% and 20%, and zero marks for errors above 20%. It also verifies the response comparison, true parameter reveal, and session score tracking.
+### Module 3 — Validation Checks #4, #5 and #6
+
+**Check #4 — Underdamped Response**
+- Damping ratio: ζ = 0.5.
+- Expected percentage overshoot: 16.3%.
+
+**Check #5 — Critically Damped Response**
+- Damping ratio: ζ = 1.
+- Expected overshoot: 0%.
+
+**Check #6 — State-Space Eigenvalues**
+- m = 1, b = 2, k = 4.
+- Damping ratio: ζ = 0.5.
+- Natural frequency: ωn = 2 rad/s.
+- Expected eigenvalues: −1 ± j1.732.
+- Eigenvalues must match the system poles.
+
+The validation panels display expected values,
+calculated values, and PASS/FAIL results.
+
 
 
 ## Screenshots
@@ -160,7 +195,7 @@ Module 4 implements the official sensor estimation challenge, verifying random f
 ### Module 3 – Predict, then Check
 ![Prediction Comparison](screenshots/module3-predectionn.png)
 
-### Module 3 – Official Validation Check #3
+### Module 3 — Official Validation Checks #4–#6
 ![Transient Response Validation](screenshots/module3-validation.png)
 
 ### Module 4 — Guess the Sensor Challenge

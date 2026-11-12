@@ -278,7 +278,7 @@ function updateModule1() {
                 gridcolor: colors.grid,
                 range: [-2.3, 0.1],
                 tickmode: "array",
-                tickvals: [0.01, 0.1, 1],
+                tickvals: [-2, -1, 0],
                 ticktext: ["0.01", "0.1", "1"]
             },
 
