@@ -1,3 +1,8 @@
 node_modules/
 .DS_Store
 *.log
+
+
+# Local homework submission documents
+/Homework1_resss.docx
+/Homework1_resss.pdf
