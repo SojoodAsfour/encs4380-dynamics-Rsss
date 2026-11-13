@@ -87,18 +87,42 @@
 
             <a href="#module3" class="lab-card p-4 block">
                 <p class="text-xs lab-accent font-bold mb-2">
-                  03 / ACTIVE
+                    03 / ACTIVE
                 </p>
                 <p class="font-semibold">Second-Order</p>
             </a>
 
             <a href="#module4" class="lab-card p-4 block">
                 <p class="text-xs lab-accent font-bold mb-2">
-                   04 / ACTIVE
+                    04 / ACTIVE
                 </p>
                 <p class="font-semibold">Guess the Sensor</p>
             </a>
         </nav>
+
+        <!-- Homework 2 — Control navigation -->
+        <a href="#control" class="lab-card p-5 mb-10 flex flex-col sm:flex-row
+          sm:items-center sm:justify-between gap-4">
+
+            <div>
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    HOMEWORK 02 / FEEDBACK CONTROL
+                </p>
+
+                <h2 class="text-xl font-bold">
+                    CONTROL — PID Toolkit
+                </h2>
+
+                <p class="lab-muted text-sm mt-2">
+                    Explore how feedback changes the behavior of dynamic systems.
+                </p>
+            </div>
+
+            <span class="text-sm font-semibold lab-accent">
+                Explore Control →
+            </span>
+        </a>
+
 
         <!-- Module 1 experiment -->
         <section id="module1" class="lab-card p-5 md:p-8">
@@ -354,652 +378,805 @@
 
         </section>
         <!-- Module 2: First-Order Frequency Response -->
-<section id="module2" class="lab-card p-5 md:p-8 mt-8">
+        <section id="module2" class="lab-card p-5 md:p-8 mt-8">
 
-    <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
-        <div>
-            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-                EXPERIMENT 002 / FREQUENCY DOMAIN
-            </p>
-            <h2 class="text-2xl md:text-3xl font-bold">
-                First-Order Frequency Response
-            </h2>
-            <p class="lab-muted mt-2 max-w-2xl">
-                Explore how a first-order sensor changes the amplitude and phase of a sinusoidal input.
-            </p>
-        </div>
-        <div class="text-xs font-semibold rounded-full px-4 py-2 lab-panel">
-            INTERACTIVE LAB
-        </div>
-    </div>
-
-    <div class="grid lg:grid-cols-3 gap-6">
-
-        <aside class="lab-panel p-5 space-y-7">
-            <div>
-                <p class="text-xs lab-accent font-bold">CONTROL PANEL</p>
-                <h3 class="text-xl font-bold mt-1">Parameters</h3>
-            </div>
-
-            <div>
-                <div class="flex justify-between gap-2 mb-3">
-                    <label for="m2Tau" class="font-medium">Time Constant (τ)</label>
-                    <output id="m2TauValue" class="font-bold lab-accent">0.20 s</output>
-                </div>
-                <input id="m2Tau" type="range" min="0.01" max="2"
-                     step="0.01" value="0.2" class="lab-range">
-            </div>
-
-            <div>
-                <div class="flex justify-between gap-2 mb-3">
-                    <label for="m2Omega" class="font-medium">Input Frequency (ω)</label>
-                    <output id="m2OmegaValue" class="font-bold lab-accent">2.00 rad/s</output>
-                </div>
-                <input id="m2Omega" type="range" min="0.1" max="30"
-                    step="0.1" value="2" class="lab-range">
-            </div>
-
-            <div>
-                <p class="text-xs lab-muted">TRANSFER FUNCTION</p>
-                <p class="font-semibold mt-2">G(s) = 1 / (τs + 1)</p>
-                <p class="text-sm lab-muted mt-2">For x(t) = sin(ωt):</p>
-                <p class="text-sm font-semibold lab-accent mt-1">
-                    M = 1 / √(1 + (ωτ)²)
-                </p>
-                <p class="text-sm font-semibold lab-accent mt-1">
-                    φ = −tan⁻¹(ωτ)
-                </p>
-            </div>
-        </aside>
-
-        <div class="lg:col-span-2 lab-panel p-4 md:p-6">
-            <div class="flex flex-wrap justify-between gap-3 mb-4">
+            <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
                 <div>
-                    <p class="text-xs lab-accent font-bold">TIME-DOMAIN RESPONSE</p>
-                    <h3 class="text-xl font-bold mt-1">
-                        Input and Output Sine Waves
-                    </h3>
-                </div>
-                <span class="text-xs lab-muted">x(t) and y(t)</span>
-            </div>
-            <div id="m2SinePlot" class="w-full" style="height:360px"
-                  aria-label="Input and output sine wave plot"></div>
-        </div>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Amplitude Ratio (M)</p>
-            <p id="m2Amplitude" class="text-2xl font-bold mt-2 lab-accent">0.928</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Phase Lag</p>
-            <p id="m2Phase" class="text-2xl font-bold mt-2">21.8°</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Cutoff Frequency (ωc)</p>
-            <p id="m2Cutoff" class="text-2xl font-bold mt-2">5.00 rad/s</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Dynamic Error (δ = M − 1)</p>
-            <p id="m2Error" class="text-2xl font-bold mt-2">−7.2%</p>
-        </div>
-    </div>
-
-    <div class="lab-card p-5 md:p-7 mt-6">
-        <div class="mb-4">
-            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-                FREQUENCY ANALYSIS / BODE
-            </p>
-            <h3 class="text-xl font-bold">Magnitude and Phase Response</h3>
-            <p class="lab-muted text-sm mt-2">
-                The cutoff occurs at ω = 1/τ, where the amplitude ratio is approximately 0.707.
-            </p>
-        </div>
-        <div id="m2BodePlot" class="w-full" style="height:560px"
-             aria-label="Bode magnitude and phase plots"></div>
-    </div>
-
-    <div class="lab-card p-5 md:p-7 mt-6">
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-            ENGINEERING VALIDATION / 02
-        </p>
-        <h3 class="text-xl font-bold">Frequency Response Validation</h3>
-        <p class="lab-muted text-sm mt-2 mb-5">
-            Check the official reference case: τ = 0.2 s and input frequency ω = 2 rad/s.
-        </p>
-        <button id="m2Validate" type="button"
-            class="lab-button px-6 py-3 font-semibold">
-            Run Validation Check #2
-        </button>
-        <div id="m2ValidationResult"
-            class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
-    </div>
-
-    
-    <!-- 100 Hz Dynamic Error Validation -->
-    <div class="lab-card p-5 md:p-7 mt-6">
-
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-             ENGINEERING VALIDATION / 03
-        </p>
-
-        <h3 class="text-xl font-bold">
-             100 Hz Dynamic Error Limit
-        </h3>
-
-        <p class="lab-muted text-sm mt-2 mb-5">
-             Verify the maximum time constant required to keep
-             the dynamic error within 5% for a 100 Hz input signal.
-        </p>
-
-        <button id="m2HighFreqValidate" type="button"
-             class="lab-button px-6 py-3 font-semibold">
-             Run 100 Hz / 5% Error Check
-         </button>
-
-        <div id="m2HighFreqResult"
-             class="lab-panel p-4 mt-5 hidden" aria-live="polite">
-        </div>
-
-    </div>
-
-
-    <div class="lab-panel p-5 mt-6">
-        <h3 class="font-bold text-lg">Predict, then Check</h3>
-        <p class="lab-muted text-sm mt-2 mb-4">
-            Before changing the frequency, predict what happens to the output amplitude as ω increases.
-        </p>
-
-        <label for="m2Prediction" class="block font-medium mb-3">
-            What happens to the amplitude ratio when the input frequency increases (with τ fixed)?
-        </label>
-
-        <select id="m2Prediction" class="lab-select mb-4">
-            <option value="">Choose your prediction</option>
-            <option value="decrease">It decreases</option>
-            <option value="increase">It increases</option>
-            <option value="same">It stays the same</option>
-        </select>
-
-        <button id="m2CheckPrediction" type="button"
-            class="lab-button px-6 py-3 font-semibold">
-            Check Prediction
-        </button>
-
-        <div id="m2PredictionResult"
-            class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
-    </div>
-
-</section>
-<!-- MODULE 3: SECOND-ORDER RESPONSE -->
-<section id="module3" class="lab-card p-5 md:p-8 mt-8">
-
-    <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
-        <div>
-            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-                EXPERIMENT 003 / SECOND-ORDER SYSTEM
-            </p>
-            <h2 class="text-2xl md:text-3xl font-bold">
-                Second-Order Response
-            </h2>
-            <p class="lab-muted mt-2 max-w-2xl">
-                Investigate how mass, damping and spring stiffness
-                affect a mechanical system's dynamic response.
-            </p>
-        </div>
-
-        <div class="text-xs font-semibold rounded-full px-4 py-2 lab-panel">
-            INTERACTIVE LAB
-        </div>
-    </div>
-
-    <!-- Controls and response plot -->
-    <div class="grid lg:grid-cols-3 gap-6">
-
-        <aside class="lab-panel p-5 space-y-7">
-
-            <div>
-                <p class="text-xs lab-accent font-bold">CONTROL PANEL</p>
-                <h3 class="text-xl font-bold mt-1">System Parameters</h3>
-            </div>
-
-            <div>
-                <div class="flex justify-between mb-3">
-                    <label for="m3Mass">Mass (m)</label>
-                    <output id="m3MassValue" class="font-bold lab-accent">1.0 kg</output>
-                </div>
-                <input id="m3Mass" type="range"
-                    min="0.2" max="10" step="0.1" value="1"
-                    class="lab-range">
-            </div>
-
-            <div>
-                <div class="flex justify-between mb-3">
-                    <label for="m3Damping">Damping (b)</label>
-                    <output id="m3DampingValue" class="font-bold lab-accent">2.0 Ns/m</output>
-                </div>
-                <input id="m3Damping" type="range"
-                    min="0" max="20" step="0.1" value="2"
-                    class="lab-range">
-            </div>
-
-            <div>
-                <div class="flex justify-between mb-3">
-                    <label for="m3Spring">Spring Constant (k)</label>
-                    <output id="m3SpringValue" class="font-bold lab-accent">4.0 N/m</output>
-                </div>
-                <input id="m3Spring" type="range"
-                    min="0.2" max="50" step="0.1" value="4"
-                    class="lab-range">
-            </div>
-
-            <div class="border-t pt-4" style="border-color:var(--border)">
-                <p class="text-xs lab-muted">SYSTEM EQUATIONS</p>
-
-                <p class="font-semibold mt-3">
-                    ωn = √(k/m)
-                </p>
-
-                <p class="font-semibold mt-2">
-                    ζ = b / 2√(mk)
-                </p>
-
-                <div class="mt-4">
-                    <p class="text-xs lab-muted">DAMPING CLASSIFICATION</p>
-                    <p id="m3Classification" class="font-bold lab-accent mt-2">
-                        Underdamped
+                    <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                        EXPERIMENT 002 / FREQUENCY DOMAIN
+                    </p>
+                    <h2 class="text-2xl md:text-3xl font-bold">
+                        First-Order Frequency Response
+                    </h2>
+                    <p class="lab-muted mt-2 max-w-2xl">
+                        Explore how a first-order sensor changes the amplitude and phase of a sinusoidal input.
                     </p>
                 </div>
-            </div>
-
-            <button id="m3Reset" type="button"
-                class="lab-select font-semibold">
-                Reset Parameters ↻
-            </button>
-
-        </aside>
-
-        <div class="lg:col-span-2 lab-panel p-4 md:p-6">
-
-            <div class="flex flex-wrap justify-between gap-3 mb-4">
-                <div>
-                    <p class="text-xs lab-accent font-bold">
-                        TIME-DOMAIN RESPONSE
-                    </p>
-                    <h3 class="text-xl font-bold mt-1">
-                        Step Response
-                    </h3>
+                <div class="text-xs font-semibold rounded-full px-4 py-2 lab-panel">
+                    INTERACTIVE LAB
                 </div>
-                <span class="text-xs lab-muted">y(t)</span>
             </div>
 
-            <div id="m3ResponsePlot"
-                style="height:380px;width:100%"
-                aria-label="Second order step response"></div>
+            <div class="grid lg:grid-cols-3 gap-6">
 
-        </div>
-    </div>
+                <aside class="lab-panel p-5 space-y-7">
+                    <div>
+                        <p class="text-xs lab-accent font-bold">CONTROL PANEL</p>
+                        <h3 class="text-xl font-bold mt-1">Parameters</h3>
+                    </div>
 
-    <!-- Calculated parameters -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                    <div>
+                        <div class="flex justify-between gap-2 mb-3">
+                            <label for="m2Tau" class="font-medium">Time Constant (τ)</label>
+                            <output id="m2TauValue" class="font-bold lab-accent">0.20 s</output>
+                        </div>
+                        <input id="m2Tau" type="range" min="0.01" max="2" step="0.01" value="0.2" class="lab-range">
+                    </div>
 
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Natural Frequency (ωn)</p>
-            <p id="m3Wn" class="text-2xl font-bold mt-2 lab-accent">2.00</p>
-            <p class="lab-muted text-xs">rad/s</p>
-        </div>
+                    <div>
+                        <div class="flex justify-between gap-2 mb-3">
+                            <label for="m2Omega" class="font-medium">Input Frequency (ω)</label>
+                            <output id="m2OmegaValue" class="font-bold lab-accent">2.00 rad/s</output>
+                        </div>
+                        <input id="m2Omega" type="range" min="0.1" max="30" step="0.1" value="2" class="lab-range">
+                    </div>
 
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Damping Ratio (ζ)</p>
-            <p id="m3Zeta" class="text-2xl font-bold mt-2">0.50</p>
-        </div>
+                    <div>
+                        <p class="text-xs lab-muted">TRANSFER FUNCTION</p>
+                        <p class="font-semibold mt-2">G(s) = 1 / (τs + 1)</p>
+                        <p class="text-sm lab-muted mt-2">For x(t) = sin(ωt):</p>
+                        <p class="text-sm font-semibold lab-accent mt-1">
+                            M = 1 / √(1 + (ωτ)²)
+                        </p>
+                        <p class="text-sm font-semibold lab-accent mt-1">
+                            φ = −tan⁻¹(ωτ)
+                        </p>
+                    </div>
+                </aside>
 
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Overshoot</p>
-            <p id="m3Overshoot" class="text-2xl font-bold mt-2">16.3%</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Peak Time</p>
-            <p id="m3PeakTime" class="text-2xl font-bold mt-2">1.81 s</p>
-        </div>
-
-    </div>
-
-    <!-- Response metrics -->
-    <div class="lab-card p-5 md:p-7 mt-6">
-
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-            TRANSIENT ANALYSIS
-        </p>
-
-        <h3 class="text-xl font-bold mb-5">Response Characteristics</h3>
-
-        <div class="grid sm:grid-cols-2 gap-4">
-
-            <div class="lab-panel p-4">
-                <p class="lab-muted text-sm">Rise Time (10–90%)</p>
-                <p id="m3RiseTime" class="text-xl font-bold mt-2">--</p>
+                <div class="lg:col-span-2 lab-panel p-4 md:p-6">
+                    <div class="flex flex-wrap justify-between gap-3 mb-4">
+                        <div>
+                            <p class="text-xs lab-accent font-bold">TIME-DOMAIN RESPONSE</p>
+                            <h3 class="text-xl font-bold mt-1">
+                                Input and Output Sine Waves
+                            </h3>
+                        </div>
+                        <span class="text-xs lab-muted">x(t) and y(t)</span>
+                    </div>
+                    <div id="m2SinePlot" class="w-full" style="height:360px"
+                        aria-label="Input and output sine wave plot"></div>
+                </div>
             </div>
 
-            <div class="lab-panel p-4">
-                <p class="lab-muted text-sm">Settling Time (2%)</p>
-                <p id="m3Settling" class="text-xl font-bold mt-2">--</p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Amplitude Ratio (M)</p>
+                    <p id="m2Amplitude" class="text-2xl font-bold mt-2 lab-accent">0.928</p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Phase Lag</p>
+                    <p id="m2Phase" class="text-2xl font-bold mt-2">21.8°</p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Cutoff Frequency (ωc)</p>
+                    <p id="m2Cutoff" class="text-2xl font-bold mt-2">5.00 rad/s</p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Dynamic Error (δ = M − 1)</p>
+                    <p id="m2Error" class="text-2xl font-bold mt-2">−7.2%</p>
+                </div>
             </div>
 
-        </div>
-    </div>
-
-    <!-- Poles -->
-    <div class="lab-card p-5 md:p-7 mt-6">
-
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-            COMPLEX FREQUENCY DOMAIN
-        </p>
-
-        <h3 class="text-xl font-bold">Poles in the S-Plane</h3>
-
-        <div id="m3PolePlot" style="height:350px;width:100%"></div>
-
-        <div class="lab-panel p-4 mt-4">
-            <p class="text-sm lab-muted">System Poles</p>
-            <p id="m3Poles" class="font-bold lab-accent mt-2">--</p>
-        </div>
-    </div>
-
-    <!-- State space -->
-    <div class="lab-card p-5 md:p-7 mt-6">
-
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-            STATE-SPACE MODEL
-        </p>
-
-        <h3 class="text-xl font-bold">Mass-Spring-Damper State Space</h3>
-
-        <p class="lab-muted text-sm mt-2">
-            The state-space matrices update automatically when
-            the system parameters change.
-        </p>
-
-        <div class="grid md:grid-cols-2 gap-4 mt-5">
-
-            <div class="lab-panel p-5">
-                <p class="font-bold mb-3">Matrix A</p>
-                <p class="font-mono text-lg" id="m3MatrixA">--</p>
+            <div class="lab-card p-5 md:p-7 mt-6">
+                <div class="mb-4">
+                    <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                        FREQUENCY ANALYSIS / BODE
+                    </p>
+                    <h3 class="text-xl font-bold">Magnitude and Phase Response</h3>
+                    <p class="lab-muted text-sm mt-2">
+                        The cutoff occurs at ω = 1/τ, where the amplitude ratio is approximately 0.707.
+                    </p>
+                </div>
+                <div id="m2BodePlot" class="w-full" style="height:560px" aria-label="Bode magnitude and phase plots">
+                </div>
             </div>
 
-            <div class="lab-panel p-5">
-                <p class="font-bold mb-3">Matrix B</p>
-                <p class="font-mono text-lg" id="m3MatrixB">--</p>
+            <div class="lab-card p-5 md:p-7 mt-6">
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    ENGINEERING VALIDATION / 02
+                </p>
+                <h3 class="text-xl font-bold">Frequency Response Validation</h3>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Check the official reference case: τ = 0.2 s and input frequency ω = 2 rad/s.
+                </p>
+                <button id="m2Validate" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Run Validation Check #2
+                </button>
+                <div id="m2ValidationResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
             </div>
 
-        </div>
 
-        <div class="lab-panel p-5 mt-4">
-            <p class="font-bold">Eigenvalues of A</p>
-            <p id="m3Eigenvalues" class="font-mono lab-accent mt-2">--</p>
-            <p class="lab-muted text-xs mt-2">
-                These eigenvalues must match the system poles.
-            </p>
-        </div>
+            <!-- 100 Hz Dynamic Error Validation -->
+            <div class="lab-card p-5 md:p-7 mt-6">
 
-        <h3 class="text-lg font-bold mt-7 mb-2">
-            Phase Plane (Displacement vs Velocity)
-        </h3>
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    ENGINEERING VALIDATION / 03
+                </p>
 
-        <div id="m3PhasePlot" style="height:350px;width:100%"></div>
+                <h3 class="text-xl font-bold">
+                    100 Hz Dynamic Error Limit
+                </h3>
 
-    </div>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Verify the maximum time constant required to keep
+                    the dynamic error within 5% for a 100 Hz input signal.
+                </p>
 
-    <!-- Prediction -->
-    <div class="lab-card p-5 md:p-7 mt-6">
+                <button id="m2HighFreqValidate" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Run 100 Hz / 5% Error Check
+                </button>
 
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-            Predection
-        </p>
+                <div id="m2HighFreqResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite">
+                </div>
 
-        <h3 class="text-xl font-bold">Predict, then Check</h3>
-
-        <p class="lab-muted text-sm mt-2 mb-4">
-            Predict how the response changes when the damping coefficient changes.
-        </p>
-
-        <label for="m3Prediction" class="font-medium block mb-3">
-            If damping increases while mass and spring stiffness remain constant, what happens?
-        </label>
-
-        <select id="m3Prediction" class="lab-select mb-4">
-            <option value="">Choose your prediction</option>
-            <option value="less">Oscillations and overshoot decrease</option>
-            <option value="more">Oscillations increase</option>
-            <option value="same">Nothing changes</option>
-        </select>
-
-        <button id="m3CheckPrediction" class="lab-button px-6 py-3 font-semibold">
-            Check Prediction
-        </button>
-
-        <div id="m3PredictionResult"
-            class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
-
-    </div>
-
-    <!-- Validation -->
-    <div class="lab-card p-5 md:p-7 mt-6">
-
-        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-            ENGINEERING VALIDATION / 04–06
-        </p>
-
-        <h3 class="text-xl font-bold">Second-Order Validation</h3>
-
-        <p class="lab-muted text-sm mt-2 mb-5">
-            Verify the analytical model against the official homework reference cases.
-        </p>
-
-        <button id="m3Validate"
-            class="lab-button px-6 py-3 font-semibold">
-            Run Validation Checks
-        </button>
-
-        <div id="m3ValidationResult"
-            class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
-
-    </div>
-
-</section>
-
-
-<!-- MODULE 4: GUESS THE SENSOR -->
-<section id="module4" class="lab-card p-5 md:p-8" style="margin-top:2rem">
-
-    <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
-        <div>
-            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
-                EXPERIMENT 004 / SENSOR IDENTIFICATION
-            </p>
-            <h2 class="text-2xl md:text-3xl font-bold">Guess the Sensor</h2>
-            <p class="lab-muted mt-2 max-w-2xl">
-                Analyze an unknown sensor response and estimate its
-                dynamic parameters before revealing the true values.
-            </p>
-        </div>
-        <div class="lab-panel px-4 py-2 text-xs font-semibold">
-            ENGINEERING CHALLENGE
-        </div>
-    </div>
-
-    <!-- Score board -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Session Score</p>
-            <p id="m4Score" class="text-2xl font-bold mt-2 lab-accent">0</p>
-            <p class="lab-muted text-xs mt-1">of <span id="m4MaxScore">0</span> possible</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Sensors Completed</p>
-            <p id="m4Completed" class="text-2xl font-bold mt-2">0</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Accuracy</p>
-            <p id="m4Accuracy" class="text-2xl font-bold mt-2">--</p>
-        </div>
-
-        <div class="lab-panel p-5">
-            <p class="lab-muted text-sm">Sensor Type</p>
-            <p id="m4SensorType" class="text-2xl font-bold mt-2 lab-accent">--</p>
-        </div>
-    </div>
-
-    <!-- Task description -->
-    <div class="lab-panel p-5 md:p-6 mb-5">
-        <p class="text-xs lab-accent font-bold">YOUR TASK</p>
-        <p id="m4Task" class="font-semibold mt-2">Loading sensor...</p>
-        <p id="m4Method" class="lab-muted text-sm mt-2"></p>
-    </div>
-
-    <!-- Sensor response -->
-    <div class="lab-panel p-5 md:p-6 mb-5">
-        <div class="flex flex-wrap justify-between gap-3 mb-4">
-            <div>
-                <p class="text-xs lab-accent font-bold">UNKNOWN SENSOR</p>
-                <h3 class="text-xl font-bold mt-1">Sensor Response Curve</h3>
             </div>
-            <span class="text-xs lab-muted">Hover over the curve to read values</span>
-        </div>
 
-        <div id="m4ResponsePlot" style="height:360px;width:100%"
-             aria-label="Noisy response of the hidden sensor"></div>
-    </div>
 
-    <!-- Optional log-method helper (first-order step only) -->
-    <div id="m4ToolsSection" class="lab-panel p-5 md:p-6 mb-5 hidden">
-        <p class="text-xs lab-accent font-bold">OPTIONAL TOOL</p>
-        <h3 class="text-xl font-bold mt-1">Log Method Helper</h3>
-        <p class="lab-muted text-sm mt-2 mb-4">
-            Enter your estimate of the final value K, then plot ln(1 − y/K)
-            against t. For a first-order step this is a straight line
-            with slope −1/τ.
-        </p>
+            <div class="lab-panel p-5 mt-6">
+                <h3 class="font-bold text-lg">Predict, then Check</h3>
+                <p class="lab-muted text-sm mt-2 mb-4">
+                    Before changing the frequency, predict what happens to the output amplitude as ω increases.
+                </p>
 
-        <div class="flex flex-wrap items-center gap-3">
-            <input id="m4LogK" type="number" min="0.01" step="any"
-                inputmode="decimal" class="lab-select"
-                style="width:160px" placeholder="Estimated K"
-                aria-label="Estimated final value K for the log method">
-
-            <button id="m4LogButton" type="button"
-                class="lab-button px-6 py-3 font-semibold">
-                Plot ln(1 − y/K)
-            </button>
-        </div>
-
-        <p id="m4LogNote" class="lab-muted text-sm mt-3 hidden"></p>
-
-        <div id="m4LogPlot" class="hidden mt-4"
-             style="height:300px;width:100%"
-             aria-label="Logarithmic helper plot"></div>
-    </div>
-
-    <!-- Guess controls -->
-    <div class="lab-panel p-5 md:p-6 mb-5">
-        <p class="text-xs lab-accent font-bold">YOUR CHALLENGE</p>
-        <h3 class="text-xl font-bold mt-1">Estimate the Parameters</h3>
-        <p class="lab-muted text-sm mt-2 mb-5">
-            Study the response curve and enter your estimated parameters.
-        </p>
-
-        <div id="m4GuessFirstOrder" class="grid gap-4"
-             style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
-            <div>
-                <label for="m4GainGuess" class="font-medium block mb-2">
-                    Estimated Gain (K)
+                <label for="m2Prediction" class="block font-medium mb-3">
+                    What happens to the amplitude ratio when the input frequency increases (with τ fixed)?
                 </label>
-                <input id="m4GainGuess" type="number" min="0.01" step="any"
-                    inputmode="decimal" autocomplete="off"
-                    class="lab-select" placeholder="Enter K">
+
+                <select id="m2Prediction" class="lab-select mb-4">
+                    <option value="">Choose your prediction</option>
+                    <option value="decrease">It decreases</option>
+                    <option value="increase">It increases</option>
+                    <option value="same">It stays the same</option>
+                </select>
+
+                <button id="m2CheckPrediction" type="button" class="lab-button px-6 py-3 font-semibold">
+                    Check Prediction
+                </button>
+
+                <div id="m2PredictionResult" class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
             </div>
 
-            <div>
-                <label for="m4TauGuess" class="font-medium block mb-2">
-                    Estimated Time Constant (τ) in seconds
+        </section>
+        <!-- MODULE 3: SECOND-ORDER RESPONSE -->
+        <section id="module3" class="lab-card p-5 md:p-8 mt-8">
+
+            <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+                <div>
+                    <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                        EXPERIMENT 003 / SECOND-ORDER SYSTEM
+                    </p>
+                    <h2 class="text-2xl md:text-3xl font-bold">
+                        Second-Order Response
+                    </h2>
+                    <p class="lab-muted mt-2 max-w-2xl">
+                        Investigate how mass, damping and spring stiffness
+                        affect a mechanical system's dynamic response.
+                    </p>
+                </div>
+
+                <div class="text-xs font-semibold rounded-full px-4 py-2 lab-panel">
+                    INTERACTIVE LAB
+                </div>
+            </div>
+
+            <!-- Controls and response plot -->
+            <div class="grid lg:grid-cols-3 gap-6">
+
+                <aside class="lab-panel p-5 space-y-7">
+
+                    <div>
+                        <p class="text-xs lab-accent font-bold">CONTROL PANEL</p>
+                        <h3 class="text-xl font-bold mt-1">System Parameters</h3>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-3">
+                            <label for="m3Mass">Mass (m)</label>
+                            <output id="m3MassValue" class="font-bold lab-accent">1.0 kg</output>
+                        </div>
+                        <input id="m3Mass" type="range" min="0.2" max="10" step="0.1" value="1" class="lab-range">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-3">
+                            <label for="m3Damping">Damping (b)</label>
+                            <output id="m3DampingValue" class="font-bold lab-accent">2.0 Ns/m</output>
+                        </div>
+                        <input id="m3Damping" type="range" min="0" max="20" step="0.1" value="2" class="lab-range">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-3">
+                            <label for="m3Spring">Spring Constant (k)</label>
+                            <output id="m3SpringValue" class="font-bold lab-accent">4.0 N/m</output>
+                        </div>
+                        <input id="m3Spring" type="range" min="0.2" max="50" step="0.1" value="4" class="lab-range">
+                    </div>
+
+                    <div class="border-t pt-4" style="border-color:var(--border)">
+                        <p class="text-xs lab-muted">SYSTEM EQUATIONS</p>
+
+                        <p class="font-semibold mt-3">
+                            ωn = √(k/m)
+                        </p>
+
+                        <p class="font-semibold mt-2">
+                            ζ = b / 2√(mk)
+                        </p>
+
+                        <div class="mt-4">
+                            <p class="text-xs lab-muted">DAMPING CLASSIFICATION</p>
+                            <p id="m3Classification" class="font-bold lab-accent mt-2">
+                                Underdamped
+                            </p>
+                        </div>
+                    </div>
+
+                    <button id="m3Reset" type="button" class="lab-select font-semibold">
+                        Reset Parameters ↻
+                    </button>
+
+                </aside>
+
+                <div class="lg:col-span-2 lab-panel p-4 md:p-6">
+
+                    <div class="flex flex-wrap justify-between gap-3 mb-4">
+                        <div>
+                            <p class="text-xs lab-accent font-bold">
+                                TIME-DOMAIN RESPONSE
+                            </p>
+                            <h3 class="text-xl font-bold mt-1">
+                                Step Response
+                            </h3>
+                        </div>
+                        <span class="text-xs lab-muted">y(t)</span>
+                    </div>
+
+                    <div id="m3ResponsePlot" style="height:380px;width:100%" aria-label="Second order step response">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Calculated parameters -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Natural Frequency (ωn)</p>
+                    <p id="m3Wn" class="text-2xl font-bold mt-2 lab-accent">2.00</p>
+                    <p class="lab-muted text-xs">rad/s</p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Damping Ratio (ζ)</p>
+                    <p id="m3Zeta" class="text-2xl font-bold mt-2">0.50</p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Overshoot</p>
+                    <p id="m3Overshoot" class="text-2xl font-bold mt-2">16.3%</p>
+                </div>
+
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Peak Time</p>
+                    <p id="m3PeakTime" class="text-2xl font-bold mt-2">1.81 s</p>
+                </div>
+
+            </div>
+
+            <!-- Response metrics -->
+            <div class="lab-card p-5 md:p-7 mt-6">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    TRANSIENT ANALYSIS
+                </p>
+
+                <h3 class="text-xl font-bold mb-5">Response Characteristics</h3>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+
+                    <div class="lab-panel p-4">
+                        <p class="lab-muted text-sm">Rise Time (10–90%)</p>
+                        <p id="m3RiseTime" class="text-xl font-bold mt-2">--</p>
+                    </div>
+
+                    <div class="lab-panel p-4">
+                        <p class="lab-muted text-sm">Settling Time (2%)</p>
+                        <p id="m3Settling" class="text-xl font-bold mt-2">--</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Poles -->
+            <div class="lab-card p-5 md:p-7 mt-6">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    COMPLEX FREQUENCY DOMAIN
+                </p>
+
+                <h3 class="text-xl font-bold">Poles in the S-Plane</h3>
+
+                <div id="m3PolePlot" style="height:350px;width:100%"></div>
+
+                <div class="lab-panel p-4 mt-4">
+                    <p class="text-sm lab-muted">System Poles</p>
+                    <p id="m3Poles" class="font-bold lab-accent mt-2">--</p>
+                </div>
+            </div>
+
+            <!-- State space -->
+            <div class="lab-card p-5 md:p-7 mt-6">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    STATE-SPACE MODEL
+                </p>
+
+                <h3 class="text-xl font-bold">Mass-Spring-Damper State Space</h3>
+
+                <p class="lab-muted text-sm mt-2">
+                    The state-space matrices update automatically when
+                    the system parameters change.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-4 mt-5">
+
+                    <div class="lab-panel p-5">
+                        <p class="font-bold mb-3">Matrix A</p>
+                        <p class="font-mono text-lg" id="m3MatrixA">--</p>
+                    </div>
+
+                    <div class="lab-panel p-5">
+                        <p class="font-bold mb-3">Matrix B</p>
+                        <p class="font-mono text-lg" id="m3MatrixB">--</p>
+                    </div>
+
+                </div>
+
+                <div class="lab-panel p-5 mt-4">
+                    <p class="font-bold">Eigenvalues of A</p>
+                    <p id="m3Eigenvalues" class="font-mono lab-accent mt-2">--</p>
+                    <p class="lab-muted text-xs mt-2">
+                        These eigenvalues must match the system poles.
+                    </p>
+                </div>
+
+                <h3 class="text-lg font-bold mt-7 mb-2">
+                    Phase Plane (Displacement vs Velocity)
+                </h3>
+
+                <div id="m3PhasePlot" style="height:350px;width:100%"></div>
+
+            </div>
+
+            <!-- Prediction -->
+            <div class="lab-card p-5 md:p-7 mt-6">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    Predection
+                </p>
+
+                <h3 class="text-xl font-bold">Predict, then Check</h3>
+
+                <p class="lab-muted text-sm mt-2 mb-4">
+                    Predict how the response changes when the damping coefficient changes.
+                </p>
+
+                <label for="m3Prediction" class="font-medium block mb-3">
+                    If damping increases while mass and spring stiffness remain constant, what happens?
                 </label>
-                <input id="m4TauGuess" type="number" min="0.01" step="any"
-                    inputmode="decimal" autocomplete="off"
-                    class="lab-select" placeholder="Enter τ">
+
+                <select id="m3Prediction" class="lab-select mb-4">
+                    <option value="">Choose your prediction</option>
+                    <option value="less">Oscillations and overshoot decrease</option>
+                    <option value="more">Oscillations increase</option>
+                    <option value="same">Nothing changes</option>
+                </select>
+
+                <button id="m3CheckPrediction" class="lab-button px-6 py-3 font-semibold">
+                    Check Prediction
+                </button>
+
+                <div id="m3PredictionResult" class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
+
             </div>
-        </div>
 
-        <div id="m4GuessSecondOrder" class="grid gap-4 hidden"
-             style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
-            <div>
-                <label for="m4ZetaGuess" class="font-medium block mb-2">
-                    Estimated Damping Ratio (ζ)
-                </label>
-                <input id="m4ZetaGuess" type="number" min="0.01" step="any"
-                    inputmode="decimal" autocomplete="off"
-                    class="lab-select" placeholder="Enter ζ">
+            <!-- Validation -->
+            <div class="lab-card p-5 md:p-7 mt-6">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    ENGINEERING VALIDATION / 04–06
+                </p>
+
+                <h3 class="text-xl font-bold">Second-Order Validation</h3>
+
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Verify the analytical model against the official homework reference cases.
+                </p>
+
+                <button id="m3Validate" class="lab-button px-6 py-3 font-semibold">
+                    Run Validation Checks
+                </button>
+
+                <div id="m3ValidationResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
+
             </div>
 
-            <div>
-                <label for="m4WnGuess" class="font-medium block mb-2">
-                    Estimated Natural Frequency (ωn) in rad/s
-                </label>
-                <input id="m4WnGuess" type="number" min="0.01" step="any"
-                    inputmode="decimal" autocomplete="off"
-                    class="lab-select" placeholder="Enter ωn">
+        </section>
+
+
+        <!-- MODULE 4: GUESS THE SENSOR -->
+        <section id="module4" class="lab-card p-5 md:p-8" style="margin-top:2rem">
+
+            <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+                <div>
+                    <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                        EXPERIMENT 004 / SENSOR IDENTIFICATION
+                    </p>
+                    <h2 class="text-2xl md:text-3xl font-bold">Guess the Sensor</h2>
+                    <p class="lab-muted mt-2 max-w-2xl">
+                        Analyze an unknown sensor response and estimate its
+                        dynamic parameters before revealing the true values.
+                    </p>
+                </div>
+                <div class="lab-panel px-4 py-2 text-xs font-semibold">
+                    ENGINEERING CHALLENGE
+                </div>
             </div>
-        </div>
 
-        <div class="flex flex-wrap gap-3 mt-6">
-            <button id="m4CheckGuess" type="button"
-                class="lab-button px-6 py-3 font-semibold">
-                Check My Guess
-            </button>
+            <!-- Score board -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Session Score</p>
+                    <p id="m4Score" class="text-2xl font-bold mt-2 lab-accent">0</p>
+                    <p class="lab-muted text-xs mt-1">of <span id="m4MaxScore">0</span> possible</p>
+                </div>
 
-            <button id="m4Hint" type="button"
-                class="lab-select font-semibold"
-                style="width:auto;cursor:pointer">
-                Get Hint
-            </button>
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Sensors Completed</p>
+                    <p id="m4Completed" class="text-2xl font-bold mt-2">0</p>
+                </div>
 
-            <button id="m4NewSensor" type="button"
-                class="lab-select font-semibold"
-                style="width:auto;cursor:pointer">
-                New Sensor ↻
-            </button>
-        </div>
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Accuracy</p>
+                    <p id="m4Accuracy" class="text-2xl font-bold mt-2">--</p>
+                </div>
 
-        <div id="m4HintResult" class="lab-panel p-4 mt-5 hidden"
-             aria-live="polite"></div>
+                <div class="lab-panel p-5">
+                    <p class="lab-muted text-sm">Sensor Type</p>
+                    <p id="m4SensorType" class="text-2xl font-bold mt-2 lab-accent">--</p>
+                </div>
+            </div>
 
-        <div id="m4GuessResult" class="lab-panel p-4 mt-5 hidden"
-             aria-live="polite"></div>
-    </div>
+            <!-- Task description -->
+            <div class="lab-panel p-5 md:p-6 mb-5">
+                <p class="text-xs lab-accent font-bold">YOUR TASK</p>
+                <p id="m4Task" class="font-semibold mt-2">Loading sensor...</p>
+                <p id="m4Method" class="lab-muted text-sm mt-2"></p>
+            </div>
 
-    <!-- Revealed results -->
-    <div id="m4RevealSection" class="lab-card p-5 md:p-6 hidden">
-        <p class="text-xs lab-accent font-bold">REVEALED RESULTS</p>
-        <h3 class="text-xl font-bold mt-1">Your Guess vs. Actual Sensor</h3>
+            <!-- Sensor response -->
+            <div class="lab-panel p-5 md:p-6 mb-5">
+                <div class="flex flex-wrap justify-between gap-3 mb-4">
+                    <div>
+                        <p class="text-xs lab-accent font-bold">UNKNOWN SENSOR</p>
+                        <h3 class="text-xl font-bold mt-1">Sensor Response Curve</h3>
+                    </div>
+                    <span class="text-xs lab-muted">Hover over the curve to read values</span>
+                </div>
 
-        <div id="m4ComparisonPlot" style="height:360px;width:100%"
-             aria-label="True curve overlaid on the guessed curve"></div>
+                <div id="m4ResponsePlot" style="height:360px;width:100%"
+                    aria-label="Noisy response of the hidden sensor"></div>
+            </div>
 
-        <div id="m4ActualValues" class="grid gap-4 mt-5"
-             style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"></div>
-    </div>
+            <!-- Optional log-method helper (first-order step only) -->
+            <div id="m4ToolsSection" class="lab-panel p-5 md:p-6 mb-5 hidden">
+                <p class="text-xs lab-accent font-bold">OPTIONAL TOOL</p>
+                <h3 class="text-xl font-bold mt-1">Log Method Helper</h3>
+                <p class="lab-muted text-sm mt-2 mb-4">
+                    Enter your estimate of the final value K, then plot ln(1 − y/K)
+                    against t. For a first-order step this is a straight line
+                    with slope −1/τ.
+                </p>
 
-</section>
+                <div class="flex flex-wrap items-center gap-3">
+                    <input id="m4LogK" type="number" min="0.01" step="any" inputmode="decimal" class="lab-select"
+                        style="width:160px" placeholder="Estimated K"
+                        aria-label="Estimated final value K for the log method">
 
-     
+                    <button id="m4LogButton" type="button" class="lab-button px-6 py-3 font-semibold">
+                        Plot ln(1 − y/K)
+                    </button>
+                </div>
+
+                <p id="m4LogNote" class="lab-muted text-sm mt-3 hidden"></p>
+
+                <div id="m4LogPlot" class="hidden mt-4" style="height:300px;width:100%"
+                    aria-label="Logarithmic helper plot"></div>
+            </div>
+
+            <!-- Guess controls -->
+            <div class="lab-panel p-5 md:p-6 mb-5">
+                <p class="text-xs lab-accent font-bold">YOUR CHALLENGE</p>
+                <h3 class="text-xl font-bold mt-1">Estimate the Parameters</h3>
+                <p class="lab-muted text-sm mt-2 mb-5">
+                    Study the response curve and enter your estimated parameters.
+                </p>
+
+                <div id="m4GuessFirstOrder" class="grid gap-4"
+                    style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+                    <div>
+                        <label for="m4GainGuess" class="font-medium block mb-2">
+                            Estimated Gain (K)
+                        </label>
+                        <input id="m4GainGuess" type="number" min="0.01" step="any" inputmode="decimal"
+                            autocomplete="off" class="lab-select" placeholder="Enter K">
+                    </div>
+
+                    <div>
+                        <label for="m4TauGuess" class="font-medium block mb-2">
+                            Estimated Time Constant (τ) in seconds
+                        </label>
+                        <input id="m4TauGuess" type="number" min="0.01" step="any" inputmode="decimal"
+                            autocomplete="off" class="lab-select" placeholder="Enter τ">
+                    </div>
+                </div>
+
+                <div id="m4GuessSecondOrder" class="grid gap-4 hidden"
+                    style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+                    <div>
+                        <label for="m4ZetaGuess" class="font-medium block mb-2">
+                            Estimated Damping Ratio (ζ)
+                        </label>
+                        <input id="m4ZetaGuess" type="number" min="0.01" step="any" inputmode="decimal"
+                            autocomplete="off" class="lab-select" placeholder="Enter ζ">
+                    </div>
+
+                    <div>
+                        <label for="m4WnGuess" class="font-medium block mb-2">
+                            Estimated Natural Frequency (ωn) in rad/s
+                        </label>
+                        <input id="m4WnGuess" type="number" min="0.01" step="any" inputmode="decimal" autocomplete="off"
+                            class="lab-select" placeholder="Enter ωn">
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 mt-6">
+                    <button id="m4CheckGuess" type="button" class="lab-button px-6 py-3 font-semibold">
+                        Check My Guess
+                    </button>
+
+                    <button id="m4Hint" type="button" class="lab-select font-semibold"
+                        style="width:auto;cursor:pointer">
+                        Get Hint
+                    </button>
+
+                    <button id="m4NewSensor" type="button" class="lab-select font-semibold"
+                        style="width:auto;cursor:pointer">
+                        New Sensor ↻
+                    </button>
+                </div>
+
+                <div id="m4HintResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
+
+                <div id="m4GuessResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
+            </div>
+
+            <!-- Revealed results -->
+            <div id="m4RevealSection" class="lab-card p-5 md:p-6 hidden">
+                <p class="text-xs lab-accent font-bold">REVEALED RESULTS</p>
+                <h3 class="text-xl font-bold mt-1">Your Guess vs. Actual Sensor</h3>
+
+                <div id="m4ComparisonPlot" style="height:360px;width:100%"
+                    aria-label="True curve overlaid on the guessed curve"></div>
+
+                <div id="m4ActualValues" class="grid gap-4 mt-5"
+                    style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))"></div>
+            </div>
+
+        </section>
+
+
+        <!-- HOMEWORK 2: CONTROL TOOLKIT -->
+        <section id="control" class="mt-12">
+
+            <!-- Control introduction -->
+            <div class="lab-card p-6 md:p-8 mb-6">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-3">
+                    HOMEWORK 02 / FEEDBACK CONTROL
+                </p>
+
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-black">
+                            CONTROL <span style="color: var(--accent)">.</span>
+                        </h2>
+
+                        <p class="lab-muted mt-2 max-w-2xl">
+                            Design, simulate, and tune feedback controllers through interactive engineering experiments.
+                        </p>
+                    </div>
+
+                    <span class="lab-panel px-4 py-3 text-xs font-semibold">
+                        04 MODULES / 01 APPLICATION
+                    </span>
+                </div>
+            </div>
+
+            <!-- Navigation for the four control modules -->
+            <nav aria-label="Control modules" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+
+                <a href="#p1" class="lab-card p-5 block">
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        P1 / CONTROL 001
+                    </p>
+                    <h3 class="font-bold">PID Playground</h3>
+                    <p class="lab-muted text-xs mt-2">
+                        Explore proportional, integral, and derivative control.
+                    </p>
+                </a>
+
+                <a href="#p2" class="lab-card p-5 block">
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        P2 / CONTROL 002
+                    </p>
+                    <h3 class="font-bold">Slow Sensor</h3>
+                    <p class="lab-muted text-xs mt-2">
+                        Investigate sensor delay in feedback loops.
+                    </p>
+                </a>
+
+                <a href="#p3" class="lab-card p-5 block">
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        P3 / CONTROL 003
+                    </p>
+                    <h3 class="font-bold">Digital PID</h3>
+                    <p class="lab-muted text-xs mt-2">
+                        Explore sampling time and anti-windup.
+                    </p>
+                </a>
+
+                <a href="#p4" class="lab-card p-5 block">
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        P4 / CONTROL 004
+                    </p>
+                    <h3 class="font-bold">Tuning Challenge</h3>
+                    <p class="lab-muted text-xs mt-2">
+                        Tune a hidden plant to meet control targets.
+                    </p>
+                </a>
+            </nav>
+
+            <!-- Real-world project navigation -->
+            <a href="#my-system" class="lab-panel p-5 mb-8 flex flex-col  sm:flex-row sm:items-center sm:justify-between gap-3">
+
+                <div>
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        PROJECT APPLICATION / MICROMOUSE
+                    </p>
+                    <h3 class="font-bold text-lg">
+                        My System — Motor Speed Control
+                    </h3>
+                    <p class="lab-muted text-sm mt-1">
+                        Apply PID control to the Micromouse drive motor.
+                    </p>
+                </div>
+
+                <span class="text-sm font-semibold lab-accent">
+                    Explore Project →
+                </span>
+            </a>
+
+            <!-- P1: PID PLAYGROUND -->
+            <section id="p1" class="lab-card p-5 md:p-8 mb-6">
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    CONTROL 001 / PID PLAYGROUND
+                </p>
+
+                <h3 class="text-2xl font-bold">
+                    PID Playground
+                </h3>
+
+                <p class="lab-muted mt-2">
+                    Explore the effects of P, I, and D on closed-loop performance.
+                </p>
+
+                <!-- P1 implementation goes here -->
+            </section>
+
+            <!-- P2: SLOW SENSOR -->
+            <section id="p2" class="lab-card p-5 md:p-8 mb-6">
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    CONTROL 002 / SENSOR FEEDBACK
+                </p>
+
+                <h3 class="text-2xl font-bold">
+                    A Slow Sensor in the Loop
+                </h3>
+
+                <p class="lab-muted mt-2">
+                    Investigate how sensor delay affects closed-loop stability.
+                </p>
+
+                <!-- P2 implementation goes here -->
+            </section>
+
+            <!-- P3: DIGITAL PID -->
+            <section id="p3" class="lab-card p-5 md:p-8 mb-6">
+                <p class="text-xs font-bold tracking-widest
+                  lab-accent mb-2">
+                    CONTROL 003 / DIGITAL CONTROLLER
+                </p>
+
+                <h3 class="text-2xl font-bold">
+                    Digital PID
+                </h3>
+
+                <p class="lab-muted mt-2">
+                    Explore sampling time, discrete control, and anti-windup.
+                </p>
+
+                <!-- P3 implementation goes here -->
+            </section>
+
+            <!-- P4: TUNING CHALLENGE -->
+            <section id="p4" class="lab-card p-5 md:p-8 mb-6">
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    CONTROL 004 / TUNING LAB
+                </p>
+
+                <h3 class="text-2xl font-bold">
+                    Tuning Challenge
+                </h3>
+
+                <p class="lab-muted mt-2">
+                    Tune PID gains to meet a hidden plant's specifications.
+                </p>
+
+                <!-- P4 implementation goes here -->
+            </section>
+
+            <!-- PROJECT: MY SYSTEM -->
+            <section id="my-system" class="lab-card p-5 md:p-8">
+
+                <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                    PROJECT APPLICATION / MICROMOUSE
+                </p>
+
+                <h3 class="text-2xl font-bold">
+                    My System — Motor Speed Control
+                </h3>
+
+                <p class="lab-muted mt-2">
+                    Model the drive motor and design a PID speed controller using measured plant parameters.
+                </p>
+
+                <!-- Micromouse implementation goes here -->
+            </section>
+
+        </section>
+
+
     </main>
+
+
 
     <footer class="text-center text-sm lab-muted py-8 px-4">
         TRANSIENT · Dynamic Characteristics Interactive Toolkit
