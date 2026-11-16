@@ -1065,7 +1065,8 @@
             </nav>
 
             <!-- Real-world project navigation -->
-            <a href="#my-system" class="lab-panel p-5 mb-8 flex flex-col  sm:flex-row sm:items-center sm:justify-between gap-3">
+            <a href="#my-system"
+                class="lab-panel p-5 mb-8 flex flex-col  sm:flex-row sm:items-center sm:justify-between gap-3">
 
                 <div>
                     <p class="text-xs font-bold lab-accent mb-2">
@@ -1098,7 +1099,464 @@
                     Explore the effects of P, I, and D on closed-loop performance.
                 </p>
 
-                <!-- P1 implementation goes here -->
+
+                <!-- P1: Plant Selection -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        CONTROL PANEL / PLANT MODEL
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-4">
+                        Choose Your System
+                    </h4>
+
+                    <label for="p1PlantType" class="block mb-2 font-semibold">
+                        Plant Type
+                    </label>
+
+                    <select id="p1PlantType" class="lab-select">
+                        <option value="first">First-Order System</option>
+                        <option value="second">Second-Order System</option>
+                    </select>
+
+                    <!-- First-order parameters -->
+                    <div id="p1FirstParams" class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-6">
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p1K">System Gain (K)</label>
+                                <output id="p1KValue" class="font-bold lab-accent">
+                                    1.0
+                                </output>
+                            </div>
+
+                            <input id="p1K" type="range" min="0.1" max="5" step="0.1" value="1" class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p1Tau">Time Constant (τ)</label>
+                                <output id="p1TauValue" class="font-bold lab-accent">
+                                    1.0
+                                </output>
+                            </div>
+
+                            <input id="p1Tau" type="range" min="0.1" max="10" step="0.1" value="1" class="lab-range">
+                        </div>
+                    </div>
+
+                    <!-- Second-order parameters -->
+                    <div id="p1SecondParams" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-5 mt-6">
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p1Mass">Mass (m)</label>
+                                <output id="p1MassValue" class="font-bold lab-accent">
+                                    1.0
+                                </output>
+                            </div>
+
+                            <input id="p1Mass" type="range" min="0.2" max="10" step="0.1" value="1" class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p1Damping">Damping (b)</label>
+                                <output id="p1DampingValue" class="font-bold lab-accent">
+                                    2.0
+                                </output>
+                            </div>
+
+                            <input id="p1Damping" type="range" min="0" max="20" step="0.1" value="2" class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p1Spring">Spring Constant (k)</label>
+                                <output id="p1SpringValue" class="font-bold lab-accent">
+                                    4.0
+                                </output>
+                            </div>
+
+                            <input id="p1Spring" type="range" min="0.2" max="50" step="0.1" value="4" class="lab-range">
+                        </div>
+                    </div>
+
+
+                    <!-- P1: PID Controller Settings -->
+                    <div class="mt-8 border-t pt-6" style="border-color: var(--border)">
+
+                        <p class="text-xs font-bold lab-accent mb-2">
+                            CONTROL PANEL / PID CONTROLLER
+                        </p>
+
+                        <h4 class="text-xl font-bold mb-2">
+                            Controller Settings
+                        </h4>
+
+                        <p class="lab-muted text-sm mb-6">
+                            Adjust the PID gains and desired setpoint.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                            <!-- Proportional Gain -->
+                            <div>
+                                <div class="flex justify-between gap-3 mb-3">
+                                    <label for="p1Kp">Proportional Gain (Kp)</label>
+                                    <output id="p1KpValue" class="font-bold lab-accent">
+                                        9.0
+                                    </output>
+                                </div>
+
+                                <input id="p1Kp" type="range" min="0" max="20" step="0.1" value="9"
+                                    class="lab-range w-full">
+                            </div>
+
+                            <!-- Integral Gain -->
+                            <div>
+                                <div class="flex justify-between gap-3 mb-3">
+                                    <label for="p1Ki">Integral Gain (Ki)</label>
+                                    <output id="p1KiValue" class="font-bold lab-accent">
+                                        0.0
+                                    </output>
+                                </div>
+
+                                <input id="p1Ki" type="range" min="0" max="10" step="0.1" value="0"
+                                    class="lab-range w-full">
+                            </div>
+
+                            <!-- Derivative Gain -->
+                            <div>
+                                <div class="flex justify-between gap-3 mb-3">
+                                    <label for="p1Kd">Derivative Gain (Kd)</label>
+                                    <output id="p1KdValue" class="font-bold lab-accent">
+                                        0.0
+                                    </output>
+                                </div>
+
+                                <input id="p1Kd" type="range" min="0" max="5" step="0.1" value="0"
+                                    class="lab-range w-full">
+                            </div>
+
+                            <!-- Desired Setpoint -->
+                            <div>
+                                <div class="flex justify-between gap-3 mb-3">
+                                    <label for="p1Setpoint">Setpoint</label>
+                                    <output id="p1SetpointValue" class="font-bold lab-accent">
+                                        1.0
+                                    </output>
+                                </div>
+
+                                <input id="p1Setpoint" type="range" min="0.5" max="2" step="0.1" value="1"
+                                    class="lab-range w-full">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- P1: Closed-Loop Block Diagram -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        CONTROL SYSTEM / BLOCK DIAGRAM
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-2">
+                        Closed-Loop Feedback
+                    </h4>
+
+                    <p class="lab-muted text-sm mb-4">
+                        Follow the signal from setpoint to plant output and back through negative feedback.
+                    </p>
+
+                    <div class="overflow-x-auto">
+                        <svg viewBox="0 0 920 240" class="w-full min-w-[760px]" role="img"
+                            aria-labelledby="p1DiagramTitle">
+
+                            <title id="p1DiagramTitle">
+                                PID closed-loop control block diagram
+                            </title>
+
+                            <defs>
+                                <marker id="p1FlowArrow" markerWidth="10" markerHeight="10" refX="8" refY="5"
+                                    orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 Z" fill="var(--primary)" />
+                                </marker>
+
+                                <marker id="p1FeedbackArrow" markerWidth="10" markerHeight="10" refX="8" refY="5"
+                                    orient="auto">
+                                    <path d="M0 0 L10 5 L0 10 Z" fill="var(--accent)" />
+                                </marker>
+                            </defs>
+
+                            <!-- Summing junction -->
+                            <circle cx="120" cy="72" r="20" fill="none" stroke="var(--primary)" stroke-width="2" />
+
+                            <text x="111" y="67" fill="currentColor">+</text>
+                            <text x="111" y="89" fill="currentColor">−</text>
+
+                            <!-- PID controller -->
+                            <rect x="185" y="43" width="180" height="58" rx="9" fill="none" stroke="var(--primary)"
+                                stroke-width="2" />
+
+                            <text x="275" y="67" text-anchor="middle" fill="currentColor" font-weight="bold">
+                                PID Controller
+                            </text>
+
+                            <text id="p1DiagramGains" x="275" y="87" text-anchor="middle" fill="currentColor"
+                                font-size="12">
+                                Kp=9.0 Ki=0.0 Kd=0.0
+                            </text>
+
+                            <!-- Actuator saturation -->
+                            <rect x="425" y="43" width="120" height="58" rx="9" fill="none" stroke="var(--accent)"
+                                stroke-width="2" />
+
+                            <text x="485" y="67" text-anchor="middle" fill="currentColor" font-size="14">
+                                Saturation
+                            </text>
+
+                            <text x="485" y="87" text-anchor="middle" fill="currentColor" font-size="12">
+                                [-20, 20]
+                            </text>
+
+                            <!-- Selected plant -->
+                            <rect x="607" y="43" width="200" height="58" rx="9" fill="none" stroke="var(--primary)"
+                                stroke-width="2" />
+
+                            <text x="707" y="67" text-anchor="middle" fill="currentColor" font-weight="bold">
+                                Plant
+                            </text>
+
+                            <text id="p1DiagramPlantModel" x="707" y="87" text-anchor="middle" fill="currentColor"
+                                font-size="13">
+                                K / (τs + 1)
+                            </text>
+
+                            <!-- Forward signal path -->
+                            <g fill="none" stroke="var(--primary)" stroke-width="2.5" marker-end="url(#p1FlowArrow)">
+
+                                <path d="M55 72 H96" />
+                                <path d="M141 72 H180" />
+                                <path d="M365 72 H420" />
+                                <path d="M545 72 H602" />
+                                <path d="M807 72 H895" />
+                            </g>
+
+                            <!-- Signal labels -->
+                            <g fill="currentColor" font-size="12">
+                                <text x="27" y="51">r(t)</text>
+                                <text x="150" y="51">e(t)</text>
+                                <text x="373" y="51">u_req</text>
+                                <text x="554" y="51">u(t)</text>
+                                <text x="854" y="51">y(t)</text>
+                            </g>
+
+                            <!-- Unity feedback path -->
+                            <rect x="390" y="171" width="130" height="38" rx="7" fill="none" stroke="var(--accent)"
+                                stroke-width="2" />
+
+                            <text x="455" y="194" text-anchor="middle" fill="currentColor" font-size="13">
+                                Feedback = 1
+                            </text>
+
+                            <path d="M855 72 V190 H520" fill="none" stroke="var(--accent)" stroke-width="2.5" />
+
+                            <path d="M390 190 H120 V96" fill="none" stroke="var(--accent)" stroke-width="2.5"
+                                marker-end="url(#p1FeedbackArrow)" />
+
+                            <text x="610" y="216" fill="currentColor" font-size="12">
+                                Measured output
+                            </text>
+
+                        </svg>
+                    </div>
+
+                    <p class="lab-muted text-xs mt-3">
+                        The controller uses negative feedback.
+                        The applied control signal is limited to [-20, 20].
+                    </p>
+
+                </div>
+
+
+                <!-- P1: Live Simulation Results -->
+                <div class="mt-6">
+
+                    <div class="mb-5">
+                        <p class="text-xs font-bold lab-accent mb-2">
+                            CLOSED-LOOP SIMULATION
+                        </p>
+
+                        <h4 class="text-xl font-bold">
+                            Live Response Analysis
+                        </h4>
+
+                        <p id="p1PlotStatus" class="lab-muted text-sm mt-2">
+                            First-order proportional control simulation.
+                        </p>
+                    </div>
+
+                    <div id="p1GraphArea" class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+
+                        <!-- Output compared with the desired setpoint -->
+                        <div class="lab-panel p-4">
+                            <h5 class="font-bold mb-3">
+                                Output vs Setpoint
+                            </h5>
+
+                            <div id="p1OutputPlot" class="w-full h-80"></div>
+                        </div>
+
+                        <!-- Controller signal and actuator limits -->
+                        <div class="lab-panel p-4">
+                            <h5 class="font-bold mb-3">
+                                Control Signal u(t)
+                            </h5>
+
+                            <div id="p1ControlPlot" class="w-full h-80"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <!-- P1: Closed-loop response metrics -->
+                <div class="mt-6">
+
+                    <div class="mb-4">
+                        <p class="text-xs font-bold lab-accent mb-2">
+                            PERFORMANCE ANALYSIS
+                        </p>
+
+                        <h4 class="text-xl font-bold">
+                            Response Characteristics
+                        </h4>
+
+                        <p class="lab-muted text-sm mt-2">
+                            Performance metrics calculated from the simulated closed-loop response.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                        <div class="lab-panel p-5">
+                            <p class="lab-muted text-sm mb-2">
+                                Rise Time (10–90%)
+                            </p>
+                            <p id="p1RiseTime" class="text-2xl font-bold lab-accent">
+                                —
+                            </p>
+                        </div>
+
+                        <div class="lab-panel p-5">
+                            <p class="lab-muted text-sm mb-2">
+                                Overshoot
+                            </p>
+                            <p id="p1Overshoot" class="text-2xl font-bold lab-accent">
+                                —
+                            </p>
+                        </div>
+
+                        <div class="lab-panel p-5">
+                            <p class="lab-muted text-sm mb-2">
+                                Settling Time (2%)
+                            </p>
+                            <p id="p1SettlingTime" class="text-2xl font-bold lab-accent">
+                                —
+                            </p>
+                        </div>
+
+                        <div class="lab-panel p-5">
+                            <p class="lab-muted text-sm mb-2">
+                                Steady-State Error
+                            </p>
+                            <p id="p1SteadyError" class="text-2xl font-bold lab-accent">
+                                —
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- P1: Predict then Check -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        INTERACTIVE LEARNING / PREDICT THEN CHECK
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        Predict the Controller Behavior
+                    </h4>
+
+                    <p class="lab-muted text-sm mb-4">
+                        Predict the result before running the simulation.
+                    </p>
+
+                    <p class="font-semibold mb-4">
+                        For a first-order plant with K = 1 and τ = 1 s, what happens to the steady-state error when Kp
+                        increases from 1 to 9, with Ki = Kd = 0?
+                    </p>
+
+                    <label for="p1PredictionChoice" class="block font-semibold mb-2">
+                        Your Prediction
+                    </label>
+
+                    <select id="p1PredictionChoice" class="lab-select w-full">
+                        <option value="">Choose your answer</option>
+                        <option value="decrease">The error decreases</option>
+                        <option value="increase">The error increases</option>
+                        <option value="same">The error stays the same</option>
+                    </select>
+
+                    <button id="p1CheckPrediction" type="button"
+                        class="mt-4 px-5 py-3 rounded-xl  bg-blue-700 text-white font-semibold hover:bg-blue-800">
+                        Check Prediction
+                    </button>
+
+                    <div id="p1PredictionResult" class="lab-muted text-sm mt-4" aria-live="polite">
+                        Select an answer, then check your prediction.
+                    </div>
+
+                </div>
+
+
+                <!-- P1: Official Engineering Validation -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        ENGINEERING VALIDATION / 01–03
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-2">
+                        PID Validation Checks
+                    </h4>
+
+                    <p class="lab-muted text-sm mb-4">
+                        Verify the controller against the official homework reference cases.
+                    </p>
+
+                    <button id="p1RunValidation" type="button" class="px-5 py-3 rounded-xl bg-blue-700 text-white font-semibold hover:bg-blue-800">
+                        Run Validation Checks
+                    </button>
+
+                    <div id="p1ValidationResults" class="mt-5 space-y-3" aria-live="polite">
+                        <p class="lab-muted text-sm">
+                            Click the button to run the three tests.
+                        </p>
+                    </div>
+
+                </div>
+
+
             </section>
 
             <!-- P2: SLOW SENSOR -->
@@ -1192,6 +1650,7 @@
     <script src="./js/module2.js"></script>
     <script src="./js/module3.js"></script>
     <script src="./js/module4.js"></script>
+    <script src="./js/control-p1.js"></script>
 </body>
 
 </html>
