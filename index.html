@@ -1544,7 +1544,8 @@
                         Verify the controller against the official homework reference cases.
                     </p>
 
-                    <button id="p1RunValidation" type="button" class="px-5 py-3 rounded-xl bg-blue-700 text-white font-semibold hover:bg-blue-800">
+                    <button id="p1RunValidation" type="button"
+                        class="px-5 py-3 rounded-xl bg-blue-700 text-white font-semibold hover:bg-blue-800">
                         Run Validation Checks
                     </button>
 
@@ -1573,7 +1574,142 @@
                     Investigate how sensor delay affects closed-loop stability.
                 </p>
 
-                <!-- P2 implementation goes here -->
+                <p id="p2PlantInfo" class="lab-muted text-sm mt-2">
+                    Plant: K=1, τ=1 (First-Order)
+                </p>
+
+                <!-- P2: A Slow Sensor in the Loop -->
+                <section id="control-p2" class="mt-10">
+                    <div class="lab-card p-5 md:p-7">
+
+                        <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                            SENSOR PARAMETERS / FEEDBACK CONTROL
+                        </p>
+
+                        <h2 class="text-2xl font-bold mb-2">
+                            A Slow Sensor in the Loop
+                        </h2>
+
+                        <p class="lab-muted mb-6">
+                            Explore how sensor delay affects the feedback response.
+                            The controller uses the measured output instead of the
+                            true plant output.
+                        </p>
+
+                        <!-- Sensor Time Constant -->
+                        <div class="lab-panel p-4 mb-5">
+                            <div class="flex justify-between items-center mb-3">
+                                <label for="p2TauS" class="font-semibold">
+                                    Sensor Time Constant (τs)
+                                </label>
+                                <strong id="p2TauSValue">0.05 s</strong>
+                            </div>
+
+                            <input id="p2TauS" type="range" min="0.01" max="3" step="0.01" value="0.05"
+                                class="lab-range w-full">
+
+                            <p class="lab-muted text-xs mt-2">
+                                Increase τs to make the sensor slower.
+                            </p>
+                        </div>
+
+                        <!-- PID Gains -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+
+                            <div class="lab-panel p-4">
+                                <label for="p2Kp" class="font-semibold block mb-2">
+                                    Proportional Gain (Kp)
+                                </label>
+                                <input id="p2Kp" type="range" min="0" max="20" step="0.1" value="9"
+                                    class="lab-range w-full">
+                                <p class="text-center font-bold mt-2" id="p2KpValue">9.0</p>
+                            </div>
+
+                            <div class="lab-panel p-4">
+                                <label for="p2Ki" class="font-semibold block mb-2">
+                                    Integral Gain (Ki)
+                                </label>
+                                <input id="p2Ki" type="range" min="0" max="10" step="0.1" value="0"
+                                    class="lab-range w-full">
+                                <p class="text-center font-bold mt-2" id="p2KiValue">0.0</p>
+                            </div>
+
+                            <div class="lab-panel p-4">
+                                <label for="p2Kd" class="font-semibold block mb-2">
+                                    Derivative Gain (Kd)
+                                </label>
+                                <input id="p2Kd" type="range" min="0" max="5" step="0.05" value="0"
+                                    class="lab-range w-full">
+                                <p class="text-center font-bold mt-2" id="p2KdValue">0.00</p>
+                            </div>
+
+                        </div>
+
+                        <!-- Plot -->
+                        <div class="lab-panel p-3 md:p-5 mb-5">
+                            <h3 class="font-bold mb-3">
+                                True Output vs Sensor Measurement
+                            </h3>
+                            <div id="p2SensorPlot" style="width:100%; height:380px;"></div>
+                        </div>
+
+                        <!-- Performance Results -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+                            <div class="lab-panel p-4">
+                                <p class="lab-muted text-sm">True Output Overshoot</p>
+                                <p class="text-xl font-bold" id="p2Overshoot">--</p>
+                            </div>
+
+                            <div class="lab-panel p-4">
+                                <p class="lab-muted text-sm">Sensor Tracking Difference</p>
+                                <p class="text-xl font-bold" id="p2SensorDifference">--</p>
+                            </div>
+
+                            <div class="lab-panel p-4">
+                                <p class="lab-muted text-sm">Setpoint Crossings</p>
+                                <p class="text-xl font-bold" id="p2Crossings">--</p>
+                            </div>
+
+                        </div>
+
+                        <p id="p2Status" class="lab-muted text-sm mb-6" aria-live="polite">
+                            Adjust the sensor time constant to explore its effect.
+                        </p>
+
+                        <!-- Predict Then Check -->
+                        <div class="lab-panel p-5">
+                            <p class="text-xs font-bold tracking-widest lab-accent mb-2">
+                                INTERACTIVE LEARNING / PREDICT THEN CHECK
+                            </p>
+
+                            <h3 class="text-xl font-bold mb-3">
+                                Predict, then Check
+                            </h3>
+
+                            <p class="lab-muted mb-4">
+                                What happens to the true output overshoot when
+                                the sensor time constant increases?
+                            </p>
+
+                            <select id="p2Prediction" class="lab-select w-full">
+                                <option value="">Choose your prediction</option>
+                                <option value="increase">Overshoot increases</option>
+                                <option value="decrease">Overshoot decreases</option>
+                                <option value="same">Overshoot stays the same</option>
+                            </select>
+
+                            <button id="p2CheckPrediction" type="button" class="lab-button px-6 py-3 font-semibold">
+                                Check Prediction
+                            </button>
+
+                            <div id="p2PredictionResult" class="lab-panel p-4 mt-4 hidden" aria-live="polite">
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
             </section>
 
             <!-- P3: DIGITAL PID -->
@@ -1651,6 +1787,7 @@
     <script src="./js/module3.js"></script>
     <script src="./js/module4.js"></script>
     <script src="./js/control-p1.js"></script>
+    <script src="./js/control-p2.js"></script>
 </body>
 
 </html>
