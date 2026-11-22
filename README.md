@@ -560,7 +560,7 @@ All implemented features were reviewed and tested by the team members, who are r
 ## Homework 2 — Development Status
 
 - P1 — PID Playground: Implemented and locally tested.
-- P2 — A Slow Sensor in the Loop: In progress.
+- P2 — A Slow Sensor in the Loop: Implemented and locally tested.
 - P3 — Digital PID: In progress.
 - P4 — Tuning Challenge: In progress.
 - My System — Micromouse Motor Speed Control: In progress.
