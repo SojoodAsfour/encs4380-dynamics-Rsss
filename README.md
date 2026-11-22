@@ -33,7 +33,7 @@ The project emphasizes interactive learning, numerical simulation, mathematical 
 |---|---|
 | Sojood Asfour | Homework 1: Module 1 — First-Order Time Response, initial website structure and styling. Homework 2: P1 — PID Playground and Control section structure. |
 | Shahd Manasra | Homework 1: Module 2 — First-Order Frequency Response. |
-| Shahd Tamimi | Homework 1: Module 3 — Second-Order Response and State-Space Modeling. |
+| Shahd Tamimi | Homework 1: Module 3 — Second-Order Response and State-Space Modeling. Homework 2: P3 - Digital PID Controler  |
 | Rahaf Suliman | Homework 1: Module 4 — Guess the Sensor; UI and documentation contributions. |
 
 Homework 2 contributions will be updated as the remaining modules are completed and integrated.
@@ -311,9 +311,50 @@ Dynamic calculation of:
 
 ## P3 — Digital PID
 
-**Status:** In Progress
+### Digital PID Controller
+**Status:** Implemented and Locally Testing
+**Contributor:** Shahd Tamimi
 
-Explores discrete-time PID control, sampling effects, and anti-windup behavior.
+The Digital PID module demonstrates how continuous PID control is implemented in a discrete-time system, similar to how an Arduino executes a controller loop.
+
+- Discrete-time PID implementation using the proportional, integral, and derivative terms.
+- Adjustable proportional gain (Kp).
+- Adjustable integral gain (Ki).
+- Adjustable derivative gain (Kd).
+- Adjustable sampling time (Ts).
+- Real-time calculation of the controller output at each sampling instant.
+- Support for changing controller parameters and observing their effect on system performance.
+
+### Sampling Time Analysis
+
+- Interactive sampling time adjustment.
+- Visualization of the stair-step control signal.
+- Live visualization of the plant response at different sampling times.
+- Demonstration of how increasing Ts affects response accuracy, stability, and overall controller performance.
+
+### Anti-Windup
+
+- Interactive anti-windup ON/OFF selection.
+- Integral windup demonstration when the actuator reaches its saturation limits.
+- Comparison of controller behavior with and without anti-windup.
+- Visualization of the effect of integral accumulation during actuator saturation.
+
+### Arduino Code Generation
+
+- Automatic generation of Arduino-style PID code based on the selected controller gains and sampling time.
+- Generated code includes proportional, integral, and derivative calculations.
+- Implementation of fixed sampling intervals.
+- Actuator output constraints.
+- Optional anti-windup logic.
+- Copy button for copying the generated Arduino code.
+
+### Interactive Learning
+
+- Live response plots and discrete control-signal visualization.
+- Adjustable controller parameters for experimentation.
+- Predict, then Check activity exploring the effect of sampling time on digital controller performance.
+
+
 
 ### P4 — Tuning Challenge
 
@@ -616,6 +657,6 @@ All implemented features were reviewed and tested by the team members, who are r
 
 - P1 — PID Playground: Implemented and locally tested.
 - P2 — A Slow Sensor in the Loop: Implemented and locally tested.
-- P3 — Digital PID: In progress.
+- P3 — Digital PID: Implemented and locally tested.
 - P4 — Tuning Challenge: In progress.
 - My System — Micromouse Motor Speed Control: In progress.
