@@ -34,7 +34,7 @@ The project emphasizes interactive learning, numerical simulation, mathematical 
 | Sojood Asfour | Homework 1: Module 1 — First-Order Time Response, initial website structure and styling. Homework 2: P1 — PID Playground and Control section structure. |
 | Shahd Manasra | Homework 1: Module 2 — First-Order Frequency Response. |
 | Shahd Tamimi | Homework 1: Module 3 — Second-Order Response and State-Space Modeling. |
-| Rahaf Suliman | Homework 1: Module 4 — Guess the Sensor; UI and documentation contributions. |
+| Rahaf Suliman | Homework 1: Module 4 — Guess the Sensor; UI and documentation contributions. P4 —  Tuning Challenge. |
 
 Homework 2 contributions will be updated as the remaining modules are completed and integrated.
 
@@ -266,7 +266,7 @@ Explores discrete-time PID control, sampling effects, and anti-windup behavior.
 
 ### P4 — Tuning Challenge
 
-**Status: Implemented and Under Testing**
+**Status: Implemented and Locally Tested**
 **Contributor:** Rahaf Suliman
 
 The Tuning Challenge provides an interactive environment where users design a PID controller for a hidden dynamic plant and attempt to satisfy specified performance requirements.
@@ -566,5 +566,5 @@ All implemented features were reviewed and tested by the team members, who are r
 - P1 — PID Playground: Implemented and locally tested.
 - P2 — A Slow Sensor in the Loop: In progress.
 - P3 — Digital PID: In progress.
-- P4 — Tuning Challenge: In progress.
+- P4 — Tuning Challenge: Implemented and locally tested.
 - My System — Micromouse Motor Speed Control: In progress.
