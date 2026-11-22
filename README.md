@@ -32,7 +32,7 @@ The project emphasizes interactive learning, numerical simulation, mathematical 
 | Team Member | Responsibility |
 |---|---|
 | Sojood Asfour | Homework 1: Module 1 — First-Order Time Response, initial website structure and styling. Homework 2: P1 — PID Playground and Control section structure. |
-| Shahd Manasra | Homework 1: Module 2 — First-Order Frequency Response. |
+| Shahd Manasra | Homework 1: Module 2 — First-Order Frequency Response. Homework 2: P2 — A Slow Sensor in the Loop  |
 | Shahd Tamimi | Homework 1: Module 3 — Second-Order Response and State-Space Modeling. Homework 2: P3 - Digital PID Controler  |
 | Rahaf Suliman | Homework 1: Module 4 — Guess the Sensor; UI and documentation contributions. Homework 2: P4 —  Tuning Challenge|
 
