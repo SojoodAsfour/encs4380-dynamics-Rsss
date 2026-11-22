@@ -1883,7 +1883,161 @@
                     Tune PID gains to meet a hidden plant's specifications.
                 </p>
 
-                <!-- P4 implementation goes here -->
+
+                <!-- Score board -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm">Session Score</p>
+                        <p id="p4SessionScore" class="text-2xl font-bold mt-2 lab-accent">0</p>
+                        <p class="lab-muted text-xs mt-1">of <span id="p4SessionMax">0</span> possible</p>
+                    </div>
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm">Challenges Completed</p>
+                        <p id="p4Completed" class="text-2xl font-bold mt-2">0</p>
+                    </div>
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm">Accuracy</p>
+                        <p id="p4Accuracy" class="text-2xl font-bold mt-2">--</p>
+                    </div>
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm">Plant Type</p>
+                        <p id="p4PlantType" class="text-2xl font-bold mt-2 lab-accent">Unknown</p>
+                    </div>
+                </div>
+
+                <!-- Task -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+                    <p class="text-xs lab-accent font-bold">YOUR TASK</p>
+                    <p class="font-semibold mt-2">
+                        The plant is hidden. Run the step test to identify it, then tune Kp, Ki and Kd to meet the
+                        specification.
+                    </p>
+                    <p class="mt-3"><span class="font-bold">Spec:</span> <span id="p4Spec"
+                            class="lab-muted text-sm"></span></p>
+
+                    <div class="flex flex-wrap gap-3 mt-5">
+                        <button id="p4StepTest" type="button" class="lab-button px-6 py-3 font-semibold">Run Open-Loop
+                            Step Test</button>
+                        <button id="p4Hint" type="button" class="lab-select font-semibold"
+                            style="width:auto;cursor:pointer">Get Hint</button>
+                        <button id="p4NewPlant" type="button" class="lab-select font-semibold"
+                            style="width:auto;cursor:pointer">New Challenge ↻</button>
+                    </div>
+
+                    <div id="p4HintResult" class="lab-panel p-4 mt-5 hidden" aria-live="polite"></div>
+                </div>
+
+                <!-- Step test -->
+                <div id="p4TestWrap" class="lab-panel p-4 mt-6 hidden">
+                    <p class="text-xs lab-accent font-bold">UNKNOWN PLANT</p>
+                    <h5 class="font-bold mb-3">Open-Loop Step Response (u = 1, noisy measurement)</h5>
+                    <div id="p4TestPlot" class="w-full h-80"></div>
+                </div>
+
+                <!-- Identify the plant (shown after the step test) -->
+                <div id="p4IdentifyWrap" class="lab-panel p-5 md:p-6 mt-6 hidden">
+                    <p class="text-xs font-bold lab-accent mb-2">SYSTEM IDENTIFICATION</p>
+                    <h4 class="text-xl font-bold mb-3">Identify the Plant</h4>
+                    <p class="lab-muted text-sm mb-4">
+                        Study the step response above. Which type of system is it?
+                    </p>
+
+                    <select id="p4PlantGuess" class="lab-select w-full">
+                        <option value="">Choose the plant type</option>
+                        <option value="first">First-order</option>
+                        <option value="second">Second-order</option>
+                    </select>
+
+                    <button id="p4CheckPlant" type="button" class="lab-button px-6 py-3 font-semibold mt-4">
+                        Check Plant Type
+                    </button>
+
+                    <div id="p4PlantResult" class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
+                </div>
+
+                <!-- Gains -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+                    <p class="text-xs font-bold lab-accent mb-2">CONTROL PANEL / PID CONTROLLER</p>
+                    <h4 class="text-xl font-bold mb-4">Tune the Gains</h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p4Kp">Proportional (Kp)</label>
+                                <output id="p4KpValue" class="font-bold lab-accent">1.0</output>
+                            </div>
+                            <input id="p4Kp" type="range" min="0" max="20" step="0.1" value="1" class="lab-range">
+                        </div>
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p4Ki">Integral (Ki)</label>
+                                <output id="p4KiValue" class="font-bold lab-accent">0.0</output>
+                            </div>
+                            <input id="p4Ki" type="range" min="0" max="10" step="0.1" value="0" class="lab-range">
+                        </div>
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p4Kd">Derivative (Kd)</label>
+                                <output id="p4KdValue" class="font-bold lab-accent">0.00</output>
+                            </div>
+                            <input id="p4Kd" type="range" min="0" max="5" step="0.05" value="0" class="lab-range">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plots -->
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-6">
+                    <div class="lab-panel p-4">
+                        <h5 class="font-bold mb-1">Output vs Setpoint</h5>
+                        <p class="lab-muted text-xs mb-3">Green band = ±2%, dotted line = settling deadline, red dashed
+                            = overshoot limit.</p>
+                        <div id="p4OutputPlot" class="w-full h-80"></div>
+                    </div>
+                    <div class="lab-panel p-4">
+                        <h5 class="font-bold mb-3">Control Signal u(t)</h5>
+                        <div id="p4ControlPlot" class="w-full h-80"></div>
+                    </div>
+                </div>
+
+                <!-- Pass / fail -->
+                <div class="mt-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <h4 class="text-xl font-bold">Specification Check</h4>
+                        <p class="text-xl font-bold">Current design: <span id="p4Score" class="lab-accent">0 /
+                                100</span></p>
+                    </div>
+                    <div id="p4Results" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+                    <p id="p4Status" class="lab-muted text-sm mt-4" aria-live="polite"></p>
+
+                    <div class="flex flex-wrap gap-3 mt-5">
+                        <button id="p4Submit" type="button" class="lab-button px-6 py-3 font-semibold">Submit My
+                            Design</button>
+                    </div>
+                    <div id="p4Truth" class="lab-panel p-4 mt-5 font-semibold hidden" aria-live="polite"></div>
+                </div>
+
+                <!-- Predict, then Check -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+                    <p class="text-xs font-bold lab-accent mb-2">INTERACTIVE LEARNING / PREDICT THEN CHECK</p>
+                    <h4 class="text-xl font-bold mb-3">Predict the Effect of the Integral Term</h4>
+                    <p class="font-semibold mb-4">
+                        You keep your current Kp and add Ki = 1. What happens to the steady-state error?
+                    </p>
+
+                    <select id="p4Prediction" class="lab-select w-full">
+                        <option value="">Choose your prediction</option>
+                        <option value="decrease">The error decreases</option>
+                        <option value="same">The error stays the same</option>
+                        <option value="increase">The error increases</option>
+                    </select>
+
+                    <button id="p4CheckPrediction" type="button" class="lab-button px-6 py-3 font-semibold mt-4">
+                        Check Prediction
+                    </button>
+
+                    <div id="p4PredictionResult" class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
+                </div>
+
             </section>
 
             <!-- PROJECT: MY SYSTEM -->
@@ -1928,6 +2082,8 @@
     <script src="./js/control-p1.js"></script>
     <script src="./js/control-p2.js"></script>
     <script src="./js/control-p3.js"></script>
+    <script src="./js/control-p4.js"></script>
+
 </body>
 
 </html>

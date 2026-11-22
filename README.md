@@ -315,11 +315,66 @@ Dynamic calculation of:
 
 Explores discrete-time PID control, sampling effects, and anti-windup behavior.
 
-## P4 — Tuning Challenge
+### P4 — Tuning Challenge
 
-**Status:** In Progress
+**Status: Implemented and Under Testing**
+**Contributor:** Rahaf Suliman
 
-An interactive controller-tuning challenge involving a hidden plant and performance targets.
+The Tuning Challenge provides an interactive environment where users design a PID controller for a hidden dynamic plant and attempt to satisfy specified performance requirements.
+
+### Hidden Plant Generation
+
+- Randomized hidden plant generation for each new challenge.
+- Reuse of Homework 1 plant models and response functions.
+- Support for first-order and second-order plant behavior.
+- Hidden plant parameters that users must identify through system response analysis.
+- New Challenge button to generate another challenge.
+
+### Open-Loop Step Test
+
+- Simulation of the hidden plant's open-loop step response.
+- Interactive visualization of the output response.
+- Analysis of the plant's transient behavior.
+- Open-loop response used as a reference for identifying the hidden plant characteristics.
+
+### Plant Identification
+
+- Interactive selection of the estimated plant type.
+- Support for first-order and second-order plant classification.
+- Check Plant Type functionality to evaluate the user's identification.
+- Feedback indicating whether the selected plant type matches the hidden plant.
+
+### PID Controller Tuning
+
+- Adjustable proportional gain (Kp).
+- Adjustable integral gain (Ki).
+- Adjustable derivative gain (Kd).
+- Interactive experimentation with different controller configurations.
+- Real-time evaluation of the selected controller gains.
+
+### Performance Specifications
+
+The controller is evaluated against three performance requirements:
+
+- Percentage Overshoot: Must remain below or equal to the specified maximum.
+- Settling Time: Must remain within the specified time limit using the 2% criterion.
+- Steady-State Error: Must remain below or equal to the specified allowable error.
+
+### Automated Evaluation and Scoring
+
+- Automatic calculation of controller performance metrics.
+- Independent PASS/FAIL evaluation for each performance requirement.
+- Overall score based on the achieved specifications.
+- Submit My Design button to evaluate the current controller configuration.
+- Display of the final evaluation results and score after submission.
+- New Challenge button resets the previous evaluation and starts a new challenge.
+
+### Interactive Learning
+
+- Users experiment with different PID gains to satisfy the hidden plant's performance specifications.
+- Comparison between controller configurations through repeated challenges.
+- Predict, then Check learning approach encouraging users to understand the relationship between PID gains and transient response characteristics.
+
 
 ## My System — Micromouse Motor Speed Control
 
