@@ -1727,7 +1727,146 @@
                     Explore sampling time, discrete control, and anti-windup.
                 </p>
 
-                <!-- P3 implementation goes here -->
+
+                <p id="p3PlantInfo" class="lab-muted text-sm mt-2">Plant: K=1, τ=1 (First-Order)</p>
+
+                <!-- Controls -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+                    <p class="text-xs font-bold lab-accent mb-2">CONTROL PANEL / DIGITAL CONTROLLER</p>
+                    <h4 class="text-xl font-bold mb-4">Sampling and Gains</h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p3Ts">Sampling Time (Ts)</label>
+                                <output id="p3TsValue" class="font-bold lab-accent">20 ms</output>
+                            </div>
+                            <input id="p3Ts" type="range" min="0.001" max="0.5" step="0.001" value="0.02"
+                                class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p3UMax">Actuator Limit (0 to Umax)</label>
+                                <output id="p3UMaxValue" class="font-bold lab-accent">1.5</output>
+                            </div>
+                            <input id="p3UMax" type="range" min="0" max="20" step="0.1" value="0" class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p3Kp">Proportional Gain (Kp)</label>
+                                <output id="p3KpValue" class="font-bold lab-accent">2.0</output>
+                            </div>
+                            <input id="p3Kp" type="range" min="0" max="20" step="0.1" value="2" class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p3Ki">Integral Gain (Ki)</label>
+                                <output id="p3KiValue" class="font-bold lab-accent">8.0</output>
+                            </div>
+                            <input id="p3Ki" type="range" min="0" max="10" step="0.1" value="8" class="lab-range">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between gap-3 mb-3">
+                                <label for="p3Kd">Derivative Gain (Kd)</label>
+                                <output id="p3KdValue" class="font-bold lab-accent">0.00</output>
+                            </div>
+                            <input id="p3Kd" type="range" min="0" max="5" step="0.05" value="0" class="lab-range">
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <input id="p3AntiWindup" type="checkbox" checked>
+                            <label for="p3AntiWindup" class="font-semibold">Anti-windup (conditional
+                                integration)</label>
+                        </div>
+                    </div>
+
+                    <p class="lab-muted text-xs mt-4">
+                        u[k] = Kp·e[k] + Ki·Ts·Σe[j] + Kd·(e[k] − e[k−1]) / Ts
+                    </p>
+                </div>
+
+                <!-- Metrics -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-6">
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm mb-2">Overshoot</p>
+                        <p id="p3Overshoot" class="text-2xl font-bold lab-accent">—</p>
+                    </div>
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm mb-2">Settling Time (2%)</p>
+                        <p id="p3Settling" class="text-2xl font-bold lab-accent">—</p>
+                    </div>
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm mb-2">Steady-State Error</p>
+                        <p id="p3SteadyError" class="text-2xl font-bold lab-accent">—</p>
+                    </div>
+                    <div class="lab-panel p-5">
+                        <p class="lab-muted text-sm mb-2">IAE (∫|e| dt)</p>
+                        <p id="p3Iae" class="text-2xl font-bold lab-accent">—</p>
+                    </div>
+                </div>
+
+                <p id="p3Status" class="lab-muted text-sm mt-4" aria-live="polite"></p>
+
+                <!-- Plots -->
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-6">
+                    <div class="lab-panel p-4">
+                        <h5 class="font-bold mb-3">Output vs Setpoint</h5>
+                        <div id="p3OutputPlot" class="w-full h-80"></div>
+                    </div>
+                    <div class="lab-panel p-4">
+                        <h5 class="font-bold mb-3">Control Signal u[k] (held between samples)</h5>
+                        <div id="p3ControlPlot" class="w-full h-80"></div>
+                    </div>
+                </div>
+
+                <div class="lab-panel p-4 mt-5">
+                    <h5 class="font-bold mb-1">Performance vs Sampling Time</h5>
+                    <p class="lab-muted text-sm mb-3">Same gains, simulated for different Ts. The dotted line marks your
+                        current Ts.</p>
+                    <div id="p3SweepPlot" class="w-full h-80"></div>
+                </div>
+
+                <!-- Arduino code -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+                    <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+                        <div>
+                            <p class="text-xs font-bold lab-accent mb-2">IMPLEMENTATION / ARDUINO</p>
+                            <h4 class="text-xl font-bold">Generated Arduino Code</h4>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span id="p3CopyStatus" class="lab-muted text-sm"></span>
+                            <button id="p3CopyCode" type="button" class="lab-button px-6 py-3 font-semibold">Copy
+                                Code</button>
+                        </div>
+                    </div>
+                    <pre class="lab-panel p-4 overflow-x-auto text-sm font-mono"><code id="p3Code"></code></pre>
+                </div>
+
+                <!-- Predict, then Check -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+                    <p class="text-xs font-bold lab-accent mb-2">INTERACTIVE LEARNING / PREDICT THEN CHECK</p>
+                    <h4 class="text-xl font-bold mb-3">Predict the Effect of Sampling Time</h4>
+                    <p class="font-semibold mb-4">
+                        With your current gains, what happens to the performance when Ts increases from 10 ms to 500 ms?
+                    </p>
+
+                    <select id="p3Prediction" class="lab-select w-full">
+                        <option value="">Choose your prediction</option>
+                        <option value="better">The performance gets better</option>
+                        <option value="same">The performance stays about the same</option>
+                        <option value="worse">The performance gets worse</option>
+                    </select>
+
+                    <button id="p3CheckPrediction" type="button" class="lab-button px-6 py-3 font-semibold mt-4">
+                        Check Prediction
+                    </button>
+
+                    <div id="p3PredictionResult" class="lab-panel p-4 mt-4 hidden" aria-live="polite"></div>
+                </div>
             </section>
 
             <!-- P4: TUNING CHALLENGE -->
@@ -1788,6 +1927,7 @@
     <script src="./js/module4.js"></script>
     <script src="./js/control-p1.js"></script>
     <script src="./js/control-p2.js"></script>
+    <script src="./js/control-p3.js"></script>
 </body>
 
 </html>
