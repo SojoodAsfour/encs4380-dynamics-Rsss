@@ -254,9 +254,60 @@ The interface also identifies responses that do not settle within the simulated 
 
 ## P2 — A Slow Sensor in the Loop
 
-**Status:** In Progress
+**Status:** Implemented and Locally Tested  
+**Contributor:** Shahd Manasra
 
-Investigates the effect of sensor dynamics and measurement delay on closed-loop control performance.
+The Slow Sensor in the Loop module demonstrates how sensor dynamics and delayed feedback affect closed-loop system behavior and PID controller performance.
+
+### Sensor Model
+
+- Implemented a first-order sensor model in the feedback loop.
+- Adjustable sensor time constant (τs).
+- Simulates the delay between the actual plant output and the sensor measurement.
+- Integrates sensor dynamics with the plant and PID controller simulation.
+
+### Closed-Loop Simulation
+
+- Simulated the plant response with a sensor included in the feedback path.
+- Euler-based numerical integration for the plant and sensor differential equations.
+- PID controller operates using the sensor measurement rather than the true plant output.
+- Supports adjustable Kp, Ki, and Kd controller gains.
+- Updates the simulation dynamically when sensor or controller parameters change.
+
+### Live Visualization
+
+- Interactive Plotly plot showing the true plant output and sensor measurement on the same graph.
+- Displays the setpoint alongside both response signals.
+- Visualizes the difference between the actual system response and the delayed sensor reading.
+- Responsive plotting integrated with the existing TRANSIENT interface.
+
+### Performance Metrics
+
+Dynamic calculation of:
+
+- True plant output overshoot.
+- Sensor tracking difference between the plant output and sensor measurement.
+- Setpoint crossing count.
+
+### Oscillation Analysis
+
+- Detects damped oscillatory responses.
+- Identifies sustained or growing oscillation behavior.
+- Evaluates oscillation amplitude, repeated crossings, and whether the oscillation amplitude is decreasing over time.
+- Displays a response status describing the observed system behavior.
+
+### Predict, then Check
+
+- Interactive prediction activity comparing the effect of different sensor time constants on closed-loop overshoot, followed by simulation-based verification of the user's prediction.
+
+### Additional Testing
+
+- Tested different sensor time constant values.
+- Tested different PID gain combinations.
+- Verified the difference between true plant output and sensor measurement.
+- Tested overshoot and oscillatory response detection.
+- Checked stable, damped, and oscillatory response behavior.
+- Verified interactive plots and parameter updates locally.
 
 ## P3 — Digital PID
 
