@@ -168,8 +168,8 @@
 
         $("p2PlantInfo").textContent = `Plant: K=${plant.K}, τ=${plant.tau} (First-Order)`;
         $("p2TauSValue").textContent = tauS.toFixed(2) + " s";
-        $("p2KpValue").textContent = Kp.toFixed(1);
-        $("p2KiValue").textContent = Ki.toFixed(1);
+        $("p2KpValue").textContent = Kp.toFixed(4);
+        $("p2KiValue").textContent = Ki.toFixed(4);
         $("p2KdValue").textContent = Kd.toFixed(2);
 
         const simulation = runSimulation();

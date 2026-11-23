@@ -1142,7 +1142,7 @@
                                 </output>
                             </div>
 
-                            <input id="p1Tau" type="range" min="0.1" max="10" step="0.1" value="1" class="lab-range">
+                            <input id="p1Tau" type="range" min="0.1" max="10" step="0.01" value="1" class="lab-range">
                         </div>
                     </div>
 
@@ -1223,7 +1223,7 @@
                                     </output>
                                 </div>
 
-                                <input id="p1Ki" type="range" min="0" max="10" step="0.1" value="0"
+                                <input id="p1Ki" type="range" min="0" max="10" step="0.01" value="0"
                                     class="lab-range w-full">
                             </div>
 
@@ -1620,7 +1620,7 @@
                                 <label for="p2Kp" class="font-semibold block mb-2">
                                     Proportional Gain (Kp)
                                 </label>
-                                <input id="p2Kp" type="range" min="0" max="20" step="0.1" value="9"
+                                <input id="p2Kp" type="range" min="0" max="20" step="0.0001" value="9"
                                     class="lab-range w-full">
                                 <p class="text-center font-bold mt-2" id="p2KpValue">9.0</p>
                             </div>
@@ -1629,7 +1629,7 @@
                                 <label for="p2Ki" class="font-semibold block mb-2">
                                     Integral Gain (Ki)
                                 </label>
-                                <input id="p2Ki" type="range" min="0" max="10" step="0.1" value="0"
+                                <input id="p2Ki" type="range" min="0" max="10" step="0.0001" value="0"
                                     class="lab-range w-full">
                                 <p class="text-center font-bold mt-2" id="p2KiValue">0.0</p>
                             </div>
@@ -1758,7 +1758,7 @@
                                 <label for="p3Kp">Proportional Gain (Kp)</label>
                                 <output id="p3KpValue" class="font-bold lab-accent">2.0</output>
                             </div>
-                            <input id="p3Kp" type="range" min="0" max="20" step="0.1" value="2" class="lab-range">
+                            <input id="p3Kp" type="range" min="0" max="20" step="0.0001" value="2" class="lab-range">
                         </div>
 
                         <div>
@@ -1766,7 +1766,7 @@
                                 <label for="p3Ki">Integral Gain (Ki)</label>
                                 <output id="p3KiValue" class="font-bold lab-accent">8.0</output>
                             </div>
-                            <input id="p3Ki" type="range" min="0" max="10" step="0.1" value="8" class="lab-range">
+                            <input id="p3Ki" type="range" min="0" max="10" step="0.0001" value="8" class="lab-range">
                         </div>
 
                         <div>
@@ -2040,6 +2040,7 @@
 
             </section>
 
+
             <!-- PROJECT: MY SYSTEM -->
             <section id="my-system" class="lab-card p-5 md:p-8">
 
@@ -2052,11 +2053,471 @@
                 </h3>
 
                 <p class="lab-muted mt-2">
-                    Model the drive motor and design a PID speed controller using measured plant parameters.
+                    Model the Micromouse drive motor, design a PI
+                    speed controller, and evaluate its closed-loop
+                    performance through interactive simulation.
                 </p>
 
-                <!-- Micromouse implementation goes here -->
+
+                <!-- SECTION 1: HARDWARE INFORMATION -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        MICROMOUSE / HARDWARE
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        Our Motor System
+                    </h4>
+
+                    <p class="lab-muted mb-4">
+                        Our Micromouse uses two N20 6V DC gear motors
+                        with encoders, an ESP32 microcontroller,
+                        and a TB6612 motor driver.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <div>
+                            <p class="font-semibold">Motor</p>
+                            <p class="lab-muted">
+                                N20 DC Gear Motor — 6V
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold">Feedback Sensor</p>
+                            <p class="lab-muted">
+                                Quadrature Encoder
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold">Microcontroller</p>
+                            <p class="lab-muted">
+                                ESP32
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="font-semibold">Motor Driver</p>
+                            <p class="lab-muted">
+                                TB6612
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECTION 2: MOTOR MODEL -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        SYSTEM IDENTIFICATION
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        First-Order Motor Model
+                    </h4>
+
+                    <p class="lab-muted mb-4">
+                        The motor speed response is represented
+                        by a first-order transfer function
+                        relating PWM duty cycle to motor speed.
+                    </p>
+
+                    <div class="lab-card p-4 mb-5 text-center">
+                        <p class="font-bold">
+                            G(s) = K / (tau * s + 1)
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                        <div>
+                            <label for="msK" class="font-medium">
+                                Motor Gain K (RPM / PWM%)
+                            </label>
+
+                            <input id="msK" type="number" min="0.01" step="0.1" value="5" class="lab-select mt-2">
+                        </div>
+
+                        <div>
+                            <label for="msTau" class="font-medium">
+                                Time Constant tau (s)
+                            </label>
+
+                            <input id="msTau" type="number" min="0.01" step="0.01" value="0.25" class="lab-select mt-2">
+                        </div>
+
+                        <div>
+                            <label for="msTargetRpm" class="font-medium">
+                                Target Speed (RPM)
+                            </label>
+
+                            <input id="msTargetRpm" type="number" min="1" step="10" value="500" class="lab-select mt-2">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECTION 3: MOTOR MODEL SOURCE -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        MODEL REFERENCE
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        Motor Model & Data Source
+                    </h4>
+
+                    <p class="lab-muted mb-3">
+                        Hardware: N20 6V DC Gear Motor with Encoder.
+                        Supplier: LABCO.
+                        Invoice Item: 000003957.
+                    </p>
+
+                    <p class="lab-muted mb-3">
+                        The motor gain and time constant are used
+                        for system modeling and controller design.
+                        Both parameters can be updated using
+                        PWM step-response data.
+                    </p>
+
+                    <div class="lab-card p-4 mb-4">
+
+                        <p class="font-semibold mb-2">
+                            Motor Gain
+                        </p>
+
+                        <p class="lab-muted text-sm">
+                            K = Change in RPM / Change in PWM (%)
+                        </p>
+
+                        <p class="font-semibold mt-4 mb-2">
+                            Time Constant
+                        </p>
+
+                        <p class="lab-muted text-sm">
+                            tau = Time to reach 63.2% of the
+                            total speed change after a PWM step.
+                        </p>
+
+                    </div>
+
+                    <p class="lab-muted text-sm">
+                        Experimental calibration status:
+                        pending PWM step-response measurements.
+                    </p>
+
+                </div>
+
+
+                <!-- SECTION 4: PI CONTROLLER DESIGN -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        CONTROLLER DESIGN
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        PI Controller Design
+                    </h4>
+
+                    <p class="lab-muted mb-5">
+                        Calculate PI gains using the desired
+                        damping ratio and natural frequency.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <div>
+                            <label for="msZeta" class="font-medium">
+                                Damping Ratio (zeta)
+                            </label>
+
+                            <input id="msZeta" type="number" min="0.1" max="2" step="0.05" value="0.7"
+                                class="lab-select mt-2">
+                        </div>
+
+                        <div>
+                            <label for="msWn" class="font-medium">
+                                Natural Frequency (rad/s)
+                            </label>
+
+                            <input id="msWn" type="number" min="0.1" step="0.5" value="6" class="lab-select mt-2">
+                        </div>
+
+                    </div>
+
+                    <button id="msDesignBtn" type="button" class="lab-button px-6 py-3 mt-5">
+                        Calculate PI Gains
+                    </button>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+
+                        <div class="lab-card p-4 min-w-0">
+                            <p class="lab-muted text-sm">Kp</p>
+                            <p id="msKpResult" class="text-2xl font-bold">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4 min-w-0">
+                            <p class="lab-muted text-sm">Ki</p>
+                            <p id="msKiResult" class="text-2xl font-bold">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4 min-w-0">
+                            <p class="lab-muted text-sm">Kd</p>
+                            <p id="msKdResult" class="text-2xl font-bold">
+                                0
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <p id="msDesignStatus" class="lab-muted mt-4" aria-live="polite"></p>
+
+
+                    <!-- My System: Integration with Control Labs -->
+                    <div class="lab-card p-4 mt-5">
+
+                        <h5 class="font-bold mb-2">
+                            Integration with Control Modules
+                        </h5>
+
+                        <p class="lab-muted text-sm mb-4">
+                            Send the current motor model to P1, P2
+                            and P3 to study controller behavior,
+                            sensor dynamics and digital control.
+                        </p>
+
+                        <button id="msBridgeBtn" type="button" class="lab-button px-6 py-3">
+                            Apply Motor Model to P1-P3
+                        </button>
+
+                        <p id="msBridgeStatus" class="lab-muted text-sm mt-3" aria-live="polite">
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- SECTION 5: CLOSED-LOOP SIMULATION -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        CLOSED-LOOP SIMULATION
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        Motor Speed Response
+                    </h4>
+
+                    <p class="lab-muted mb-4">
+                        Simulate motor speed using the first-order
+                        model and calculated PI gains.
+                        PWM is limited to 0–100%.
+                    </p>
+
+                    <button id="msSimulateBtn" type="button" class="lab-button px-6 py-3 mb-5">
+                        Run Simulation
+                    </button>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+
+                        <div class="lab-card p-4 min-w-0">
+                            <p class="lab-muted text-sm">
+                                Overshoot
+                            </p>
+                            <p id="msOvershoot" class="text-2xl font-bold">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4 min-w-0">
+                            <p class="lab-muted text-sm">
+                                Settling Time (2%)
+                            </p>
+                            <p id="msSettling" class="text-2xl font-bold">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4 min-w-0">
+                            <p class="lab-muted text-sm">
+                                Final Error
+                            </p>
+                            <p id="msError" class="text-2xl font-bold">
+                                --
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4">
+
+                        <div class="lab-card p-4 min-w-0">
+
+                            <h5 class="font-bold mb-2">
+                                Motor Speed vs Setpoint
+                            </h5>
+
+                            <div id="msSpeedPlot" class="w-full" style="height: 320px;">
+                            </div>
+
+                        </div>
+
+                        <div class="lab-card p-4 min-w-0">
+
+                            <h5 class="font-bold mb-2">
+                                PWM Control Signal
+                            </h5>
+
+                            <div id="msPwmPlot" class="w-full" style="height: 320px;">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <p class="lab-muted text-sm mt-4">
+                        Results are generated through
+                        closed-loop numerical simulation.
+                    </p>
+
+                </div>
+
+
+                <!-- SECTION 6: DESIGN VALIDATION -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        DESIGN VALIDATION
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        Controller Specifications
+                    </h4>
+
+                    <p class="lab-muted mb-5">
+                        Evaluate the simulated motor response
+                        against the selected design specifications.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <div class="lab-card p-4">
+                            <p class="font-semibold">
+                                Target Damping Ratio: 0.6 - 0.8
+                            </p>
+                            <p id="msSpecDamping" class="mt-2">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4">
+                            <p class="font-semibold">
+                                Overshoot: at most 10%
+                            </p>
+                            <p id="msSpecOvershoot" class="mt-2">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4">
+                            <p class="font-semibold">
+                                Settling Time: at most 2 s
+                            </p>
+                            <p id="msSpecSettling" class="mt-2">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4">
+                            <p class="font-semibold">
+                                Final Error at 6 s: at most 1%
+                            </p>
+                            <p id="msSpecError" class="mt-2">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4">
+                            <p class="font-semibold">
+                                PWM: 0 - 100%
+                            </p>
+                            <p id="msSpecPWM" class="mt-2">
+                                --
+                            </p>
+                        </div>
+
+                        <div class="lab-card p-4">
+                            <p class="font-semibold">
+                                Target Speed Reachability
+                            </p>
+                            <p id="msSpecReachability" class="mt-2">
+                                --
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <p class="lab-muted text-sm mt-5">
+                        These checks evaluate the simulation
+                        model and controller design.
+                    </p>
+
+                </div>
+
+
+                <!-- SECTION 7: GENERATED CONTROLLER CODE -->
+                <div class="lab-panel p-5 md:p-6 mt-6">
+
+                    <p class="text-xs font-bold lab-accent mb-2">
+                        IMPLEMENTATION / ESP32
+                    </p>
+
+                    <h4 class="text-xl font-bold mb-3">
+                        Generated PI Controller Code
+                    </h4>
+
+                    <p class="lab-muted mb-4">
+                        Generate the PI controller core
+                        using the current design parameters.
+                    </p>
+
+                    <button id="msGenerateCodeBtn" type="button" class="lab-button px-6 py-3 mb-4">
+                        Generate Arduino Code
+                    </button>
+
+                    <pre
+                        class="lab-card p-4 overflow-x-auto text-sm"><code id="msArduinoCode">Click Generate Arduino Code.</code></pre>
+
+                    <p id="msCodeStatus" class="lab-muted text-sm mt-3" aria-live="polite"></p>
+
+                    <p class="lab-muted text-sm mt-4">
+                        Controller core for ESP32 integration.
+                        Encoder RPM measurement, motor-driver
+                        connections and hardware testing
+                        are separate implementation steps.
+                    </p>
+
+                </div>
+
             </section>
+
+
 
         </section>
 
@@ -2083,6 +2544,7 @@
     <script src="./js/control-p2.js"></script>
     <script src="./js/control-p3.js"></script>
     <script src="./js/control-p4.js"></script>
+    <script src="./js/my-system.js"></script>
 
 </body>
 

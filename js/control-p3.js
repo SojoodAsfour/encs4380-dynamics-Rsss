@@ -153,8 +153,8 @@
 
         return [
             "// Digital PID: u[k] = Kp*e + Ki*Ts*sum(e) + Kd*(e - ePrev)/Ts",
-            "const float Kp = " + Kp.toFixed(2) + ";",
-            "const float Ki = " + Ki.toFixed(2) + ";",
+            "const float Kp = " + Kp.toFixed(4) + ";",
+            "const float Ki = " + Ki.toFixed(4) + ";",
             "const float Kd = " + Kd.toFixed(2) + ";",
             "const unsigned long TS_US = " + tsUs + "UL;      // sampling time = " + (Ts * 1000).toFixed(1) + " ms",
             "const float Ts = TS_US / 1000000.0;",
@@ -249,8 +249,8 @@
         const s = readSettings();
 
         $("p3TsValue").textContent = (s.Ts * 1000).toFixed(0) + " ms";
-        $("p3KpValue").textContent = s.Kp.toFixed(1);
-        $("p3KiValue").textContent = s.Ki.toFixed(1);
+        $("p3KpValue").textContent = s.Kp.toFixed(4);
+        $("p3KiValue").textContent = s.Ki.toFixed(4);
         $("p3KdValue").textContent = s.Kd.toFixed(2);
         $("p3UMaxValue").textContent = s.uMax.toFixed(1);
         if ($("p3PlantInfo")) $("p3PlantInfo").textContent = `Plant: K=${s.K}, τ=${s.tau} (First-Order)`;

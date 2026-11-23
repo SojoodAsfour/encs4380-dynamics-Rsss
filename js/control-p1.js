@@ -17,7 +17,10 @@
         const output = document.getElementById(outputId);
 
         function updateValue() {
-            output.textContent = Number(slider.value).toFixed(1);
+
+            const decimals = (sliderId === "p1K" || sliderId === "p1Tau") ? 2 : 1;
+            output.textContent =  Number(slider.value).toFixed(decimals);
+
         }
 
         slider.addEventListener("input", updateValue);
@@ -796,12 +799,12 @@
             });
 
             // Calculate the error at the end of simulation
-            const finalY = response.output[ response.output.length - 1 ];
+            const finalY = response.output[response.output.length - 1];
 
             const errorPercent = Math.abs(1 - finalY) * 100;
 
             return {
-                Kp,Ki,errorPercent
+                Kp, Ki, errorPercent
             };
         });
 
@@ -826,5 +829,5 @@
 
     }
 
-    validationButton.addEventListener( "click", runP1Validation );
+    validationButton.addEventListener("click", runP1Validation);
 })();
