@@ -83,12 +83,21 @@
 
         // Overshoot relative to the expected final value
         const peak = Math.max(...y);
-        const overshoot = finalValue > 1e-6 ? Math.max(0, (peak / finalValue - 1) * 100) : 0;
+
+        const overshoot = Math.max(
+            0,
+            (peak / SETPOINT - 1) * 100
+        );
+
 
         // Last sample outside the ±2% band around the final value
         let lastOutside = -1;
         for (let i = 0; i <= last; i++) {
-            if (Math.abs(y[i] - finalValue) > 0.02 * Math.max(Math.abs(finalValue), 1e-9)) lastOutside = i;
+
+            if (Math.abs(y[i] - SETPOINT) > 0.02 * SETPOINT) {
+                lastOutside = i;
+            }
+
         }
         // The output must stay inside the band for the last 10% of the run. Checking only the
         // final sample is not enough: a limit cycle can cross the band exactly at the end.
@@ -98,7 +107,8 @@
         // Steady-state error: mean of the last 3% of the run
         const tail = y.slice(Math.floor(y.length * 0.97));
         const mean = tail.reduce((a, b) => a + b, 0) / tail.length;
-        const steadyError = settled ? Math.abs(SETPOINT - mean) / SETPOINT * 100 : null;
+
+        const steadyError = Math.abs(SETPOINT - mean) / SETPOINT * 100;
 
         // Integral of absolute error
         let iae = 0;
@@ -184,7 +194,10 @@
             "  ePrev = error;",
             "",
             "  // The actuator is unipolar (PWM 0..U_MAX), exactly as in the simulation.",
-            "  analogWrite(PWM_PIN, (int)((u - U_MIN) / (U_MAX - U_MIN) * 255.0));",
+
+            "  float pwmFraction = (U_MAX > U_MIN) ? (u - U_MIN) / (U_MAX - U_MIN) : 0.0f;",
+            "  analogWrite(PWM_PIN, (int)(pwmFraction * 255.0f));",
+
             "}"
         ].join("\n");
     }
@@ -253,17 +266,25 @@
 
         // Status message: compare Ts with the closed-loop speed
         const tauCL = s.tau / (1 + s.K * s.Kp);
+
         let status;
-        if (m.settling === null) {
-            status = "The loop does not settle: Ts is too large for these gains, so the controller reacts too late and the output keeps oscillating.";
+
+        if (s.uMax <= 0) {
+            status = "The actuator limit is zero. The controller cannot apply any control signal, so the plant cannot reach the setpoint.";
+
+        } else if (s.K * s.uMax < SETPOINT) {
+            status = "The setpoint is unreachable because the maximum plant output is below the setpoint.";
+
+        } else if (m.settling === null) {
+            status = "The response does not settle within the simulation time. Check the sampling time, PID gains, and actuator saturation.";
+
         } else if (s.Ts > tauCL / 2) {
-            status = `Ts is large compared with the closed-loop time constant (≈ ${tauCL.toFixed(3)} s). The response is degraded.`;
+            status = `Ts is large compared with the closed-loop time constant (≈ ${tauCL.toFixed(3)} s). The response may be degraded.`;
+
         } else {
             status = `Ts is small compared with the closed-loop time constant (≈ ${tauCL.toFixed(3)} s). The digital loop behaves almost like a continuous one.`;
         }
-        if (s.K * s.uMax < SETPOINT) {
-            status += " Note: K·Umax < setpoint, so the setpoint is not reachable.";
-        }
+
         $("p3Status").textContent = status;
 
         const c = chartStyle();

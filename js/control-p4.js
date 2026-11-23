@@ -200,7 +200,7 @@
                 for (const Kd of [0, 0.2, 0.6, 1.5]) {
                     const m = calculateMetrics(simulateClosed(p, { Kp, Ki, Kd }, 0.002));
                     if (m.diverged || m.settling === null) continue;
-                    if (m.overshoot > overshootLimit || m.steadyError > SSE_LIMIT) continue;
+                    if (m.overshoot === null || m.steadyError === null || m.overshoot > overshootLimit || m.steadyError > SSE_LIMIT) continue;
                     if (best === null || m.settling < best) best = m.settling;
                 }
             }
