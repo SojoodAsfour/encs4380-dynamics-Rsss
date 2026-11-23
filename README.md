@@ -4,39 +4,34 @@
 **University:** Birzeit University  
 **Instructor:** Dr. Wasel Ghanem  
 **Assignment:** Homework 1 & Homework 2  
-**Project Status:** Homework 1 Completed (v1.0) | Homework 2 In Progress  
-**Team:** RSSS
+**Team:** RSSS  
+**Project Status:** Homework 1 Completed (v1.0) | Homework 2 Implemented and Simulated
 
 ---
 
-## Project Description
+## Project Overview
 
-TRANSIENT is an interactive web-based educational toolkit designed to explore the dynamic characteristics of sensors and engineering systems.
+TRANSIENT is an interactive educational website for studying dynamic systems and feedback control.
 
-The toolkit allows users to adjust system parameters, observe live response plots, predict system behavior, and validate simulation results against analytical reference values.
+Homework 1 focuses on system response, frequency analysis, and system identification. Homework 2 extends the toolkit with PID control, sensor feedback, digital control, controller tuning, and a Micromouse motor-speed application.
 
-Homework 2 extends the toolkit with interactive feedback control experiments, PID controller design, first-order and second-order plant simulations, performance analysis, and a real-world Micromouse application.
+All simulations and visualizations run directly in the browser.
 
-The project emphasizes interactive learning, numerical simulation, mathematical understanding, and engineering validation.
+### Live Links
 
-## Live Website
-
-**GitHub Pages:** https://sojoodasfour.github.io/encs4380-dynamics-Rsss/
-
-**GitHub Repository:** https://github.com/SojoodAsfour/encs4380-dynamics-Rsss
+- **Website:** https://sojoodasfour.github.io/encs4380-dynamics-Rsss/
+- **Repository:** https://github.com/SojoodAsfour/encs4380-dynamics-Rsss
 
 ---
 
 ## Team Members and Contributions
 
-| Team Member | Responsibility |
-|---|---|
-| Sojood Asfour | Homework 1: Module 1 — First-Order Time Response, initial website structure and styling. Homework 2: P1 — PID Playground and Control section structure. |
-| Shahd Manasra | Homework 1: Module 2 — First-Order Frequency Response. Homework 2: P2 — A Slow Sensor in the Loop  |
-| Shahd Tamimi | Homework 1: Module 3 — Second-Order Response and State-Space Modeling. Homework 2: P3 - Digital PID Controler  |
-| Rahaf Suliman | Homework 1: Module 4 — Guess the Sensor; UI and documentation contributions. Homework 2: P4 —  Tuning Challenge|
-
-Homework 2 contributions will be updated as the remaining modules are completed and integrated.
+| Team Member | Homework 1 | Homework 2 |
+|---|---|---|
+| Sojood Asfour | Module 1, website structure and styling | P1 — PID Playground and Control section structure |
+| Shahd Manasra | Module 2 — Frequency Response | P2 — A Slow Sensor in the Loop |
+| Shahd Tamimi | Module 3 — Second-Order Response | P3 — Digital PID |
+| Rahaf Suliman | Module 4 — Guess the Sensor, UI and documentation | P4 — Tuning Challenge |
 
 ---
 
@@ -45,497 +40,200 @@ Homework 2 contributions will be updated as the remaining modules are completed 
 **Status:** Completed  
 **Release:** v1.0
 
-## Homework 1 — Project Modules
-
 ### Module 1 — First-Order Time Response
 
-**Status:** Implemented
-
-- Interactive gain (K) and time constant (τ) sliders.
-- Step and ramp input selection.
-- Live first-order response visualization.
-- Step-response markers at 63.2% (τ) and approximately 95% (3τ).
-- Ramp time lag and steady-state error.
-- Logarithmic error-fraction plot with natural-log slope −1/τ.
-- Interactive Predict, then Check questions for step and ramp responses.
-- Official Homework Validation Check #1 with expected values, simulated values, and PASS/FAIL results.
+Interactive first-order simulations with adjustable gain and time constant, step and ramp responses, transient markers, logarithmic error analysis, and Predict, then Check activities.
 
 ### Module 2 — First-Order Frequency Response
 
-**Status:** Implemented
-
-- Interactive time constant (τ) and input angular frequency (ω) sliders.
-- Live sinusoidal input and output response visualization.
-- Real-time calculation of amplitude ratio (M) and phase lag (φ).
-- Dynamic error (δ) calculation as the frequency changes.
-- Interactive Bode plots showing magnitude (dB) and phase (degrees).
-- Cutoff frequency calculation and −3 dB point identification.
-- Selected-frequency marker on the Bode magnitude plot.
-- Interactive Predict, then Check question about the effect of increasing input frequency on amplitude ratio.
-- Official Homework Validation Check #2 using the reference values (τ = 0.2 s, ω = 2 rad/s), with expected values, calculated values, and PASS/CHECK results.
+Sinusoidal input/output visualization, amplitude ratio, phase lag, dynamic error, interactive Bode plots, and cutoff-frequency analysis.
 
 ### Module 3 — Second-Order Response
 
-**Status:** Implemented
-
-- Interactive mass (m), damping coefficient (b), and spring constant (k) sliders.
-- Real-time calculation of natural frequency (ωₙ) and damping ratio (ζ).
-- Automatic classification of underdamped, critically damped, and overdamped responses.
-- Live second-order step-response visualization.
-- Dynamic calculation of rise time, peak time, percentage overshoot, and settling time.
-- Interactive pole visualization in the complex S-plane.
-- State-space modeling with dynamically updated A and B matrices.
-- Real-time calculation and display of system poles and eigenvalues.
-- Numerical state-space simulation using the fourth-order Runge-Kutta (RK4) method.
-- Interactive phase-plane visualization showing displacement versus velocity.
-- Interactive Predict, then Check question about the effect of increasing damping on oscillations and overshoot.
+Adjustable mass-spring-damper model, damping classification, transient response metrics, pole visualization, state-space representation, RK4 simulation, and phase-plane analysis.
 
 ### Module 4 — Guess the Sensor
 
-**Status:** Implemented
+Random hidden first-order and second-order systems, noisy measurements, progressive hints, parameter estimation, scoring, and response comparison.
 
-- Random hidden sensor in every round: first-order step, first-order sine, or second-order underdamped step.
-- Noise added to the measured response, with point-by-point values accessible through hover tooltips.
-- Hidden true parameters: K and τ for first-order sensors, ζ and ωₙ for second-order sensors.
-- Estimation using methods from Modules 1–3:
-  - The 63.2% point and logarithmic method for first-order step responses.
-  - Phase lag and amplitude ratio for first-order sine responses.
-  - Overshoot and peak time for second-order responses.
-- Optional log-method helper that plots ln(1 − y/K) against time for first-order step responses.
-- Progressive hints with three levels per sensor type.
-- Scoring system:
-  - Each parameter within 10% of the true value earns 50 points.
-  - Errors between 10% and 20% earn 25 points.
-  - Errors above 20% earn 0 points.
-  - Each round is worth 100 points.
-- Rounds skipped without checking a guess are not counted.
-- Reveal of true values with a comparison plot showing measured data, the true curve, and the estimated curve.
-- Running session scoreboard displaying total score, maximum possible score, completed rounds, and accuracy.
-- New Sensor button to start another round while keeping the session score.
-- Reuse of the response functions from Modules 1, 2, and 3.
+### Homework 1 — Engineering Validation
 
-## Homework 1 — Engineering Validation
+| Check | Reference Result |
+|---|---|
+| #1 — First-order step | 63.2% at τ and approximately 95% at 3τ |
+| #2 — Sinusoidal response | M ≈ 0.93, φ ≈ 21.8° |
+| #3 — Dynamic error | Maximum τ ≈ 0.52 ms |
+| #4 — Underdamped response | ζ = 0.5, overshoot ≈ 16.3% |
+| #5 — Critically damped response | ζ = 1, overshoot = 0% |
+| #6 — State-space poles | −1 ± j1.732 |
 
-The project implements the six official validation checks specified in Homework 1.
-
-### Module 1 — Validation Check #1
-
-**First-Order Step Response**
-
-- At t = τ, the response reaches approximately 63.2% of KA.
-- At t = 3τ, the response reaches approximately 95% of KA.
-
-### Module 2 — Validation Checks #2 and #3
-
-**Check #2 — Sinusoidal Response**
-
-- Time constant: τ = 0.2 s.
-- Input angular frequency: ω = 2 rad/s.
-- Expected amplitude ratio: approximately 0.93.
-- Expected phase lag: approximately 21.8°.
-
-**Check #3 — Dynamic Error**
-
-- Maximum frequency: 100 Hz.
-- Maximum allowable dynamic error: 5%.
-- Expected maximum time constant: approximately 0.52 ms.
-- Expected phase lag at 50 Hz: approximately 9.3°.
-
-### Module 3 — Validation Checks #4, #5 and #6
-
-**Check #4 — Underdamped Response**
-
-- Damping ratio: ζ = 0.5.
-- Expected percentage overshoot: 16.3%.
-
-**Check #5 — Critically Damped Response**
-
-- Damping ratio: ζ = 1.
-- Expected overshoot: 0%.
-
-**Check #6 — State-Space Eigenvalues**
-
-- m = 1, b = 2, k = 4.
-- Damping ratio: ζ = 0.5.
-- Natural frequency: ωₙ = 2 rad/s.
-- Expected eigenvalues: −1 ± j1.732.
-- Eigenvalues must match the system poles.
-
-The validation panels display expected values, calculated values, and PASS/FAIL results.
+The toolkit includes validation panels comparing calculated and expected results.
 
 ---
 
 # Homework 2 — Feedback Control Toolkit
 
-**Status:** In Progress
+**Status:** Implemented and Simulated
 
-Homework 2 extends TRANSIENT from sensor dynamics analysis to closed-loop feedback control.
-
-The Control section introduces interactive PID experiments, numerical simulations, controller tuning, and an application to the Micromouse robotics project.
-
-The toolkit is organized into four control modules and one project application.
+Homework 2 introduces four interactive PID control modules. Each module includes a Predict, then Check learning activity.
 
 ## P1 — PID Playground
 
-**Status:** Implemented and Locally Tested  
-**Contributor:** Sojood Asfour
+**Contributor:** Sojood Asfour  
+**Status:** Implemented and Locally Tested
 
-The PID Playground allows users to explore how proportional, integral, and derivative control affect the performance of different dynamic systems.
-
-### Plant Selection
-
-- Interactive selection between first-order and second-order plants.
-- Adjustable first-order plant parameters:
-  - System gain (K).
-  - Time constant (τ).
-- Adjustable second-order plant parameters:
-  - Mass (m).
-  - Damping coefficient (b).
-  - Spring constant (k).
-
-### PID Controller
-
-- Interactive proportional gain (Kp) control.
-- Interactive integral gain (Ki) control.
-- Interactive derivative gain (Kd) control.
-- Adjustable reference setpoint.
-- Support for P, PI, PD, and PID controller configurations.
-
-### Numerical Simulation
-
-- First-order and second-order closed-loop simulations.
-- Euler-based numerical integration for solving system differential equations.
-- Derivative control applied to measured output to avoid setpoint-induced derivative kick.
-- Actuator saturation limits.
-- Conditional integral anti-windup.
-- Real-time recalculation when controller or plant parameters change.
-
-### Live Visualization
-
-- Interactive closed-loop feedback block diagram.
-- Dynamic display of controller gains and selected plant model.
-- Live plot of actual plant output compared with the desired setpoint.
-- Live plot of applied control signal with actuator limits.
-- Responsive plotting using Plotly.js.
-- Compatibility with the website's Light and Dark themes.
-
-### Response Characteristics
-
-Dynamic calculation of:
-
-- Rise time (10–90%).
-- Percentage overshoot.
-- Settling time using the 2% criterion.
-- Steady-state error estimate.
-
-The interface also identifies responses that do not settle within the simulated time window or are classified as undamped or unstable.
-
-### Predict, then Check
-
-- Interactive prediction activity focused on proportional control.
-- Comparison of two proportional gains using numerical simulation.
-- Evaluation of the user's prediction.
-- Explanation of the effect of increasing Kp on steady-state error.
-
-### Engineering Validation
-
-- Three official validation checks.
-- Comparison of expected and calculated values.
-- PASS/FAIL results.
-- Numerical verification using the same simulation functions as the interactive plots.
-
-### Additional Testing
-
-- First-order P-only, PI, PD, and PID responses.
-- Second-order system responses.
-- Undamped oscillatory behavior.
-- Actuator saturation.
-- Comparison between theoretical and numerical results.
+- First-order and second-order plant selection.
+- Adjustable Kp, Ki, Kd, and setpoint.
+- Euler-based closed-loop simulation.
+- Feedback block diagram and live response plots.
+- Control-signal limits and conditional anti-windup.
+- Rise time, overshoot, settling time, and steady-state error.
+- P, PI, PD, and PID controller comparison.
 
 ## P2 — A Slow Sensor in the Loop
 
-**Status:** Implemented and Locally Tested  
-**Contributor:** Shahd Manasra
+**Contributor:** Shahd Manasra  
+**Status:** Implemented and Locally Tested
 
-The Slow Sensor in the Loop module demonstrates how sensor dynamics and delayed feedback affect closed-loop system behavior and PID controller performance.
-
-### Sensor Model
-
-- Implemented a first-order sensor model in the feedback loop.
-- Adjustable sensor time constant (τs).
-- Simulates the delay between the actual plant output and the sensor measurement.
-- Integrates sensor dynamics with the plant and PID controller simulation.
-
-### Closed-Loop Simulation
-
-- Simulated the plant response with a sensor included in the feedback path.
-- Euler-based numerical integration for the plant and sensor differential equations.
-- PID controller operates using the sensor measurement rather than the true plant output.
-- Supports adjustable Kp, Ki, and Kd controller gains.
-- Updates the simulation dynamically when sensor or controller parameters change.
-
-### Live Visualization
-
-- Interactive Plotly plot showing the true plant output and sensor measurement on the same graph.
-- Displays the setpoint alongside both response signals.
-- Visualizes the difference between the actual system response and the delayed sensor reading.
-- Responsive plotting integrated with the existing TRANSIENT interface.
-
-### Performance Metrics
-
-Dynamic calculation of:
-
-- True plant output overshoot.
-- Sensor tracking difference between the plant output and sensor measurement.
-- Setpoint crossing count.
-
-### Oscillation Analysis
-
-- Detects damped oscillatory responses.
-- Identifies sustained or growing oscillation behavior.
-- Evaluates oscillation amplitude, repeated crossings, and whether the oscillation amplitude is decreasing over time.
-- Displays a response status describing the observed system behavior.
-
-### Predict, then Check
-
-- Interactive prediction activity comparing the effect of different sensor time constants on closed-loop overshoot, followed by simulation-based verification of the user's prediction.
-
-### Additional Testing
-
-- Tested different sensor time constant values.
-- Tested different PID gain combinations.
-- Verified the difference between true plant output and sensor measurement.
-- Tested overshoot and oscillatory response detection.
-- Checked stable, damped, and oscillatory response behavior.
-- Verified interactive plots and parameter updates locally.
+- First-order sensor model in the feedback path.
+- Adjustable sensor time constant and PID gains.
+- True output, sensor measurement, and setpoint on the same plot.
+- Sensor tracking difference, overshoot, and setpoint crossings.
+- Demonstration and detection of oscillatory behavior.
 
 ## P3 — Digital PID
 
-### Digital PID Controller
-**Status:** Implemented and Locally Testing
-**Contributor:** Shahd Tamimi
+**Contributor:** Shahd Tamimi  
+**Status:** Implemented and Locally Tested
 
-The Digital PID module demonstrates how continuous PID control is implemented in a discrete-time system, similar to how an Arduino executes a controller loop.
+- Discrete-time PID with adjustable gains and sampling time.
+- Stair-step control-signal visualization.
+- Sampling-time effects on stability and performance.
+- Anti-windup ON/OFF.
+- Generated Arduino-style PID code with a copy button.
 
-- Discrete-time PID implementation using the proportional, integral, and derivative terms.
-- Adjustable proportional gain (Kp).
-- Adjustable integral gain (Ki).
-- Adjustable derivative gain (Kd).
-- Adjustable sampling time (Ts).
-- Real-time calculation of the controller output at each sampling instant.
-- Support for changing controller parameters and observing their effect on system performance.
+## P4 — Tuning Challenge
 
-### Sampling Time Analysis
+**Contributor:** Rahaf Suliman  
+**Status:** Implemented and Locally Tested
 
-- Interactive sampling time adjustment.
-- Visualization of the stair-step control signal.
-- Live visualization of the plant response at different sampling times.
-- Demonstration of how increasing Ts affects response accuracy, stability, and overall controller performance.
-
-### Anti-Windup
-
-- Interactive anti-windup ON/OFF selection.
-- Integral windup demonstration when the actuator reaches its saturation limits.
-- Comparison of controller behavior with and without anti-windup.
-- Visualization of the effect of integral accumulation during actuator saturation.
-
-### Arduino Code Generation
-
-- Automatic generation of Arduino-style PID code based on the selected controller gains and sampling time.
-- Generated code includes proportional, integral, and derivative calculations.
-- Implementation of fixed sampling intervals.
-- Actuator output constraints.
-- Optional anti-windup logic.
-- Copy button for copying the generated Arduino code.
-
-### Interactive Learning
-
-- Live response plots and discrete control-signal visualization.
-- Adjustable controller parameters for experimentation.
-- Predict, then Check activity exploring the effect of sampling time on digital controller performance.
-
-
-
-### P4 — Tuning Challenge
-
-**Status: Implemented and Locally Tested**
-**Contributor:** Rahaf Suliman
-
-The Tuning Challenge provides an interactive environment where users design a PID controller for a hidden dynamic plant and attempt to satisfy specified performance requirements.
-
-### Hidden Plant Generation
-
-- Randomized hidden plant generation for each new challenge.
-- Reuse of Homework 1 plant models and response functions.
-- Support for first-order and second-order plant behavior.
-- Hidden plant parameters that users must identify through system response analysis.
-- New Challenge button to generate another challenge.
-
-### Open-Loop Step Test
-
-- Simulation of the hidden plant's open-loop step response.
-- Interactive visualization of the output response.
-- Analysis of the plant's transient behavior.
-- Open-loop response used as a reference for identifying the hidden plant characteristics.
-
-### Plant Identification
-
-- Interactive selection of the estimated plant type.
-- Support for first-order and second-order plant classification.
-- Check Plant Type functionality to evaluate the user's identification.
-- Feedback indicating whether the selected plant type matches the hidden plant.
-
-### PID Controller Tuning
-
-- Adjustable proportional gain (Kp).
-- Adjustable integral gain (Ki).
-- Adjustable derivative gain (Kd).
-- Interactive experimentation with different controller configurations.
-- Real-time evaluation of the selected controller gains.
-
-### Performance Specifications
-
-The controller is evaluated against three performance requirements:
-
-- Percentage Overshoot: Must remain below or equal to the specified maximum.
-- Settling Time: Must remain within the specified time limit using the 2% criterion.
-- Steady-State Error: Must remain below or equal to the specified allowable error.
-
-### Automated Evaluation and Scoring
-
-- Automatic calculation of controller performance metrics.
-- Independent PASS/FAIL evaluation for each performance requirement.
-- Overall score based on the achieved specifications.
-- Submit My Design button to evaluate the current controller configuration.
-- Display of the final evaluation results and score after submission.
-- New Challenge button resets the previous evaluation and starts a new challenge.
-
-### Interactive Learning
-
-- Users experiment with different PID gains to satisfy the hidden plant's performance specifications.
-- Comparison between controller configurations through repeated challenges.
-- Predict, then Check learning approach encouraging users to understand the relationship between PID gains and transient response characteristics.
-
-
-## My System — Micromouse Motor Speed Control
-
-**Status:** In Progress
-
-A real-world engineering application exploring PID-based motor speed control for the Micromouse robot.
-
-The implementation details, mathematical model, simulation results, and engineering analysis will be documented as the project progresses.
+- Random hidden first-order and second-order plants.
+- Open-loop step test and plant-type identification.
+- Interactive PID tuning.
+- Overshoot, settling-time, and steady-state-error specifications.
+- Individual PASS/FAIL results and scoring.
 
 ---
 
 ## Homework 2 — P1 Engineering Validation
 
-The P1 PID Playground implements three official reference checks.
+All three official reference checks passed during local testing.
 
-### Test #1 — P-Only Controller
+| Test | Expected | Calculated | Status |
+|---|---|---|---|
+| P-only: K=1, τ=1, Kp=9 | τcl=0.1 s, SSE=10% | 0.0998 s, 10.00% | PASS |
+| PI: Kp=1, Ki=1 | ωn=1, ζ=1 | 1.000, 1.000 | PASS |
+| Stable PI step tracking | SSE approaches 0% | Approximately 0% | PASS |
 
-**Plant Parameters**
+For the PI step-tracking test, the simulated residual errors were approximately 0.0000%, 0.0003%, and 0.0000% for the tested gain combinations.
 
-- K = 1.
-- τ = 1 s.
+---
 
-**Controller Parameters**
+# My System — Micromouse Motor Speed Control
 
-- Kp = 9.
-- Ki = 0.
-- Kd = 0.
+**Status:** Implemented and Simulated — Hardware Calibration Pending
 
-**Expected Results**
+### Hardware
 
-- Closed-loop time constant: 0.1 s.
-- Steady-state error: 10%.
+- **Motor:** N20 6V DC Gear Motor with Encoder
+- **Supplier:** LABCO
+- **Microcontroller:** ESP32
+- **Motor Driver:** TB6612
 
-**Local Test Results**
+### Motor Model
 
-- Calculated closed-loop time constant: approximately 0.0998 s.
-- Calculated steady-state error: approximately 10.00%.
-- Status: PASS.
+A first-order motor-speed model is used:
 
-### Test #2 — PI Controller Characteristics
+G(s) = K / (τs + 1)
 
-**Plant Parameters**
+| Parameter | Value |
+|---|---|
+| Motor Gain (K) | 5 RPM/PWM% |
+| Time Constant (τ) | 0.25 s |
+| Target Speed | 500 RPM |
+| Damping Ratio (ζ) | 0.7 |
+| Natural Frequency (ωn) | 6 rad/s |
 
-- K = 1.
-- τ = 1 s.
+### PI Controller Design
 
-**Controller Parameters**
+The controller uses pole-placement equations:
 
-- Kp = 1.
-- Ki = 1.
-- Kd = 0.
+Kp = (2ζωnτ − 1) / K
 
-**Expected Results**
+Ki = τωn² / K
 
-- Natural frequency: 1 rad/s.
-- Damping ratio: 1.
-- Step output at t = 1 s: approximately 0.6321.
+Kd = 0
 
-**Local Test Results**
+**Final gains:**
 
-- Calculated natural frequency: 1.000 rad/s.
-- Calculated damping ratio: 1.000.
-- Simulated output at t = 1 s: approximately 0.6323.
-- Status: PASS.
+- Kp = 0.2200
+- Ki = 1.8000
+- Kd = 0
 
-### Test #3 — PI Zero Steady-State Error
+### Simulated Performance
 
-**Objective**
+| Metric | Result |
+|---|---|
+| Overshoot | 0.00% |
+| Settling Time (2%) | 0.978 s |
+| Final Error | 0.00% |
+| Maximum PWM | 100% |
+| Validation | 6 PASS checks |
 
-Verify that stable PI-controlled systems approach zero steady-state error for a reachable step setpoint.
+The simulated motor reaches the selected 500 RPM target, with PWM reaching its maximum limit of 100%.
 
-The validation uses several proportional and integral gain configurations.
+These values describe the simulated response. Encoder-based motor calibration remains pending.
 
-**Tested Configurations**
+### Integration with P1–P3
 
-| Kp | Ki | Simulated Error |
-|---|---|---|
-| 1 | 1 | Approximately 0.0000% |
-| 2 | 1 | Approximately 0.0003% |
-| 3 | 2 | Approximately 0.0000% |
+My System transfers the motor model and normalized PI gains to the control modules.
 
-**Status:** PASS.
+| Parameter | Normalized Value |
+|---|---|
+| Plant Gain | 1.00 |
+| Time Constant | 0.25 s |
+| Kp | 1.1000 |
+| Ki | 9.0000 |
+| Kd | 0 |
 
-These results represent residual errors after finite-duration numerical simulation. The theoretical steady-state error approaches zero for stable PI-controlled systems with a reachable constant setpoint.
+P2 demonstrates sensor delay, while P3 demonstrates digital sampling and anti-windup.
 
-All three P1 validation checks passed during local testing. Further integration and edge-case testing will be performed as the remaining Homework 2 modules are completed.
+The page also generates a PI controller core using a 20 ms sampling period.
 
 ---
 
 ## Technologies Used
 
-- HTML5.
-- CSS3.
-- Tailwind CSS v4.
-- JavaScript.
-- Plotly.js.
-- Git and GitHub.
-- GitHub Pages.
+- HTML5, CSS3, and Tailwind CSS v4
+- JavaScript and Plotly.js
+- Euler and RK4 numerical simulation
+- Git, GitHub, and GitHub Pages
 
-The website is a static application that runs directly in the browser without a backend server.
+The website runs without a backend server.
 
 ## Development and Deployment
 
-The project follows a feature-branch development workflow using Git and GitHub.
-
-- Each team member develops assigned functionality on a separate branch.
-- Pull requests are used to review and integrate changes.
+- Homework 1 was released as `v1.0`.
+- Team members contributed their assigned modules through Git.
 - The `main` branch is used for GitHub Pages deployment.
-- Tailwind CSS is compiled into `output.css`.
-- The compiled CSS file is included in the repository so the published website works without a build server.
-
-The Homework 1 release `v1.0` remains available as the original completed version of TRANSIENT.
-
-Homework 2 extends the existing website and is being integrated through additional team contributions.
+- Compiled Tailwind CSS is included for static hosting.
+- Homework 2 extends the existing Homework 1 repository.
 
 ---
 
-## Screenshots
+# Screenshots
 
-### Homework 1 — Module 1
+## Homework 1 — Module 1
 
 **First-Order Step Response**
 
@@ -553,7 +251,7 @@ Homework 2 extends the existing website and is being integrated through addition
 
 ![Prediction Comparison](screenshots/module1-prediction.png)
 
-### Homework 1 — Module 2
+## Homework 1 — Module 2
 
 **First-Order Frequency Response**
 
@@ -577,7 +275,7 @@ Homework 2 extends the existing website and is being integrated through addition
 
 ![Prediction Comparison](screenshots/module2-prediction.png)
 
-### Homework 1 — Module 3
+## Homework 1 — Module 3
 
 **Second-Order Response**
 
@@ -599,7 +297,7 @@ Homework 2 extends the existing website and is being integrated through addition
 
 ![Transient Response Validation](screenshots/module3-validation.png)
 
-### Homework 1 — Module 4
+## Homework 1 — Module 4
 
 **Guess the Sensor Challenge**
 
@@ -629,34 +327,31 @@ Homework 2 extends the existing website and is being integrated through addition
 
 ![Session Scoreboard](screenshots/module4-scoreboard.png)
 
+---
 
 ## AI Tool Usage
 
 ChatGPT was used to assist with:
 
-- Understanding mathematical and engineering concepts.
-- Reviewing JavaScript implementation.
-- Explaining numerical simulation methods.
-- Improving responsive interface design.
-- Reviewing validation logic.
-- Supporting debugging and documentation.
+- Understanding engineering concepts and equations.
+- Reviewing JavaScript and numerical simulation.
+- Debugging and validation.
+- Interface design and documentation.
 
-All implemented features were reviewed and tested by the team members, who are responsible for understanding and explaining their code and engineering calculations.
+All modules were reviewed and tested by their contributors.
 
 ---
 
-## Homework 1 — Course Milestones
+## Course Milestones
 
-- **Checkpoint 1:** November 3, 2026 — Module 1 working on GitHub Pages.
-- **Checkpoint 2:** November 9, 2026 — Modules 2 and 3 working.
-- **Final Submission:** November 12, 2026 — All four modules and GitHub release `v1.0`.
+### Homework 1
 
----
+- November 3, 2026 — Module 1 checkpoint.
+- November 9, 2026 — Modules 2 and 3 checkpoint.
+- November 12, 2026 — Final release `v1.0`.
 
-## Homework 2 — Development Status
+### Homework 2
 
-- P1 — PID Playground: Implemented and locally tested.
-- P2 — A Slow Sensor in the Loop: Implemented and locally tested.
-- P3 — Digital PID: Implemented and locally tested.
-- P4 — Tuning Challenge: Implemented and locally tested.
-- My System — Micromouse Motor Speed Control: In progress.
+- November 16, 2026 — Assignment released.
+- November 19, 2026 — P1 and P2 checkpoint.
+- November 23, 2026 — Final submission deadline.
